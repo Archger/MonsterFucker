@@ -1,0 +1,17 @@
+#MyEclipse Hibernate Properties
+#Thu Sep 14 11:52:05 CST 2017
+genVersionTag=false
+sessionFactoryName=com.analysis.hibernate.HibernateSessionFactory
+genAnnotations=false
+configFile=/ApkAnalyzePlatform/src/hibernate.cfg.xml
+reStrategyClass=
+sessionFactoryId=
+profile=
+detectM2M=false
+genBasicCompId=false
+keyGenerator=
+createConfigFile=true
+basePersistenceClass=
+detectO2O=false
+useJavaTypes=true
+reSettingsFile=
