@@ -45,6 +45,9 @@ public class regest extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//request.setCharacterEncoding("utf-8");
+
+		response.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("UTF-8");
 		System.out.println("ok regestPost success!");
 		String password =request.getParameter("password");
 		String password2 =request.getParameter("password2");

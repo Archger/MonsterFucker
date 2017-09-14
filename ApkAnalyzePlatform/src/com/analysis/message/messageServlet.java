@@ -45,7 +45,8 @@ public class messageServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("UTF-8");
 		System.out.println("ok messagetPost success!");
 		Object user_id=request.getSession().getAttribute("user_id");
 		String to =request.getParameter("to");

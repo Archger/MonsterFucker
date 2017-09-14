@@ -103,6 +103,9 @@ public class loginJudge extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//request.setCharacterEncoding("utf-8");
+
+		response.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("UTF-8");
 		System.out.println("ok dopost success!");
 		Session session=HibernateSessionFactory.getSession();
 		Transaction tx = session.beginTransaction();
