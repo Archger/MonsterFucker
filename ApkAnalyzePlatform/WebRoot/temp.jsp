@@ -452,12 +452,6 @@ System.out.println(un_read_num);*/
 			</div>
 		</footer>
 		<!--foot end-->
-		
-		<div class="fixed-action-btn">
-    <a class="btn-floating btn-large red" href="upload.jsp">
-      <i class="large material-icons">replay</i>
-    </a>
-  </div>
 
 	</body>
 

@@ -15,33 +15,56 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-	
-<head>
-	<meta charset="utf-8"> 
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    
-    <title>消息通知</title>
 
-    <!-- CORE CSS-->    
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+	<head>
+		<title>Message</title>
+		<meta charset="utf-8" />
+		<!--Import Google Icon Font-->
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+		<!--Import materialize.css-->
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+		<!--Let browser know website is optimized for mobile-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+		<script type="text/javascript" src="FusionCharts/js/fusioncharts.js"></script>
+		<script type="text/javascript" src="FusionCharts/js/themes/fusioncharts.theme.fint.js"></script>
 
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!--<style>
-	html{height:100%;}
-body{min-height:100%;margin:0;padding:0;position:relative;}
 
-header{background-color: #ffe4c4;}
-main{padding-bottom:100px;background-color: #bdb76b;}/* main的padding-bottom值要等于或大于footer的height值 */
-footer{position:absolute;bottom:0;width:100%;height:100px;background-color: #ffc0cb;}
-</style>-->
+		<style>
+			.side-nav-bar {
+    		position: fixed !important;
+  		}
+			header,
+			main,
+			footer {
+				padding-left: 300px;
+			}
+			
+			@media only screen and (max-width: 992px) {
+				header,
+				main,
+				footer {
+					padding-left: 0;
+				}
+			}
+			
+			body {
+				display: flex;
+				min-height: 100vh;
+				flex-direction: column;
+			}
+			
+			main {
+				flex: 1 0 auto;
+			}
+		</style>
+		
 
-</head>
+	</head>
 
-<body>
-<%
+	<body>
+		<!--java start-->
+		<%
 //request.setCharacterEncoding("utf-8");
 Object user_id=request.getSession().getAttribute("user_id");
 Object username=request.getSession().getAttribute("username");
@@ -67,57 +90,31 @@ System.out.println(un_read_num);*/
 //tx2.commit();
 //HibernateSessionFactory.closeSession();
  %>
-
-
+		<!--java end-->
+		
+		
 		<!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="js/materialize.min.js"></script>
-    
-    <!-- Start Page Loading -->
-    <!--<div id="loader-wrapper">
-        <div id="loader"></div>        
-        <div class="loader-section section-left"></div>
-        <div class="loader-section section-right"></div>
-    </div>-->
-    <!-- End Page Loading -->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
 
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-    
-  
-    <!-- START HEADER -->
-    <header id="header" class="page-topbar">
-        <!-- start header nav-->
-        <div class="navbar-fixed">
-            <nav class="cyan">
-                <div class="nav-wrapper">
-                    <h4 class="logo-wrapper">AnalyzeSystem</h4>
-                </div>
-            </nav>
-        </div>
-        <!-- end header nav-->
-    </header>
-    <!-- END HEADER -->
-
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-     <!-- START MAIN -->
-    <div id="main">
-        <!-- START WRAPPER -->
-        <div class="wrapper">
-        	<div class="row">
-        		<div class="col s1">
-        			<aside id="left-sidebar-nav">
-                <ul id="slide-out" class="side-nav fixed leftside-navigation">
-                    <li class="user-details cyan darken-2">
-                        <div class="row">
-                            <div class="col col s8 m8 l8">
-                            
-                            <!--选项-->
-                         
-                                <!--用户名-->
-                                <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" data-activates="profile-dropdown"><%=username %></a>
-                                
-                                <!--用户权限-->
-                                <p class="user-roal"><%
+		<header>
+			<nav class="top-nav">
+				<div class="container">
+				<div class="nav-wrapper">
+					<span class="flow-text left-align">Message</span>
+				</div>
+				</div>
+			</nav>
+			
+			<ul id="slide-out" class="side-nav fixed">
+				<li class="logo"> <img src="images/materialize-logo.png" /> </li>
+				<li><div class="userView">
+				      <div class="background">
+				        <img src="images/user-bg.jpg">
+				      </div>
+				     <img class="circle" src="images/sample4.jpg">
+				      <span class="white-text name"><%=username %></span>
+				      <span class="white-text"><%
                                 if((Boolean)is_admin)
                                 {
                                 	%>管理员<%
@@ -126,12 +123,10 @@ System.out.println(un_read_num);*/
                                 {
                                 	%>用户<%
                                 }
-                                 %></p>              
-                                
-                            </div>
-                        </div>
-                    </li>
-                    <li class="bold"><a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
+                                 %></span>   
+				    </div>
+				</li>
+				<li class="bold"><a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
                     </li>
                     <li class="bold"><a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
                     </li>
@@ -145,7 +140,7 @@ System.out.println(un_read_num);*/
                     </li>
 
                     <li class="li-hover"><div class="divider"></div></li>
-                    <li class="li-hover"><p class="ultra-small margin more-text">MORE</p></li>             
+                    <li class="li-hover"><p class="ultra-small margin more-text">MORE</p></li>                
                     <li>
                     <a href="aboutus.jsp"><i class="material-icons">turned_in</i>关于我们</a>
                     </li>
@@ -162,17 +157,19 @@ System.out.println(un_read_num);*/
                                 </div>
                             </div>
                         </div>
-                    </li>
-                </ul>
-            </aside>
-        		</div>
-        		<div class="col s11">
-        		<!-- START CONTENT -->
-            		<section id="content">
+                    </li> 
+                 
+			</ul>
+		</header>
+		<main>
+			<div class="container">
 
-                <!--start container-->
-                <div class="container">
-                	<div class="row">
+				<!--right start-->
+				<div class="row">
+					<div class="col s12 m9 l10">
+						<div id="message" class="section scrollspy">
+							<!--start-->
+							<div class="row">
                 		<div class="col s12 m6 l6">
                 			<p class="flow-text">用户留言</p>
                 			<ul class="collapsible popout" data-collapsible="accordion">
@@ -253,12 +250,16 @@ System.out.println(un_read_num);*/
                 		
                 	</div>
                 	
-                	<br />
+							<!--end-->
+						</div>
+						<div id="leave" class="section scrollspy">
+							<!--stary-->
+							<br />
                 	<div class="divider"></div>
                 	<br />
-                	<div class="container">
                 		<div class="row">
                 			<div class="card col s12 hoverable">
+                				<br />
                 				<form class="col s12" action="/ApkAnalyzePlatform/messagepatten" method="post">
 							      <div class="row">
 							        <div class="input-field col s2">
@@ -282,54 +283,190 @@ System.out.println(un_read_num);*/
 						    
 						</div>
                 		<br />
-                	</div>
-                	<br />
-                	<br />
-                	<br />
-                	
-                </div>
-                <!--end container-->
-            </section>
-           		 <!-- END CONTENT -->
-            
-             <!-- START FOOTER -->
-			    <footer class="page-footer">
-			          <div class="container">
-			             Copyright MonsterFucker Team © 2017   All rights reserved.
-			          </div>
-			          <br />
-			          <div class="footer-copyright">
-			            <div class="container">
-			            © Design and Developed by MonsterFucker
-			            </div>
-			          </div>
-			        </footer>
-			   <!-- END FOOTER -->
-            
-        		</div>
-        		
-        	</div>
+							<!--end-->
+						</div>
+					</div>
+					<div class="col hide-on-small-only m3 l2">
+						<ul class="section table-of-contents side-nav-bar">
+							<li>
+								<a href="#message">消息</a>
+							</li>
+							<li>
+								<a href="#leave">留言</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--right end-->
 
-            <!-- //////////////////////////////////////////////////////////////////////////// -->
+			</div>
+		</main>
 
-            
+		<!--foot start-->
+		<footer class="page-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col l6 s12">
+						<h5 class="white-text">联系我们</h5>
+						<p class="grey-text text-lighten-4">QQ:xxxxxxxxxx</p>
+						<p class="grey-text text-lighten-4">TEL:xxxxxxxxx</p>
+					</div>
+					<div class="col l4 offset-l2 s12">
+						<h5 class="white-text">关于网站</h5>
+						<ul>
+							<li>
+								<a class="grey-text text-lighten-3" href="#!">制作团队</a>
+							</li>
+							<li>
+								<a class="grey-text text-lighten-3" href="#!">合作</a>
+							</li>
+							<li>
+								<a class="grey-text text-lighten-3" href="#!">发展</a>
+							</li>
+							<li>
+								<a class="grey-text text-lighten-3" href="#!">鸣谢</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="footer-copyright">
+				<div class="container">
+				    Copyright MonsterFucker Team © 2017   All rights reserved.
+				    <span class="right"> Design and Developed by  MonsterFucker's</span>
+				</div>
+			</div>
+		</footer>
+		<!--foot end-->
 
-            <!-- //////////////////////////////////////////////////////////////////////////// -->
-            
+	</body>
+	
+	
+	<!--Script start-->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.scrollspy').scrollSpy();
+		});
+    </script>
+	
+	<script>
+	FusionCharts.ready(function () {
+    var revenueChart = new FusionCharts({
+        type: 'doughnut2d',
+        renderAt: 'chart-container',
+        width: '250',
+        height: '250',
+        dataFormat: 'json',
+        dataSource: {
+            "chart": {
+                "caption": "Split of Revenue by Product Categories",
+                "subCaption": "Last year",
+                "numberPrefix": "$",
+                "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
+                "bgColor": "#ffffff",
+                "showBorder": "0",
+                "use3DLighting": "0",
+                "showShadow": "0",
+                "enableSmartLabels": "0",
+                "startingAngle": "310",
+                "showLabels": "0",
+                "showPercentValues": "1",
+                "showLegend": "1",
+                "legendShadow": "0",
+                "legendBorderAlpha": "0",
+                "defaultCenterLabel": "Total revenue: $64.08K",
+                "centerLabel": "Revenue from $label: $value",
+                "centerLabelBold": "1",
+                "showTooltip": "0",
+                "decimals": "0",
+                "captionFontSize": "14",
+                "subcaptionFontSize": "14",
+                "subcaptionFontBold": "0"
+            },
+            "data": [
+                {
+                    "label": "Food",
+                    "value": "28504"
+                }, 
+                {
+                    "label": "Apparels",
+                    "value": "14633"
+                }, 
+                {
+                    "label": "Electronics",
+                    "value": "10507"
+                }, 
+                {
+                    "label": "Household",
+                    "value": "4910"
+                }
+            ]
+        }
+    }).render();
+});
+	
+</script>
+<script>
+	FusionCharts.ready(function () {
+    var revenueChart = new FusionCharts({
+        type: 'doughnut2d',
+        renderAt: 'chart-container2',
+        width: '250',
+        height: '250',
+        dataFormat: 'json',
+        dataSource: {
+            "chart": {
+                "caption": "Split of Revenue by Product Categories",
+                "subCaption": "Last year",
+                "numberPrefix": "$",
+                "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
+                "bgColor": "#ffffff",
+                "showBorder": "0",
+                "use3DLighting": "0",
+                "showShadow": "0",
+                "enableSmartLabels": "0",
+                "startingAngle": "310",
+                "showLabels": "0",
+                "showPercentValues": "1",
+                "showLegend": "1",
+                "legendShadow": "0",
+                "legendBorderAlpha": "0",
+                "defaultCenterLabel": "Total revenue: $64.08K",
+                "centerLabel": "Revenue from $label: $value",
+                "centerLabelBold": "1",
+                "showTooltip": "0",
+                "decimals": "0",
+                "captionFontSize": "14",
+                "subcaptionFontSize": "14",
+                "subcaptionFontBold": "0"
+            },
+            "data": [
+                {
+                    "label": "Food",
+                    "value": "27404"
+                }, 
+                {
+                    "label": "Apparels",
+                    "value": "165633"
+                }, 
+                {
+                    "label": "Electronics",
+                    "value": "145607"
+                }, 
+                {
+                    "label": "Household",
+                    "value": "89910"
+                }
+            ]
+        }
+    }).render();
+});
+	
+</script>
 
-        </div>
-        <!-- END WRAPPER -->
-
-    </div>
-    <!-- END MAIN -->
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-
-</body>
+	
+	
+	
+	<!--Script End-->
 
 </html>
-
-
-
-
- 
-

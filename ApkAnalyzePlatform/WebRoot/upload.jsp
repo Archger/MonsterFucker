@@ -15,44 +15,55 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-	
-<head>
-	<meta charset="utf-8"> 
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    
-    <title>上传文件</title>
 
-    <!-- CORE CSS-->    
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+	<head>
+		<title>Upload</title>
+		<meta charset="utf-8" />
+		<!--Import Google Icon Font-->
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+		<!--Import materialize.css-->
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+		<!--Let browser know website is optimized for mobile-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<script type="text/javascript" src="FusionCharts/js/fusioncharts.js"></script>
+		<script type="text/javascript" src="FusionCharts/js/themes/fusioncharts.theme.fint.js"></script>
 
-<!--<style>
-	html{height:100%;}
-body{min-height:100%;margin:0;padding:0;position:relative;}
+		<style>
+			.side-nav-bar {
+				position: fixed !important;
+			}
+			
+			header,
+			main,
+			footer {
+				padding-left: 300px;
+			}
+			
+			@media only screen and (max-width: 992px) {
+				header,
+				main,
+				footer {
+					padding-left: 0;
+				}
+			}
+			
+			body {
+				display: flex;
+				min-height: 100vh;
+				flex-direction: column;
+			}
+			
+			main {
+				flex: 1 0 auto;
+			}
+		</style>
 
-header{background-color: #ffe4c4;}
-main{padding-bottom:100px;background-color: #bdb76b;}/* main的padding-bottom值要等于或大于footer的height值 */
-footer{position:absolute;bottom:0;width:100%;height:100px;background-color: #ffc0cb;}
-</style>-->
-<style>
-	body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
+	</head>
 
-  main {
-    flex: 1 0 auto;
-  }
-</style>
-</head>
-
-<body>
-<%
+	<body>
+		<!--java start-->
+		<%
 //request.setCharacterEncoding("utf-8");
 Object user_id=request.getSession().getAttribute("user_id");
 Object username=request.getSession().getAttribute("username");
@@ -78,57 +89,31 @@ System.out.println(un_read_num);*/
 //tx2.commit();
 //HibernateSessionFactory.closeSession();
  %>
-
+		<!--java end-->
 
 		<!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="js/materialize.min.js"></script>
-    
-    <!-- Start Page Loading -->
-    <!--<div id="loader-wrapper">
-        <div id="loader"></div>        
-        <div class="loader-section section-left"></div>
-        <div class="loader-section section-right"></div>
-    </div>-->
-    <!-- End Page Loading -->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
 
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-    
-  
-    <!-- START HEADER -->
-    <header id="header" class="page-topbar">
-        <!-- start header nav-->
-        <div class="navbar-fixed">
-            <nav class="cyan">
-                <div class="nav-wrapper">
-                    <h4 class="logo-wrapper">AnalyzeSystem</h4>
-                </div>
-            </nav>
-        </div>
-        <!-- end header nav-->
-    </header>
-    <!-- END HEADER -->
+		<header>
+			<nav class="top-nav">
+				<div class="container">
+					<div class="nav-wrapper">
+						<span class="flow-text left-align">Upload</span>
+					</div>
+				</div>
+			</nav>
 
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-    <!-- START MAIN -->
-    <div id="main">
-        <!-- START WRAPPER -->
-        <div class="wrapper">
-        	<div class="row">
-        		<div class="col s1">
-        			<aside id="left-sidebar-nav">
-                <ul id="slide-out" class="side-nav fixed leftside-navigation">
-                    <li class="user-details cyan darken-2">
-                        <div class="row">
-                            <div class="col col s8 m8 l8">
-                            
-                            <!--选项-->
-                         
-                                <!--用户名-->
-                                <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" data-activates="profile-dropdown"><%=username %></a>
-                                
-                                <!--用户权限-->
-                                <p class="user-roal"><%
+			<ul id="slide-out" class="side-nav fixed">
+				<li class="logo"> <img src="images/materialize-logo.png" /> </li>
+				<li>
+					<div class="userView">
+						<div class="background">
+							<img src="images/user-bg.jpg">
+						</div>
+						<img class="circle" src="images/sample4.jpg">
+						<span class="white-text name"><%=username %></span>
+						<span class="white-text"><%
                                 if((Boolean)is_admin)
                                 {
                                 	%>管理员<%
@@ -137,117 +122,273 @@ System.out.println(un_read_num);*/
                                 {
                                 	%>用户<%
                                 }
-                                 %></p>              
-                                
-                            </div>
-                        </div>
-                    </li>
-                    <li class="bold"><a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
-                    </li>
-                    <li class="bold active teal lighten-4"><a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
-                    </li>
-                    <li class="bold"><a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知</a>
-                    </li>
-                    <li class="bold"><a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
-                    </li>
-                    <li class="bold"><a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
-                    </li>
-                    <li class="bold"><a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
-                    </li>
+                                 %></span>
+					</div>
+				</li>
+				<li class="bold">
+					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
+				</li>
+				<li class="bold active teal lighten-4">
+					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
+				</li>
+				<li class="bold">
+					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知</a>
+				</li>
+				<li class="bold">
+					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
+				</li>
+				<li class="bold">
+					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
+				</li>
+				<li class="bold">
+					<a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
+				</li>
 
-                    <li class="li-hover"><div class="divider"></div></li>
-                    <li class="li-hover"><p class="ultra-small margin more-text">MORE</p></li>             
-                    <li>
-                    <a href="aboutus.jsp"><i class="material-icons">turned_in</i>关于我们</a>
-                    </li>
-                    <li class="li-hover"><div class="divider"></div></li>
-                    
-                    
-                    <!--登录统计-->
-                    <li class="li-hover"><p class="ultra-small margin more-text">登录统计</p></li>
-                    <li class="li-hover">
-                        <div class="row">
-                            <div class="col s12 m12 l12">
-                                <div class="sample-chart-wrapper">                            
-                                    <div class="ct-chart ct-golden-section" id="ct2-chart"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </aside>
-        		
-        		</div>
-        		
-        		<div class="col s11">
-        			<!-- START CONTENT -->
-            <section id="content">
+				<li class="li-hover">
+					<div class="divider"></div>
+				</li>
+				<li class="li-hover">
+					<p class="ultra-small margin more-text">MORE</p>
+				</li>
+				<li>
+					<a href="aboutus.jsp"><i class="material-icons">turned_in</i>关于我们</a>
+				</li>
+				<li class="li-hover">
+					<div class="divider"></div>
+				</li>
 
-                <!--start container-->
-                <div class="container">
-               			<h3>上传apk文件</h3>
-							    	<form method="post" enctype="multipart/form-data" action="/ApkAnalyzePlatform/Upload">
-							    		选择一个文件	<input type="file" name="uploadFile" class="btn waves-effect">
-							    		选择app类型<select name="type"> 
-										<option value="系统工具">系统工具</option> 
-										<option value="桌面插件">桌面插件</option> 
-										<option value="资讯阅读">资讯阅读</option> 
-										<option value="社交聊天">社交聊天</option> 
-										<option value="影音娱乐">影音娱乐</option> 
-										<option value="生活服务">生活服务</option> 
-										<option value="实用工具">实用工具</option> 
-										<option value="文档商务">文档商务</option> 
-										<option value="金融财经">金融财经</option> 
-										<option value="运动健康">运动健康</option> 
-										<option value="学习教育">学习教育</option> 
-										<option value="出行交通">出行交通</option> 
-										<option value="其它">其它</option></select>
-							    		<br/>
-							    		<input type="submit" class="btn waves-effect" value="上传">
-							    	</form>
-                	
-                	
-                </div>
-                <!--end container-->
-            </section>
-            <!-- END CONTENT -->
-            
-             <!-- START FOOTER -->
-			    <footer class="page-footer">
-			          <div class="container">
-			             Copyright MonsterFucker Team © 2017   All rights reserved.
-			          </div>
-			          <br />
-			          <div class="footer-copyright">
-			            <div class="container">
-			            © Design and Developed by MonsterFucker
-			            </div>
-			          </div>
-			        </footer>
-			   <!-- END FOOTER -->
-            
-        		</div>
-        		
-        	</div>
+				<!--登录统计-->
+				<li class="li-hover">
+					<p class="ultra-small margin more-text">登录统计</p>
+				</li>
+				<li class="li-hover">
+					<div class="row">
+						<div class="col s12 m12 l12">
+							<div class="sample-chart-wrapper">
+								<div class="ct-chart ct-golden-section" id="ct2-chart"></div>
+							</div>
+						</div>
+					</div>
+				</li>
 
-            <!-- //////////////////////////////////////////////////////////////////////////// -->
+			</ul>
+		</header>
+		<main>
+			<div class="container">
 
-            
+				<!--right start-->
+				<div class="row">
+					<div class="col s12 m9 l10">
+						<div id="upload" class="section scrollspy">
+							<!--start-->
+								<form method="post" enctype="multipart/form-data" action="/ApkAnalyzePlatform/Upload">
+									<div class="file-field input-field col s12">
+										<div class="btn">
+											<span>选择一个文件</span>
+											<input type="file" name="uploadFile">
+										</div>
+										<div class="file-path-wrapper">
+											<input class="file-path validate" type="text" name="uploadFile">
+										</div>
+									</div>
 
-            <!-- //////////////////////////////////////////////////////////////////////////// -->
-            
+									<div class="input-field col s12">
+										<select>
+											<option value="" disabled selected>选择类型</option>
+											<option value="系统工具">系统工具</option>
+											<option value="桌面插件">桌面插件</option>
+											<option value="资讯阅读">资讯阅读</option>
+											<option value="社交聊天">社交聊天</option>
+											<option value="影音娱乐">影音娱乐</option>
+											<option value="生活服务">生活服务</option>
+											<option value="实用工具">实用工具</option>
+											<option value="文档商务">文档商务</option>
+											<option value="金融财经">金融财经</option>
+											<option value="运动健康">运动健康</option>
+											<option value="学习教育">学习教育</option>
+											<option value="出行交通">出行交通</option>
+											<option value="其它">其它</option>
+										</select>
+										<label>选择app类型</label>
+									</div>
+									<div class="col s12">
+										<input type="submit" value="上传" class="btn">
+									</div>
+								</form>
 
-        </div>
-        <!-- END WRAPPER -->
+							<!--end-->
+						</div>
+					</div>
+					<div class="col hide-on-small-only m3 l2">
+						<ul class="section table-of-contents side-nav-bar">
+							<li>
+								<a href="#upload">上传</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--right end-->
 
-    </div>
-    <!-- END MAIN -->
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
+			</div>
+		</main>
 
+		<!--foot start-->
+		<footer class="page-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col l6 s12">
+						<h5 class="white-text">联系我们</h5>
+						<p class="grey-text text-lighten-4">QQ:xxxxxxxxxx</p>
+						<p class="grey-text text-lighten-4">TEL:xxxxxxxxx</p>
+					</div>
+					<div class="col l4 offset-l2 s12">
+						<h5 class="white-text">关于网站</h5>
+						<ul>
+							<li>
+								<a class="grey-text text-lighten-3" href="#!">制作</a>
+							</li>
+							<li>
+								<a class="grey-text text-lighten-3" href="#!">合作</a>
+							</li>
+							<li>
+								<a class="grey-text text-lighten-3" href="#!">发展</a>
+							</li>
+							<li>
+								<a class="grey-text text-lighten-3" href="#!">鸣谢</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="footer-copyright">
+				<div class="container">
+					Copyright MonsterFucker Team © 2017 All rights reserved.
+					<span class="right"> Design and Developed by  MonsterFucker's</span>
+				</div>
+			</div>
+		</footer>
+		<!--foot end-->
 
-</body>
+	</body>
+
+	<!--Script start-->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.scrollspy').scrollSpy();
+		});
+	</script>
+
+	<script>
+		FusionCharts.ready(function() {
+			var revenueChart = new FusionCharts({
+				type: 'doughnut2d',
+				renderAt: 'chart-container',
+				width: '250',
+				height: '250',
+				dataFormat: 'json',
+				dataSource: {
+					"chart": {
+						"caption": "Split of Revenue by Product Categories",
+						"subCaption": "Last year",
+						"numberPrefix": "$",
+						"paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
+						"bgColor": "#ffffff",
+						"showBorder": "0",
+						"use3DLighting": "0",
+						"showShadow": "0",
+						"enableSmartLabels": "0",
+						"startingAngle": "310",
+						"showLabels": "0",
+						"showPercentValues": "1",
+						"showLegend": "1",
+						"legendShadow": "0",
+						"legendBorderAlpha": "0",
+						"defaultCenterLabel": "Total revenue: $64.08K",
+						"centerLabel": "Revenue from $label: $value",
+						"centerLabelBold": "1",
+						"showTooltip": "0",
+						"decimals": "0",
+						"captionFontSize": "14",
+						"subcaptionFontSize": "14",
+						"subcaptionFontBold": "0"
+					},
+					"data": [{
+							"label": "Food",
+							"value": "28504"
+						},
+						{
+							"label": "Apparels",
+							"value": "14633"
+						},
+						{
+							"label": "Electronics",
+							"value": "10507"
+						},
+						{
+							"label": "Household",
+							"value": "4910"
+						}
+					]
+				}
+			}).render();
+		});
+	</script>
+	<script>
+		FusionCharts.ready(function() {
+			var revenueChart = new FusionCharts({
+				type: 'doughnut2d',
+				renderAt: 'chart-container2',
+				width: '250',
+				height: '250',
+				dataFormat: 'json',
+				dataSource: {
+					"chart": {
+						"caption": "Split of Revenue by Product Categories",
+						"subCaption": "Last year",
+						"numberPrefix": "$",
+						"paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
+						"bgColor": "#ffffff",
+						"showBorder": "0",
+						"use3DLighting": "0",
+						"showShadow": "0",
+						"enableSmartLabels": "0",
+						"startingAngle": "310",
+						"showLabels": "0",
+						"showPercentValues": "1",
+						"showLegend": "1",
+						"legendShadow": "0",
+						"legendBorderAlpha": "0",
+						"defaultCenterLabel": "Total revenue: $64.08K",
+						"centerLabel": "Revenue from $label: $value",
+						"centerLabelBold": "1",
+						"showTooltip": "0",
+						"decimals": "0",
+						"captionFontSize": "14",
+						"subcaptionFontSize": "14",
+						"subcaptionFontBold": "0"
+					},
+					"data": [{
+							"label": "Food",
+							"value": "27404"
+						},
+						{
+							"label": "Apparels",
+							"value": "165633"
+						},
+						{
+							"label": "Electronics",
+							"value": "145607"
+						},
+						{
+							"label": "Household",
+							"value": "89910"
+						}
+					]
+				}
+			}).render();
+		});
+	</script>
+
+	<!--Script End-->
 
 </html>
-
-
-

@@ -135,13 +135,13 @@ System.out.println(un_read_num);*/
 				<li class="bold">
 					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知</a>
 				</li>
-				<li class="bold">
+				<li class="bold active teal lighten-4">
 					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
 				</li>
 				<li class="bold">
 					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
 				</li>
-				<li class="bold active teal lighten-4">
+				<li class="bold">
 					<a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
 				</li>
 
