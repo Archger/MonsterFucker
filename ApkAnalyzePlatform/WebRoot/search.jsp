@@ -104,7 +104,6 @@ System.out.println(un_read_num);*/
 					</div>
 				</div>
 			</nav>
-
 			<ul id="slide-out" class="side-nav fixed">
 				<li class="logo"> <img src="images/materialize-logo.png" /> </li>
 				<li>

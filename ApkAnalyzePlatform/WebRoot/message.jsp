@@ -174,7 +174,13 @@ System.out.println(un_read_num);*/
                 			<p class="flow-text">用户留言</p>
                 			<ul class="collapsible popout" data-collapsible="accordion">
                 	 <%
-				        if(list.size()>0)
+                	 	if(list.size()==0)
+                	 	{
+                	 		%>
+				        	<p>  暂时没有消息</p>
+				        	<%
+                	 	}
+				        else if(list.size()>0)
 				        { 
 				        	  int num2=0;
 				        	 for(int i=0;i<list.size();i++)
@@ -213,6 +219,12 @@ System.out.println(un_read_num);*/
                 			<p class="flow-text">系统通知</p>
                 			<ul class="collapsible popout" data-collapsible="accordion">
                 	 <%
+                	 if(list.size()==0)
+                	 	{
+                	 		%>
+				        	<p>  暂时没有通知</p>
+				        	<%
+                	 	}
 				        if(list.size()>0)
 				        {  
 				        	int num=0;
@@ -236,7 +248,7 @@ System.out.println(un_read_num);*/
 				        	 if(num==0)
 				        	 {
 				        	 	%>
-				        	 	<p>  暂时没有消息</p>
+				        	 	<p>  暂时没有通知</p>
 				        	 	<%
 				        	 }
 				        }

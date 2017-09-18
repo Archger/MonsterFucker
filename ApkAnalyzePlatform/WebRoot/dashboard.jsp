@@ -25,15 +25,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 		<!--Let browser know website is optimized for mobile-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		
+
 		<script type="text/javascript" src="FusionCharts/js/fusioncharts.js"></script>
 		<script type="text/javascript" src="FusionCharts/js/themes/fusioncharts.theme.fint.js"></script>
 
-
 		<style>
 			.side-nav-bar {
-    		position: fixed !important;
-  		}
+				position: fixed !important;
+			}
+			
 			header,
 			main,
 			footer {
@@ -58,7 +58,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				flex: 1 0 auto;
 			}
 		</style>
-		
 
 	</head>
 
@@ -90,8 +89,7 @@ tx2.commit();
 HibernateSessionFactory.closeSession();
  %>
 		<!--java end-->
-		
-		
+
 		<!--Import jQuery before materialize.js-->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js/materialize.min.js"></script>
@@ -99,21 +97,32 @@ HibernateSessionFactory.closeSession();
 		<header>
 			<nav class="top-nav">
 				<div class="container">
-				<div class="nav-wrapper">
-					<span class="flow-text left-align">Dashboard</span>
-				</div>
+					<div class="nav-wrapper">
+						<span class="flow-text left-align">Dashboard</span>
+					</div>
 				</div>
 			</nav>
-			
+
 			<ul id="slide-out" class="side-nav fixed">
 				<li class="logo"> <img src="images/materialize-logo.png" /> </li>
-				<li><div class="userView">
-				      <div class="background">
-				        <img src="images/user-bg.jpg">
-				      </div>
-				     <img class="circle" src="images/sample4.jpg">
-				      <span class="white-text name"><%=username %></span>
-				      <span class="white-text"><%
+				<li>
+					<div class="userView">
+						<div class="background">
+							<img src="images/user-bg.jpg">
+						</div>
+						<img class="circle" src="images/sample4.jpg">
+
+						<span>
+				  	  	<!-- Dropdown Trigger -->
+						  <a class='dropdown-button white-text' data-activates='dropdownuser'><%=username %></a>
+						
+						  <!-- Dropdown Structure -->
+						  <ul id='dropdownuser' class='dropdown-content'>
+						    <li><a href="#!">退出登录</a></li>
+						  </ul>
+				  	  </span>
+
+						<span class="white-text"><%
                                 if((Boolean)is_admin)
                                 {
                                 	%>管理员<%
@@ -122,42 +131,55 @@ HibernateSessionFactory.closeSession();
                                 {
                                 	%>用户<%
                                 }
-                                 %></span>   
-				    </div>
+                                 %></span>
+					</div>
 				</li>
-				<li class="bold active teal lighten-4"><a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
-                    </li>
-                    <li class="bold"><a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
-                    </li>
-                    <li class="bold"><a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知<span class="new badge pink"><%=un_read_num %></span></a>
-                    </li>
-                    <li class="bold"><a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
-                    </li>
-                    <li class="bold"><a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
-                    </li>
-                    <li class="bold"><a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
-                    </li>
+				<li class="bold active teal lighten-4">
+					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
+				</li>
+				<li class="bold">
+					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
+				</li>
+				<li class="bold">
+					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知<span class="new badge pink"><%=un_read_num %></span></a>
+				</li>
+				<li class="bold">
+					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
+				</li>
+				<li class="bold">
+					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
+				</li>
+				<li class="bold">
+					<a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
+				</li>
 
-                    <li class="li-hover"><div class="divider"></div></li>
-                    <li class="li-hover"><p class="ultra-small margin more-text">MORE</p></li>                
-                    <li>
-                    <a href="aboutus.jsp"><i class="material-icons">turned_in</i>关于我们</a>
-                    </li>
-                    <li class="li-hover"><div class="divider"></div></li>
-                    
-                    
-                    <!--登录统计-->
-                    <li class="li-hover"><p class="ultra-small margin more-text">登录统计</p></li>
-                    <li class="li-hover">
-                        <div class="row">
-                            <div class="col s12 m12 l12">
-                                <div class="sample-chart-wrapper">                            
-                                    <div class="ct-chart ct-golden-section" id="ct2-chart"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </li> 
-                 
+				<li class="li-hover">
+					<div class="divider"></div>
+				</li>
+				<li class="li-hover">
+					<p class="ultra-small margin more-text">MORE</p>
+				</li>
+				<li>
+					<a href="aboutus.jsp"><i class="material-icons">turned_in</i>关于我们</a>
+				</li>
+				<li class="li-hover">
+					<div class="divider"></div>
+				</li>
+
+				<!--登录统计-->
+				<li class="li-hover">
+					<p class="ultra-small margin more-text">登录统计</p>
+				</li>
+				<li class="li-hover">
+					<div class="row">
+						<div class="col s12 m12 l12">
+							<div class="sample-chart-wrapper">
+								<div class="ct-chart ct-golden-section" id="ct2-chart"></div>
+							</div>
+						</div>
+					</div>
+				</li>
+
 			</ul>
 		</header>
 		<main>
@@ -169,58 +191,59 @@ HibernateSessionFactory.closeSession();
 						<div id="introduction" class="section scrollspy">
 							<!--start-->
 							<div class="col s12">
-		                            <div class="col s6">
-		                                <div class="card hoverable">
-		                                    <div class="card-move-up">
-		                                        <div id="chart-container">FusionCharts XT will load here!</div>
-		                                        
-		                                    </div>
-		                                    <div class="card-content">
-		                                        
-		                                        FusionCharts XT will load here!
-		                                    </div>
-		
-		                                    <div class="card-reveal">
-		                                       FusionCharts XT will load here!2
-		                                       
-		                                    </div>
-		
-		
-		                                </div>
-		                            </div>
-		
-		                            <div class="col s6">
-		                                <div class="card hoverable">
-		                                    <div class="card-move-up">
-		                                        <div id="chart-container2">FusionCharts XT will load here!</div>
-		                                        
-		                                    </div>
-		                                    <div class="card-content  teal darken-2">
-		                                        
-		                                        FusionCharts XT will load here!
-		                                    </div>
-		                                    <div class="card-reveal">
-		                                        FusionCharts XT will load here!2
-		                                        
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </div>
-		                    <p>内容 </p>
+								<div class="col s6">
+									<div class="card hoverable">
+										<div class="card-move-up">
+											<div id="chart-container">FusionCharts XT will load here!</div>
+
+										</div>
+										<div class="card-content">
+
+											FusionCharts XT will load here!
+										</div>
+
+										<div class="card-reveal">
+											FusionCharts XT will load here!2
+
+										</div>
+
+									</div>
+								</div>
+
+								<div class="col s6">
+									<div class="card hoverable">
+										<div class="card-move-up">
+											<div id="chart-container2">FusionCharts XT will load here!</div>
+
+										</div>
+										<div class="card-content  teal darken-2">
+
+											FusionCharts XT will load here!
+										</div>
+										<div class="card-reveal">
+											FusionCharts XT will load here!2
+
+										</div>
+									</div>
+								</div>
+							</div>
 							<p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
-							<p>内容 </p><p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
-							<p>内容 </p><p>内容 </p>
+							<p>内容 </p>
+							<p>内容 </p>
+							<p>内容 </p>
+							<p>内容 </p>
+							<p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
@@ -260,10 +283,9 @@ HibernateSessionFactory.closeSession();
 							<p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
-							
+
 						</div>
 						<div id="initialization" class="section scrollspy">
-							<p>内容 </p><p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
@@ -287,7 +309,9 @@ HibernateSessionFactory.closeSession();
 							<p>内容 </p>
 							<p>内容 </p>
 							<p>内容 </p>
-							
+							<p>内容 </p>
+							<p>内容 </p>
+
 						</div>
 					</div>
 					<div class="col hide-on-small-only m3 l2">
@@ -359,156 +383,147 @@ HibernateSessionFactory.closeSession();
 			</div>
 			<div class="footer-copyright">
 				<div class="container">
-				    Copyright MonsterFucker Team © 2017   All rights reserved.
-				    <span class="right"> Design and Developed by  MonsterFucker's</span>
+					Copyright MonsterFucker Team © 2017 All rights reserved.
+					<span class="right"> Design and Developed by  MonsterFucker's</span>
 				</div>
 			</div>
 		</footer>
 		<!--foot end-->
 
 	</body>
-	
-	
+
 	<!--Script start-->
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('.scrollspy').scrollSpy();
 		});
-    // Toast Notification
-    $(window).load(function() {
-        setTimeout(function() {
-            Materialize.toast('<span>Hi!  Welcome to Dashboard  <%=username %></span>', 2500);
-        }, 3000);
-        <%if(un_read_num>0){ %>
-        setTimeout(function() {
-            Materialize.toast('<span>You have <%=un_read_num%> new message!</span><a class="btn-flat yellow-text" href="message.jsp">Read<a>', 6000);
-        }, 4500);
-        <%}%>
-        setTimeout(function() {
-            Materialize.toast('<span>You have new order.</span><a class="btn-flat yellow-text" href="#">Read<a>', 3000);
-        }, 18000);
-    });
-    
-    </script>
-	
-	<script>
-	FusionCharts.ready(function () {
-    var revenueChart = new FusionCharts({
-        type: 'doughnut2d',
-        renderAt: 'chart-container',
-        width: '250',
-        height: '250',
-        dataFormat: 'json',
-        dataSource: {
-            "chart": {
-                "caption": "Split of Revenue by Product Categories",
-                "subCaption": "Last year",
-                "numberPrefix": "$",
-                "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
-                "bgColor": "#ffffff",
-                "showBorder": "0",
-                "use3DLighting": "0",
-                "showShadow": "0",
-                "enableSmartLabels": "0",
-                "startingAngle": "310",
-                "showLabels": "0",
-                "showPercentValues": "1",
-                "showLegend": "1",
-                "legendShadow": "0",
-                "legendBorderAlpha": "0",
-                "defaultCenterLabel": "Total revenue: $64.08K",
-                "centerLabel": "Revenue from $label: $value",
-                "centerLabelBold": "1",
-                "showTooltip": "0",
-                "decimals": "0",
-                "captionFontSize": "14",
-                "subcaptionFontSize": "14",
-                "subcaptionFontBold": "0"
-            },
-            "data": [
-                {
-                    "label": "Food",
-                    "value": "28504"
-                }, 
-                {
-                    "label": "Apparels",
-                    "value": "14633"
-                }, 
-                {
-                    "label": "Electronics",
-                    "value": "10507"
-                }, 
-                {
-                    "label": "Household",
-                    "value": "4910"
-                }
-            ]
-        }
-    }).render();
-});
-	
-</script>
-<script>
-	FusionCharts.ready(function () {
-    var revenueChart = new FusionCharts({
-        type: 'doughnut2d',
-        renderAt: 'chart-container2',
-        width: '250',
-        height: '250',
-        dataFormat: 'json',
-        dataSource: {
-            "chart": {
-                "caption": "Split of Revenue by Product Categories",
-                "subCaption": "Last year",
-                "numberPrefix": "$",
-                "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
-                "bgColor": "#ffffff",
-                "showBorder": "0",
-                "use3DLighting": "0",
-                "showShadow": "0",
-                "enableSmartLabels": "0",
-                "startingAngle": "310",
-                "showLabels": "0",
-                "showPercentValues": "1",
-                "showLegend": "1",
-                "legendShadow": "0",
-                "legendBorderAlpha": "0",
-                "defaultCenterLabel": "Total revenue: $64.08K",
-                "centerLabel": "Revenue from $label: $value",
-                "centerLabelBold": "1",
-                "showTooltip": "0",
-                "decimals": "0",
-                "captionFontSize": "14",
-                "subcaptionFontSize": "14",
-                "subcaptionFontBold": "0"
-            },
-            "data": [
-                {
-                    "label": "Food",
-                    "value": "27404"
-                }, 
-                {
-                    "label": "Apparels",
-                    "value": "165633"
-                }, 
-                {
-                    "label": "Electronics",
-                    "value": "145607"
-                }, 
-                {
-                    "label": "Household",
-                    "value": "89910"
-                }
-            ]
-        }
-    }).render();
-});
-	
-</script>
+		// Toast Notification
+		$(window).load(function() {
+			setTimeout(function() {
+				Materialize.toast('<span>Hi!  Welcome to Dashboard  <%=username %></span>', 2500);
+			}, 3000);
+			<%if(un_read_num>0){ %>
+			setTimeout(function() {
+				Materialize.toast('<span>You have <%=un_read_num%> new message!</span><a class="btn-flat yellow-text" href="message.jsp">Read<a>', 6000);
+			}, 4500);
+			<%}%>
+			setTimeout(function() {
+				Materialize.toast('<span>You have new order.</span><a class="btn-flat yellow-text" href="#">Read<a>', 3000);
+			}, 18000);
+		});
+	</script>
 
-	
-	
-	
+	<script>
+		FusionCharts.ready(function() {
+			var revenueChart = new FusionCharts({
+				type: 'doughnut2d',
+				renderAt: 'chart-container',
+				width: '250',
+				height: '250',
+				dataFormat: 'json',
+				dataSource: {
+					"chart": {
+						"caption": "Split of Revenue by Product Categories",
+						"subCaption": "Last year",
+						"numberPrefix": "$",
+						"paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
+						"bgColor": "#ffffff",
+						"showBorder": "0",
+						"use3DLighting": "0",
+						"showShadow": "0",
+						"enableSmartLabels": "0",
+						"startingAngle": "310",
+						"showLabels": "0",
+						"showPercentValues": "1",
+						"showLegend": "1",
+						"legendShadow": "0",
+						"legendBorderAlpha": "0",
+						"defaultCenterLabel": "Total revenue: $64.08K",
+						"centerLabel": "Revenue from $label: $value",
+						"centerLabelBold": "1",
+						"showTooltip": "0",
+						"decimals": "0",
+						"captionFontSize": "14",
+						"subcaptionFontSize": "14",
+						"subcaptionFontBold": "0"
+					},
+					"data": [{
+							"label": "Food",
+							"value": "28504"
+						},
+						{
+							"label": "Apparels",
+							"value": "14633"
+						},
+						{
+							"label": "Electronics",
+							"value": "10507"
+						},
+						{
+							"label": "Household",
+							"value": "4910"
+						}
+					]
+				}
+			}).render();
+		});
+	</script>
+	<script>
+		FusionCharts.ready(function() {
+			var revenueChart = new FusionCharts({
+				type: 'doughnut2d',
+				renderAt: 'chart-container2',
+				width: '250',
+				height: '250',
+				dataFormat: 'json',
+				dataSource: {
+					"chart": {
+						"caption": "Split of Revenue by Product Categories",
+						"subCaption": "Last year",
+						"numberPrefix": "$",
+						"paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
+						"bgColor": "#ffffff",
+						"showBorder": "0",
+						"use3DLighting": "0",
+						"showShadow": "0",
+						"enableSmartLabels": "0",
+						"startingAngle": "310",
+						"showLabels": "0",
+						"showPercentValues": "1",
+						"showLegend": "1",
+						"legendShadow": "0",
+						"legendBorderAlpha": "0",
+						"defaultCenterLabel": "Total revenue: $64.08K",
+						"centerLabel": "Revenue from $label: $value",
+						"centerLabelBold": "1",
+						"showTooltip": "0",
+						"decimals": "0",
+						"captionFontSize": "14",
+						"subcaptionFontSize": "14",
+						"subcaptionFontBold": "0"
+					},
+					"data": [{
+							"label": "Food",
+							"value": "27404"
+						},
+						{
+							"label": "Apparels",
+							"value": "165633"
+						},
+						{
+							"label": "Electronics",
+							"value": "145607"
+						},
+						{
+							"label": "Household",
+							"value": "89910"
+						}
+					]
+				}
+			}).render();
+		});
+	</script>
+
 	<!--Script End-->
 
 </html>

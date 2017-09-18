@@ -48,6 +48,7 @@ public class regest extends HttpServlet {
 
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("UTF-8");
+		
 		System.out.println("ok regestPost success!");
 		String password =request.getParameter("password");
 		String password2 =request.getParameter("password2");
@@ -55,14 +56,27 @@ public class regest extends HttpServlet {
 		String email = request.getParameter("email");
 		System.out.println(username+" ok and "+password+" ok "+password2+" ok ");
 		//----------------------------------------------
-		if(password.isEmpty()||password2.isEmpty())
+
+		Session session=HibernateSessionFactory.getSession();
+		Transaction tx = session.beginTransaction();
+        Query qs = session.createQuery("from User where username=?");  
+        qs.setString(0, username);  
+        List<User> lists=qs.list();
+        System.out.println(lists.size());
+        if(lists.size()>0)
+        {
+        	response.getWriter().print("<script>alert(\"username is existed.\");window.history.back();</script>");
+        }
+		
+		//------------------------------------------
+        else if(password.isEmpty()||password2.isEmpty())
 		{
 			System.out.println("ok password is void!");
 			response.getWriter().print("<script>alert(\"passwords shouldn't be void.\");window.history.back();</script>");
 		}
 		else if(!password.equals(password2))
 		{
-			response.getWriter().print("<script>alert(\"passwords should be the same\");window.history.back();</script>");
+			response.getWriter().print("<script>alert(\"passwords should be the same.\");window.history.back();</script>");
 		}
 		else if(email.isEmpty())
 		{
@@ -70,8 +84,6 @@ public class regest extends HttpServlet {
 		}
 		else
 		{
-			Session session=HibernateSessionFactory.getSession();
-			Transaction tx = session.beginTransaction();
 			User user = new User();
 			user.setUsername(username);
 			user.setPassword(password);
@@ -80,12 +92,10 @@ public class regest extends HttpServlet {
 			user.setDownload(true);
 			user.setFileSize(1024);
 			session.save(user);
-			//request.getRequestDispatcher("/dashboard.jsp").forward(request,response);
-	        tx.commit();
-	        HibernateSessionFactory.closeSession();
 	        response.sendRedirect("/ApkAnalyzePlatform/login.jsp");
 		}  
-		
+        tx.commit();
+        HibernateSessionFactory.closeSession();
 		//----------------------------------------------
 		/*tx2.commit();//提交事务
 		//tx2.rollback();//回滚事务
