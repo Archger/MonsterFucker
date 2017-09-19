@@ -50,6 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			
 			body {
+				background-image: url(images/loginback3.jpg);
 				display: flex;
 				min-height: 100vh;
 				flex-direction: column;
@@ -69,8 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 Object user_id=request.getSession().getAttribute("user_id");
 Object username=request.getSession().getAttribute("username");
 Object is_admin=request.getSession().getAttribute("is_admin");
-//Object is_admin=request.getSession().getAttribute("is_admin");
-//System.out.println(username+" "+is_admin);
+System.out.println(username+" "+is_admin);
 int un_read_num=0;
 Session session2=HibernateSessionFactory.getSession();
 Transaction tx2 = session2.beginTransaction();
@@ -78,17 +78,17 @@ Transaction tx2 = session2.beginTransaction();
 Message message = new Message();  
 Query q = session2.createQuery("from Message where receiver_id = ?");  
 q.setParameter(0, user_id.toString());
-//System.out.println("user_id = "+user_id.toString());
+System.out.println("user_id = "+user_id.toString());
 List<Message> list=q.list();
-//System.out.println("list size = "+list.size());
-/*for(int i=0;i<list.size();i++)
+System.out.println("list size = "+list.size());
+for(int i=0;i<list.size();i++)
 {
 	if(!list.get(i).getIsRead())
 		un_read_num++;
 }
-System.out.println(un_read_num);*/
-//tx2.commit();
-//HibernateSessionFactory.closeSession();
+System.out.println(un_read_num);
+tx2.commit();
+HibernateSessionFactory.closeSession();
  %>
 		<!--java end-->
 
@@ -97,24 +97,41 @@ System.out.println(un_read_num);*/
 		<script type="text/javascript" src="js/materialize.min.js"></script>
 
 		<header>
-			<nav class="top-nav">
+			<nav class="top-nav z-depth-2 hoverable">
 				<div class="container">
 					<div class="nav-wrapper">
-						<span class="flow-text left-align">Analysis</span>
+						<span class="flow-text left-align">Analysis Result</span>
 					</div>
 				</div>
 			</nav>
 
-			<ul id="slide-out" class="side-nav fixed">
+			<ul id="slide-out" class="side-nav fixed z-depth-4 hoverable">
 				<li class="logo"> <img src="images/materialize-logo.png" /> </li>
 				<li>
-					<div class="userView">
+					<div class="userView row col s12">
 						<div class="background">
-							<img src="images/user-bg.jpg">
+							<img src="images/user.jpg" class="responsive-img">
 						</div>
-						<img class="circle" src="images/sample4.jpg">
-						<span class="white-text name"><%=username %></span>
-						<span class="white-text"><%
+
+						<div class="col s12">
+							<div class="col s1"></div>
+							<div class="col s10">
+								<img class="circle responsive-img" src="images/sample4.jpg">
+							</div>
+							<div class="col s1"></div>
+						</div>
+						<div class="col s12">
+							<span>
+				  	  	<!-- Dropdown Trigger -->
+						  <a class='dropdown-button black-text left' data-activates='dropdownuser'><%=username %></a>
+						
+						  <!-- Dropdown Structure -->
+						  <ul id='dropdownuser' class='dropdown-content'>
+						    <li><a href="/ApkAnalyzePlatform/signoutpatten">退出登录</a></li>
+						  </ul>
+				  	  </span></div>
+						<div class="col s12">
+							<span class="black-text"><%
                                 if((Boolean)is_admin)
                                 {
                                 	%>管理员<%
@@ -123,17 +140,19 @@ System.out.println(un_read_num);*/
                                 {
                                 	%>用户<%
                                 }
-                                 %></span>
+                                 %></span></div>
+
 					</div>
+
 				</li>
 				<li class="bold">
 					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
 				</li>
-				<li class="bold active teal lighten-4">
+				<li class="bold active red lighten-4">
 					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
 				</li>
 				<li class="bold">
-					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知</a>
+					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
 				</li>
 				<li class="bold">
 					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
@@ -179,7 +198,7 @@ System.out.println(un_read_num);*/
 
 				<!--right start-->
 				<div class="row">
-					<div class="col s12 m9 l10">
+					<div class="col s12">
 						<div id="analysis" class="section scrollspy">
 							<!--start-->
 								<p class="flow-text center">${message}</p> <br>
@@ -192,8 +211,8 @@ System.out.println(un_read_num);*/
 									   %>
 									   <div class="row">
 										   <div class="col s12">
-										   	<div class="col s10 m4 l2">
-										   		<div class="card hoverable z-depth-1">
+										   	<div class="col s12 m6 l2">
+										   		<div class="card hoverable z-depth-2">
 								            <div class="card-image">
 								              <img src="${iconPath}">
 								            </div>
@@ -206,7 +225,7 @@ System.out.println(un_read_num);*/
 										   	</div>
 										   	<div class="col s12 m6 l10">
 										   		<div class="card">
-										   		<table class="striped highlight centered">
+										   		<table class="striped highlight centered z-depth-2 hoverable">
 									        <thead>
 									          <tr>
 									              <th data-field="id">权限名称</th>
@@ -403,13 +422,6 @@ System.out.println(un_read_num);*/
 							<!--end-->
 						</div>
 					</div>
-					<div class="col hide-on-small-only m3 l2">
-						<ul class="section table-of-contents side-nav-bar">
-							<li>
-								<a href="#analysis">分析结果</a>
-							</li>
-						</ul>
-					</div>
 				</div>
 				<!--right end-->
 
@@ -418,32 +430,6 @@ System.out.println(un_read_num);*/
 
 		<!--foot start-->
 		<footer class="page-footer">
-			<div class="container">
-				<div class="row">
-					<div class="col l6 s12">
-						<h5 class="white-text">联系我们</h5>
-						<p class="grey-text text-lighten-4">QQ:xxxxxxxxxx</p>
-						<p class="grey-text text-lighten-4">TEL:xxxxxxxxx</p>
-					</div>
-					<div class="col l4 offset-l2 s12">
-						<h5 class="white-text">关于网站</h5>
-						<ul>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">制作</a>
-							</li>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">合作</a>
-							</li>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">发展</a>
-							</li>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">鸣谢</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
 			<div class="footer-copyright">
 				<div class="container">
 					Copyright MonsterFucker Team © 2017 All rights reserved.

@@ -49,6 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			
 			body {
+				background-image: url(images/loginback3.jpg);
 				display: flex;
 				min-height: 100vh;
 				flex-direction: column;
@@ -93,9 +94,21 @@ HibernateSessionFactory.closeSession();
 		<!--Import jQuery before materialize.js-->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js/materialize.min.js"></script>
+		
+		 <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red" href="statistic.jsp"><i class="material-icons">insert_chart</i></a></li>
+      <li><a class="btn-floating yellow darken-1" href="message.jsp"><i class="material-icons">question_answer</i></a></li>
+      <li><a class="btn-floating green" href="upload.jsp"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue" href="dashboard.jsp"><i class="material-icons">perm_identity</i></a></li>
+    </ul>
+  </div>
 
 		<header>
-			<nav class="top-nav">
+			<nav class="top-nav z-depth-2 hoverable">
 				<div class="container">
 					<div class="nav-wrapper">
 						<span class="flow-text left-align">Dashboard</span>
@@ -103,26 +116,33 @@ HibernateSessionFactory.closeSession();
 				</div>
 			</nav>
 
-			<ul id="slide-out" class="side-nav fixed">
+			<ul id="slide-out" class="side-nav fixed z-depth-4 hoverable">
 				<li class="logo"> <img src="images/materialize-logo.png" /> </li>
 				<li>
-					<div class="userView">
+					<div class="userView row col s12">
 						<div class="background">
-							<img src="images/user-bg.jpg">
+							<img src="images/user.jpg" class="responsive-img">
 						</div>
-						<img class="circle" src="images/sample4.jpg">
 
-						<span>
+						<div class="col s12">
+							<div class="col s1"></div>
+							<div class="col s10">
+								<img class="circle responsive-img" src="images/sample4.jpg">
+							</div>
+							<div class="col s1"></div>
+						</div>
+						<div class="col s12">
+							<span>
 				  	  	<!-- Dropdown Trigger -->
-						  <a class='dropdown-button white-text' data-activates='dropdownuser'><%=username %></a>
+						  <a class='dropdown-button black-text left' data-activates='dropdownuser'><%=username %></a>
 						
 						  <!-- Dropdown Structure -->
 						  <ul id='dropdownuser' class='dropdown-content'>
-						    <li><a href="#!">退出登录</a></li>
+						    <li><a href="/ApkAnalyzePlatform/signoutpatten">退出登录</a></li>
 						  </ul>
-				  	  </span>
-
-						<span class="white-text"><%
+				  	  </span></div>
+						<div class="col s12">
+							<span class="black-text"><%
                                 if((Boolean)is_admin)
                                 {
                                 	%>管理员<%
@@ -131,17 +151,19 @@ HibernateSessionFactory.closeSession();
                                 {
                                 	%>用户<%
                                 }
-                                 %></span>
+                                 %></span></div>
+
 					</div>
+
 				</li>
-				<li class="bold active teal lighten-4">
+				<li class="bold active red lighten-4">
 					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
 				</li>
 				<li class="bold">
 					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
 				</li>
 				<li class="bold">
-					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知<span class="new badge pink"><%=un_read_num %></span></a>
+					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
 				</li>
 				<li class="bold">
 					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
@@ -355,32 +377,6 @@ HibernateSessionFactory.closeSession();
 
 		<!--foot start-->
 		<footer class="page-footer">
-			<div class="container">
-				<div class="row">
-					<div class="col l6 s12">
-						<h5 class="white-text">联系我们</h5>
-						<p class="grey-text text-lighten-4">QQ:xxxxxxxxxx</p>
-						<p class="grey-text text-lighten-4">TEL:xxxxxxxxx</p>
-					</div>
-					<div class="col l4 offset-l2 s12">
-						<h5 class="white-text">关于网站</h5>
-						<ul>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">制作团队</a>
-							</li>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">合作</a>
-							</li>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">发展</a>
-							</li>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">鸣谢</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
 			<div class="footer-copyright">
 				<div class="container">
 					Copyright MonsterFucker Team © 2017 All rights reserved.
@@ -401,11 +397,11 @@ HibernateSessionFactory.closeSession();
 		$(window).load(function() {
 			setTimeout(function() {
 				Materialize.toast('<span>Hi!  Welcome to Dashboard  <%=username %></span>', 2500);
-			}, 3000);
+			}, 2500);
 			<%if(un_read_num>0){ %>
 			setTimeout(function() {
 				Materialize.toast('<span>You have <%=un_read_num%> new message!</span><a class="btn-flat yellow-text" href="message.jsp">Read<a>', 6000);
-			}, 4500);
+			}, 5500);
 			<%}%>
 			setTimeout(function() {
 				Materialize.toast('<span>You have new order.</span><a class="btn-flat yellow-text" href="#">Read<a>', 3000);

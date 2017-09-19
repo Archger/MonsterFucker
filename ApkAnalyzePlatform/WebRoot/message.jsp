@@ -25,15 +25,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 		<!--Let browser know website is optimized for mobile-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		
+
 		<script type="text/javascript" src="FusionCharts/js/fusioncharts.js"></script>
 		<script type="text/javascript" src="FusionCharts/js/themes/fusioncharts.theme.fint.js"></script>
 
-
 		<style>
 			.side-nav-bar {
-    		position: fixed !important;
-  		}
+				position: fixed !important;
+			}
+			
 			header,
 			main,
 			footer {
@@ -49,6 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			
 			body {
+				background-image: url(images/loginback3.jpg);
 				display: flex;
 				min-height: 100vh;
 				flex-direction: column;
@@ -58,7 +59,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				flex: 1 0 auto;
 			}
 		</style>
-		
 
 	</head>
 
@@ -80,6 +80,11 @@ Query q = session2.createQuery("from Message where receiver_id = ?");
 q.setParameter(0, user_id.toString());
 //System.out.println("user_id = "+user_id.toString());
 List<Message> list=q.list();
+
+Query upm = session2.createQuery("update Message set is_read = ? where receiver_id = ?");
+upm.setParameter(0, true);
+upm.setParameter(1, user_id);
+upm.executeUpdate();
 //System.out.println("list size = "+list.size());
 /*for(int i=0;i<list.size();i++)
 {
@@ -97,24 +102,54 @@ System.out.println(un_read_num);*/
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js/materialize.min.js"></script>
 
+		<div class="fixed-action-btn">
+		    <a class="btn-floating btn-large red">
+		      <i class="large material-icons">mode_edit</i>
+		    </a>
+		    <ul>
+		      <li><a class="btn-floating red" href="statistic.jsp"><i class="material-icons">insert_chart</i></a></li>
+		      <li><a class="btn-floating yellow darken-1" href="message.jsp"><i class="material-icons">question_answer</i></a></li>
+		      <li><a class="btn-floating green" href="upload.jsp"><i class="material-icons">publish</i></a></li>
+		      <li><a class="btn-floating blue" href="dashboard.jsp"><i class="material-icons">perm_identity</i></a></li>
+		    </ul>
+		  </div>
+
 		<header>
-			<nav class="top-nav">
+			<nav class="top-nav z-depth-2 hoverable">
 				<div class="container">
-				<div class="nav-wrapper">
-					<span class="flow-text left-align">Message</span>
-				</div>
+					<div class="nav-wrapper">
+						<span class="flow-text left-align">Message</span>
+					</div>
 				</div>
 			</nav>
-			
-			<ul id="slide-out" class="side-nav fixed">
+
+			<ul id="slide-out" class="side-nav fixed z-depth-4 hoverable">
 				<li class="logo"> <img src="images/materialize-logo.png" /> </li>
-				<li><div class="userView">
-				      <div class="background">
-				        <img src="images/user-bg.jpg">
-				      </div>
-				     <img class="circle" src="images/sample4.jpg">
-				      <span class="white-text name"><%=username %></span>
-				      <span class="white-text"><%
+				<li>
+					<div class="userView row col s12">
+						<div class="background">
+							<img src="images/user.jpg" class="responsive-img">
+						</div>
+
+						<div class="col s12">
+							<div class="col s1"></div>
+							<div class="col s10">
+								<img class="circle responsive-img" src="images/sample4.jpg">
+							</div>
+							<div class="col s1"></div>
+						</div>
+						<div class="col s12">
+							<span>
+				  	  	<!-- Dropdown Trigger -->
+						  <a class='dropdown-button black-text left' data-activates='dropdownuser'><%=username %></a>
+						
+						  <!-- Dropdown Structure -->
+						  <ul id='dropdownuser' class='dropdown-content'>
+						    <li><a href="/ApkAnalyzePlatform/signoutpatten">退出登录</a></li>
+						  </ul>
+				  	  </span></div>
+						<div class="col s12">
+							<span class="black-text"><%
                                 if((Boolean)is_admin)
                                 {
                                 	%>管理员<%
@@ -123,45 +158,59 @@ System.out.println(un_read_num);*/
                                 {
                                 	%>用户<%
                                 }
-                                 %></span>   
-				    </div>
-				</li>
-				<li class="bold"><a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
-                    </li>
-                    <li class="bold"><a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
-                    </li>
-                    <li class="bold active teal lighten-4"><a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知</a>
-                    </li>
-                    <li class="bold"><a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
-                    </li>
-                    <li class="bold"><a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
-                    </li>
-                    <li class="bold"><a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
-                    </li>
+                                 %></span></div>
 
-                    <li class="li-hover"><div class="divider"></div></li>
-                    <li class="li-hover"><p class="ultra-small margin more-text">MORE</p></li>                
-                    <li>
-                    <a href="aboutus.jsp"><i class="material-icons">turned_in</i>关于我们</a>
-                    </li>
-                    <li class="li-hover"><div class="divider"></div></li>
-                    
-                    
-                    <!--登录统计-->
-                    <li class="li-hover"><p class="ultra-small margin more-text">登录统计</p></li>
-                    <li class="li-hover">
-                        <div class="row">
-                            <div class="col s12 m12 l12">
-                                <div class="sample-chart-wrapper">                            
-                                    <div class="ct-chart ct-golden-section" id="ct2-chart"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </li> 
-                 
+					</div>
+
+				</li>
+				<li class="bold">
+					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
+				</li>
+				<li class="bold">
+					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
+				</li>
+				<li class="bold active red lighten-4">
+					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知</a>
+				</li>
+				<li class="bold">
+					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
+				</li>
+				<li class="bold">
+					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
+				</li>
+				<li class="bold">
+					<a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
+				</li>
+
+				<li class="li-hover">
+					<div class="divider"></div>
+				</li>
+				<li class="li-hover">
+					<p class="ultra-small margin more-text">MORE</p>
+				</li>
+				<li>
+					<a href="aboutus.jsp"><i class="material-icons">turned_in</i>关于我们</a>
+				</li>
+				<li class="li-hover">
+					<div class="divider"></div>
+				</li>
+
+				<!--登录统计-->
+				<li class="li-hover">
+					<p class="ultra-small margin more-text">登录统计</p>
+				</li>
+				<li class="li-hover">
+					<div class="row">
+						<div class="col s12 m12 l12">
+							<div class="sample-chart-wrapper">
+								<div class="ct-chart ct-golden-section" id="ct2-chart"></div>
+							</div>
+						</div>
+					</div>
+				</li>
+
 			</ul>
-		</header>
-		<main>
+		</header><main>
 			<div class="container">
 
 				<!--right start-->
@@ -270,7 +319,7 @@ System.out.println(un_read_num);*/
                 	<div class="divider"></div>
                 	<br />
                 		<div class="row">
-                			<div class="card col s12 hoverable">
+                			<div class="card col s12 hoverable z-depth-2">
                 				<br />
                 				<form class="col s12" action="/ApkAnalyzePlatform/messagepatten" method="post">
 							      <div class="row">
@@ -282,7 +331,7 @@ System.out.println(un_read_num);*/
 							      <br />
 							      <div class="row">
 							          <div class="input-field col s11">
-							          	<input placeholder="留言内容" id="content" name="content" type="text" class="validate">
+							          	<textarea placeholder="留言内容" id="content" name="content" class="materialize-textarea"></textarea>
 							          	<label for="content">留言：</label>
 							          </div>
 							      </div>
@@ -316,36 +365,10 @@ System.out.println(un_read_num);*/
 
 		<!--foot start-->
 		<footer class="page-footer">
-			<div class="container">
-				<div class="row">
-					<div class="col l6 s12">
-						<h5 class="white-text">联系我们</h5>
-						<p class="grey-text text-lighten-4">QQ:xxxxxxxxxx</p>
-						<p class="grey-text text-lighten-4">TEL:xxxxxxxxx</p>
-					</div>
-					<div class="col l4 offset-l2 s12">
-						<h5 class="white-text">关于网站</h5>
-						<ul>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">制作团队</a>
-							</li>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">合作</a>
-							</li>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">发展</a>
-							</li>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">鸣谢</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
 			<div class="footer-copyright">
 				<div class="container">
-				    Copyright MonsterFucker Team © 2017   All rights reserved.
-				    <span class="right"> Design and Developed by  MonsterFucker's</span>
+					Copyright MonsterFucker Team © 2017 All rights reserved.
+					<span class="right"> Design and Developed by  MonsterFucker's</span>
 				</div>
 			</div>
 		</footer>
@@ -360,124 +383,6 @@ System.out.println(un_read_num);*/
 			$('.scrollspy').scrollSpy();
 		});
     </script>
-	
-	<script>
-	FusionCharts.ready(function () {
-    var revenueChart = new FusionCharts({
-        type: 'doughnut2d',
-        renderAt: 'chart-container',
-        width: '250',
-        height: '250',
-        dataFormat: 'json',
-        dataSource: {
-            "chart": {
-                "caption": "Split of Revenue by Product Categories",
-                "subCaption": "Last year",
-                "numberPrefix": "$",
-                "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
-                "bgColor": "#ffffff",
-                "showBorder": "0",
-                "use3DLighting": "0",
-                "showShadow": "0",
-                "enableSmartLabels": "0",
-                "startingAngle": "310",
-                "showLabels": "0",
-                "showPercentValues": "1",
-                "showLegend": "1",
-                "legendShadow": "0",
-                "legendBorderAlpha": "0",
-                "defaultCenterLabel": "Total revenue: $64.08K",
-                "centerLabel": "Revenue from $label: $value",
-                "centerLabelBold": "1",
-                "showTooltip": "0",
-                "decimals": "0",
-                "captionFontSize": "14",
-                "subcaptionFontSize": "14",
-                "subcaptionFontBold": "0"
-            },
-            "data": [
-                {
-                    "label": "Food",
-                    "value": "28504"
-                }, 
-                {
-                    "label": "Apparels",
-                    "value": "14633"
-                }, 
-                {
-                    "label": "Electronics",
-                    "value": "10507"
-                }, 
-                {
-                    "label": "Household",
-                    "value": "4910"
-                }
-            ]
-        }
-    }).render();
-});
-	
-</script>
-<script>
-	FusionCharts.ready(function () {
-    var revenueChart = new FusionCharts({
-        type: 'doughnut2d',
-        renderAt: 'chart-container2',
-        width: '250',
-        height: '250',
-        dataFormat: 'json',
-        dataSource: {
-            "chart": {
-                "caption": "Split of Revenue by Product Categories",
-                "subCaption": "Last year",
-                "numberPrefix": "$",
-                "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
-                "bgColor": "#ffffff",
-                "showBorder": "0",
-                "use3DLighting": "0",
-                "showShadow": "0",
-                "enableSmartLabels": "0",
-                "startingAngle": "310",
-                "showLabels": "0",
-                "showPercentValues": "1",
-                "showLegend": "1",
-                "legendShadow": "0",
-                "legendBorderAlpha": "0",
-                "defaultCenterLabel": "Total revenue: $64.08K",
-                "centerLabel": "Revenue from $label: $value",
-                "centerLabelBold": "1",
-                "showTooltip": "0",
-                "decimals": "0",
-                "captionFontSize": "14",
-                "subcaptionFontSize": "14",
-                "subcaptionFontBold": "0"
-            },
-            "data": [
-                {
-                    "label": "Food",
-                    "value": "27404"
-                }, 
-                {
-                    "label": "Apparels",
-                    "value": "165633"
-                }, 
-                {
-                    "label": "Electronics",
-                    "value": "145607"
-                }, 
-                {
-                    "label": "Household",
-                    "value": "89910"
-                }
-            ]
-        }
-    }).render();
-});
-	
-</script>
-
-	
-	
 	
 	<!--Script End-->
 

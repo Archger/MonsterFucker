@@ -95,10 +95,13 @@ public class SecurityFilter implements Filter {
         if(currentUrl.length()>=5&&currentUrl.substring(0, 4).equals("/js/")){
         	isPermit = true;
         }
-        else if(currentUrl.length()>=6&&currentUrl.substring(0, 6).equals("/font/")){
+        else if(currentUrl.length()>=7&&currentUrl.substring(0, 7).equals("/fonts/")){
         	isPermit = true;
         }
         else if(currentUrl.length()>=5&&currentUrl.substring(0, 5).equals("/css/")){
+        	isPermit = true;
+        }
+        else if(currentUrl.length()>=8&&currentUrl.substring(0, 8).equals("/images/")){
         	isPermit = true;
         }
         else if (permitUrls != null && permitUrls.length > 0) { 

@@ -52,6 +52,7 @@ public class messageServlet extends HttpServlet {
 		String to =request.getParameter("to");
 		String content =request.getParameter("content");
 		System.out.println(to+" ok and "+content+" ok");
+		Object is_admin=request.getSession().getAttribute("is_admin");
 		//----------------------------------------------
 		if(to.isEmpty())
 		{
@@ -63,25 +64,36 @@ public class messageServlet extends HttpServlet {
 		}
 		else if(to.equals("all"))
 		{
-			Session session=HibernateSessionFactory.getSession();
-			Transaction tx = session.beginTransaction();
-		
-			Message message = new Message();
-			message.setContent(content);
-			message.setSenderId((Integer)user_id);
-			message.setIsRead(false);
-			
-			Query q = session.createQuery("from User");  
-	        List<User> list=q.list();
-			for(int i=0;i<list.size();i++)
+			if((Boolean)is_admin)
 			{
-				message.setReceiverId(list.get(i).getUserId());
-				session.save(message);
-			}
+				Session session=HibernateSessionFactory.getSession();
+				Transaction tx = session.beginTransaction();
 			
-	        tx.commit();
-	        HibernateSessionFactory.closeSession();
-	        response.sendRedirect("/ApkAnalyzePlatform/message.jsp");
+				Message message = new Message();
+				message.setContent(content);
+				message.setSenderId((Integer)user_id);
+				message.setIsRead(false);
+				
+				Query q = session.createQuery("from User");  
+		        List<User> list=q.list();
+				for(int i=0;i<list.size();i++)
+				{
+					Message temp = message;
+					temp.setReceiverId(list.get(i).getUserId());
+					session.save(temp);
+					session.flush();
+					session.clear();
+					tx.commit();
+					tx=session.beginTransaction();
+				}
+				
+		        HibernateSessionFactory.closeSession();
+		        response.sendRedirect("/ApkAnalyzePlatform/message.jsp");
+			}
+			else
+			{
+				response.getWriter().print("<script>alert(\"You are not admin.\");window.history.back();</script>");
+			}
 		}
 		else
 		{

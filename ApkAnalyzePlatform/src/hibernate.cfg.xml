@@ -24,6 +24,7 @@
 		<property name="connection.driver_class">
 			com.mysql.jdbc.Driver
 		</property>
+		<property name="hibernate.cache.use_second_level_cache">false</property>
 		<mapping resource="com/analysis/hibernate/Apk.hbm.xml" />
 		<mapping resource="com/analysis/hibernate/Evaluation.hbm.xml" />
 		<mapping resource="com/analysis/hibernate/Message.hbm.xml" />

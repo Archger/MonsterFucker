@@ -55,6 +55,9 @@ public class Upload extends HttpServlet {
  
     		
     		HttpServletResponse response) throws ServletException, IOException {
+
+		response.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("UTF-8");
 		// 检测是否为多媒体上传
 		if (!ServletFileUpload.isMultipartContent(request)) {
 		    // 如果不是则停止q	
