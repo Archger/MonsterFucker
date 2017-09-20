@@ -1,5 +1,7 @@
 package com.analysis.hibernate;
 
+import java.util.Date;
+
 /**
  * Apk entity. @author MyEclipse Persistence Tools
  */
@@ -13,6 +15,8 @@ public class Apk implements java.io.Serializable {
 	private String iconDirectory;
 	private String apkName;
 	private String apkType;
+	private Date uploadDate;
+	private Integer fileSize;
 	private Integer developerId;
 	private String versionName;
 	private Boolean internet;
@@ -98,20 +102,22 @@ public class Apk implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Apk(String fileDirectoryName, String iconDirectory, String apkName, String apkType, Integer developerId,
-			String versionName, Boolean internet, Boolean accessCoarseLocation, Boolean accessFineLocation,
-			Boolean camera, Boolean recordAudio, Boolean readContacts, Boolean writeContacts, Boolean bluetooth,
-			Boolean nfc, Boolean callaPhone, Boolean readSms, Boolean writeSms, Boolean modifyAudioSettings,
-			Boolean bodySensors, Boolean readExternalStorage, Boolean writeExternalStorage, Boolean readPhoneState,
-			Boolean modifyPhoneState, Boolean changeWifiState, Boolean accessWifiState, Boolean flashlight,
-			Boolean wakeLock, Boolean viberate, Boolean systemAlertWindow, Boolean receiveBootCompleted,
-			Boolean accessNetworkState, Boolean changeNetworkState, Boolean readCallLog, Boolean writeCallLog,
-			Boolean battertyStats, Boolean writeSettings, Boolean expandStatusBar, Boolean setWallpaper,
-			Boolean setPreferredApplications, Boolean writeSecureSettings) {
+	public Apk(String fileDirectoryName, String iconDirectory, String apkName, String apkType, Date uploadDate,
+			Integer fileSize, Integer developerId, String versionName, Boolean internet, Boolean accessCoarseLocation,
+			Boolean accessFineLocation, Boolean camera, Boolean recordAudio, Boolean readContacts,
+			Boolean writeContacts, Boolean bluetooth, Boolean nfc, Boolean callaPhone, Boolean readSms,
+			Boolean writeSms, Boolean modifyAudioSettings, Boolean bodySensors, Boolean readExternalStorage,
+			Boolean writeExternalStorage, Boolean readPhoneState, Boolean modifyPhoneState, Boolean changeWifiState,
+			Boolean accessWifiState, Boolean flashlight, Boolean wakeLock, Boolean viberate, Boolean systemAlertWindow,
+			Boolean receiveBootCompleted, Boolean accessNetworkState, Boolean changeNetworkState, Boolean readCallLog,
+			Boolean writeCallLog, Boolean battertyStats, Boolean writeSettings, Boolean expandStatusBar,
+			Boolean setWallpaper, Boolean setPreferredApplications, Boolean writeSecureSettings) {
 		this.fileDirectoryName = fileDirectoryName;
 		this.iconDirectory = iconDirectory;
 		this.apkName = apkName;
 		this.apkType = apkType;
+		this.uploadDate = uploadDate;
+		this.fileSize = fileSize;
 		this.developerId = developerId;
 		this.versionName = versionName;
 		this.internet = internet;
@@ -191,6 +197,22 @@ public class Apk implements java.io.Serializable {
 
 	public void setApkType(String apkType) {
 		this.apkType = apkType;
+	}
+
+	public Date getUploadDate() {
+		return this.uploadDate;
+	}
+
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
+	}
+
+	public Integer getFileSize() {
+		return this.fileSize;
+	}
+
+	public void setFileSize(Integer fileSize) {
+		this.fileSize = fileSize;
 	}
 
 	public Integer getDeveloperId() {

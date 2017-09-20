@@ -81,6 +81,13 @@ public class SecurityFilter implements Filter {
         		gotoUrl="/dashboard.jsp";
         	}
         }
+        else if(currentUrl.length()>=11&&currentUrl.substring(0, 11).equals("/upload.jsp")){
+        	Object upload =  res.getSession().getAttribute("upload");
+        	if(!(Boolean)upload){
+        		filter=true;
+        		gotoUrl="/dashboard.jsp";
+        	}
+        }
 
         return filter;  
 

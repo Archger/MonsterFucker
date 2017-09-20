@@ -9,6 +9,7 @@
 <%@ page import="com.analysis.hibernate.User"%>
 <%@ page import="com.analysis.hibernate.Apk"%>
 <%@ page import="com.analysis.cfg.HibernateSessionFactory"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -152,7 +153,10 @@ HibernateSessionFactory.closeSession();
 					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
 				</li>
 				<li class="bold">
-					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
+					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知
+						<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span>
+						<%}%>
+					</a>
 				</li>
 				<li class="bold">
 					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
@@ -201,224 +205,313 @@ HibernateSessionFactory.closeSession();
 					<div class="col s12">
 						<div id="analysis" class="section scrollspy">
 							<!--start-->
-								<p class="flow-text center">${message}</p> <br>
-									   <%
+							<p class="flow-text center">${message}</p> <br>
+							<%
 									   Object obj=request.getAttribute("apk");
 										   Apk apk=(Apk)obj; 
 										   if(apk!=null)
 										   {
 										   
 									   %>
-									   <div class="row">
-										   <div class="col s12">
-										   	<div class="col s12 m6 l2">
-										   		<div class="card hoverable z-depth-2">
-								            <div class="card-image">
-								              <img src="${iconPath}">
-								            </div>
-								            <div class="card-content">
-								            	<h5 class="left pink-text"><%=apk.getApkName() %></h5><br /><br /><br />
-								              <p class="left">应用类型：<br /><%=apk.getApkType() %></p><br /><br /><br />
-											  <p class="left">版本号：<br /><%=apk.getVersionName() %></p><br /><br />
-								            </div>
-								          </div>
-										   	</div>
-										   	<div class="col s12 m6 l10">
-										   		<div class="card">
-										   		<table class="striped highlight centered z-depth-2 hoverable">
-									        <thead>
-									          <tr>
-									              <th data-field="id">权限名称</th>
-									              <th data-field="name">详情</th>
-									          </tr>
-									        </thead>
-									
-									        <tbody>
-									          
-									          <tr>
-									            <td>获取大致位置信息</td>
-									            <td><%if(apk.getAccessCoarseLocation()){out.println("√");}%></td>
-									          </tr>
-									         
-									          <tr>
-									            <td>获取精确位置信息</td>
-									            <td><%if(apk.getAccessFineLocation()){out.println("√");} %></td>
-									          </tr>
-									                 
-									          <tr>
-									            <td>网络访问</td>
-									            <td><%if(apk.getInternet()){out.println("√");} %></td>
-									          </tr>
-									          
-									          <tr>
-									            <td>拍摄照片或视频</td>
-									            <td><%if(apk.getCamera()){out.println("√");} %></td>
-									          </tr>  
-									             
-									          <tr>
-									            <td>录音</td>
-									            <td><%if(apk.getRecordAudio()){out.println("√");} %></td>
-									          </tr>
-									          
-									          <tr>
-									            <td>访问联系人</td>
-									            <td><%if(apk.getReadContacts()){out.println("√");} %></td>
-									          </tr>  
-									             
-									          <tr>
-									            <td>编辑联系人</td>
-									            <td><%if(apk.getWriteContacts()){out.println("√");} %></td>
-									          </tr>
-									          
-									          <tr>
-									            <td>蓝牙</td>
-									            <td><%if(apk.getBluetooth()){out.println("√");} %></td>
-									          </tr>
-									          
-									          <tr>
-									            <td>NFC</td>
-									            <td><%if(apk.getNfc()){out.println("√");} %></td>
-									          </tr>
-									          
-									          <tr>
-									            <td>拨打电话</td>
-									            <td><%if(apk.getCallaPhone()){out.println("√");} %></td>
-									          </tr>
-									            
-									          <tr>
-									            <td>访问短信</td>
-									            <td><%if(apk.getReadSms()){out.println("√");} %></td>
-									          </tr>
-									          
-									          <tr>
-									            <td>编辑短信</td>
-									            <td><%if(apk.getWriteContacts()){out.println("√");} %></td>
-									          </tr>
-									          <tr>
-									            <td>更改音频设置</td>
-									            <td><%if(apk.getModifyAudioSettings()){out.println("√");} %></td>
-									          </tr>
-									                    
-									          <tr>
-									            <td>人体传感器</td>
-									            <td><%if(apk.getBodySensors()){out.println("√");} %></td>
-									          </tr>
-									                    
-									          <tr>
-									            <td>读取外部存储设备中的内容</td>
-									            <td><%if(apk.getReadExternalStorage()){out.println("√");} %></td>
-									          </tr>
-									                    
-									          <tr>
-									            <td>修改或删除外部存储设备中的内容</td>
-									            <td><%if(apk.getWriteExternalStorage()){out.println("√");} %></td>
-									          </tr>
-									                    
-									          <tr>
-									            <td>读取手机状态</td>
-									            <td><%if(apk.getReadPhoneState()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>修改手机状态</td>
-									            <td><%if(apk.getModifyPhoneState()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>连接WLAN网络和断开连接</td>
-									            <td><%if(apk.getChangeWifiState()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>查看WLAN连接</td>
-									            <td><%if(apk.getAccessWifiState()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>控制闪光灯</td>
-									            <td><%if(apk.getFlashlight()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>防止手机休眠</td>
-									            <td><%if(apk.getWakeLock()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>控制振动</td>
-									            <td><%if(apk.getViberate()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>在其他应用之上显示内容</td>
-									            <td><%if(apk.getSystemAlertWindow()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>开机启动</td>
-									            <td><%if(apk.getReceiveBootCompleted()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>查看网络状态</td>
-									            <td><%if(apk.getAccessNetworkState()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>更改网络状态</td>
-									            <td><%if(apk.getChangeNetworkState()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>读取通话记录</td>
-									            <td><%if(apk.getReadCallLog()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>写入通话记录</td>
-									            <td><%if(apk.getWriteCallLog()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>读取电池使用统计信息</td>
-									            <td><%if(apk.getBattertyStats()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>修改系统设置</td>
-									            <td><%if(apk.getWriteSettings()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>展开/收拢状态栏</td>
-									            <td><%if(apk.getExpandStatusBar()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>设置壁纸</td>
-									            <td><%if(apk.getSetWallpaper()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>设置首选应用</td>
-									            <td><%if(apk.getSetPreferredApplications()){out.println("√");} %></td>
-									          </tr>
-									                              
-									          <tr>
-									            <td>修改安全系统设置</td>
-									            <td><%if(apk.getWriteSecureSettings()){out.println("√");} %></td>
-									          </tr>
-									          
-									        </tbody>
-									      </table>
-										   		</div>
-										   	</div>
-											    
-											  </div>
-									  </div>
-									   <br>
-									
-									 <%} %>
+							<div class="row">
+								<div class="col s12">
+									<div class="col s12 m6 l2">
+										<div class="card hoverable z-depth-2">
+											<div class="card-image">
+												<img src="${iconPath}">
+											</div>
+											<div class="card-content">
+												<h5 class="left pink-text"><%=apk.getApkName() %></h5><br /><br /><br />
+												<p class="left">应用类型：<br />
+													<%=apk.getApkType() %>
+												</p><br /><br /><br />
+												<p class="left">版本号：<br />
+													<%=apk.getVersionName() %>
+												</p><br /><br />
+												<tr>
+													<td>文件大小</td>
+													<td>
+														<%=apk.getFileSize()+"MB" %>
+													</td>
+												</tr>
+
+												<%SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");%>
+												<tr>
+													<td>上传日期</td>
+													<td>
+														<%=ft.format(apk.getUploadDate()) %>
+													</td>
+												</tr>
+
+											</div>
+										</div>
+									</div>
+									<div class="col s12 m6 l10">
+										<div class="card">
+											<table class="striped highlight centered z-depth-2 hoverable">
+												<thead>
+													<tr>
+														<th data-field="id">权限名称</th>
+														<th data-field="name">详情</th>
+													</tr>
+												</thead>
+
+												<tbody>
+
+													<tr>
+														<td>获取大致位置信息</td>
+														<td>
+															<%if(apk.getAccessCoarseLocation()){out.println("√");}%>
+														</td>
+													</tr>
+
+													<tr>
+														<td>获取精确位置信息</td>
+														<td>
+															<%if(apk.getAccessFineLocation()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>网络访问</td>
+														<td>
+															<%if(apk.getInternet()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>拍摄照片或视频</td>
+														<td>
+															<%if(apk.getCamera()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>录音</td>
+														<td>
+															<%if(apk.getRecordAudio()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>访问联系人</td>
+														<td>
+															<%if(apk.getReadContacts()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>编辑联系人</td>
+														<td>
+															<%if(apk.getWriteContacts()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>蓝牙</td>
+														<td>
+															<%if(apk.getBluetooth()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>NFC</td>
+														<td>
+															<%if(apk.getNfc()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>拨打电话</td>
+														<td>
+															<%if(apk.getCallaPhone()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>访问短信</td>
+														<td>
+															<%if(apk.getReadSms()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>编辑短信</td>
+														<td>
+															<%if(apk.getWriteContacts()){out.println("√");} %>
+														</td>
+													</tr>
+													<tr>
+														<td>更改音频设置</td>
+														<td>
+															<%if(apk.getModifyAudioSettings()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>人体传感器</td>
+														<td>
+															<%if(apk.getBodySensors()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>读取外部存储设备中的内容</td>
+														<td>
+															<%if(apk.getReadExternalStorage()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>修改或删除外部存储设备中的内容</td>
+														<td>
+															<%if(apk.getWriteExternalStorage()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>读取手机状态</td>
+														<td>
+															<%if(apk.getReadPhoneState()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>修改手机状态</td>
+														<td>
+															<%if(apk.getModifyPhoneState()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>连接WLAN网络和断开连接</td>
+														<td>
+															<%if(apk.getChangeWifiState()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>查看WLAN连接</td>
+														<td>
+															<%if(apk.getAccessWifiState()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>控制闪光灯</td>
+														<td>
+															<%if(apk.getFlashlight()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>防止手机休眠</td>
+														<td>
+															<%if(apk.getWakeLock()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>控制振动</td>
+														<td>
+															<%if(apk.getViberate()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>在其他应用之上显示内容</td>
+														<td>
+															<%if(apk.getSystemAlertWindow()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>开机启动</td>
+														<td>
+															<%if(apk.getReceiveBootCompleted()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>查看网络状态</td>
+														<td>
+															<%if(apk.getAccessNetworkState()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>更改网络状态</td>
+														<td>
+															<%if(apk.getChangeNetworkState()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>读取通话记录</td>
+														<td>
+															<%if(apk.getReadCallLog()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>写入通话记录</td>
+														<td>
+															<%if(apk.getWriteCallLog()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>读取电池使用统计信息</td>
+														<td>
+															<%if(apk.getBattertyStats()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>修改系统设置</td>
+														<td>
+															<%if(apk.getWriteSettings()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>展开/收拢状态栏</td>
+														<td>
+															<%if(apk.getExpandStatusBar()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>设置壁纸</td>
+														<td>
+															<%if(apk.getSetWallpaper()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>设置首选应用</td>
+														<td>
+															<%if(apk.getSetPreferredApplications()){out.println("√");} %>
+														</td>
+													</tr>
+
+													<tr>
+														<td>修改安全系统设置</td>
+														<td>
+															<%if(apk.getWriteSecureSettings()){out.println("√");} %>
+														</td>
+													</tr>
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<br>
+
+							<%} %>
 							<!--end-->
 						</div>
 					</div>
@@ -438,12 +531,12 @@ HibernateSessionFactory.closeSession();
 			</div>
 		</footer>
 		<!--foot end-->
-		
+
 		<div class="fixed-action-btn">
-    <a class="btn-floating btn-large red" href="upload.jsp">
-      <i class="large material-icons">replay</i>
-    </a>
-  </div>
+			<a class="btn-floating btn-large red" href="upload.jsp">
+				<i class="large material-icons">replay</i>
+			</a>
+		</div>
 
 	</body>
 

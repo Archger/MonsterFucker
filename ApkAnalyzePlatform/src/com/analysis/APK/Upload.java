@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -55,9 +56,6 @@ public class Upload extends HttpServlet {
  
     		
     		HttpServletResponse response) throws ServletException, IOException {
-
-		response.setCharacterEncoding("utf-8");
-		request.setCharacterEncoding("UTF-8");
 		// 检测是否为多媒体上传
 		if (!ServletFileUpload.isMultipartContent(request)) {
 		    // 如果不是则停止q	
@@ -103,12 +101,20 @@ public class Upload extends HttpServlet {
             if (formItems != null && formItems.size() > 0) {
                 // 迭代表单数据
             	ApkInfo tempApkInfo=new ApkInfo();
+            	//初始化文件大小
+            	Integer fileSize=new Integer(0);
+            	//获取上传日期
+            	Date date=new Date();
+
                 for (FileItem item : formItems) {
                 	
                 	// 处理不在表单中的字段
             
                 	if (!item.isFormField()&&item.getName().endsWith(".apk")) {
                         String fileName = new File(item.getName()).getName();
+                        fileSize=(int)item.getSize(); 
+                        fileSize=fileSize/1048576; //获取大小并转换为MB为单位
+                        
                         String filePath =uploadPath + File.separator + fileName;
                         File storeFile = new File(filePath);
                         // 保存文件到硬盘
@@ -120,10 +126,11 @@ public class Upload extends HttpServlet {
                         	tempApkInfo=extract(fileName);
             
                     }
-                	//处理普通文本（apk类型）
+                	//处理普通文本（apk的类型）
                 	else if(item.isFormField())
                 	{
-                		Apk apk=storeInfo(tempApkInfo,item.getString("utf-8"));
+                		System.out.println("*********************************"+item.getString("utf-8"));
+                		Apk apk=storeInfo(tempApkInfo,item.getString("utf-8"),date,fileSize);
                 		request.setAttribute("apk",apk );
                 		request.setAttribute("iconPath", apk.getIconDirectory());
                 	}
@@ -161,7 +168,7 @@ public class Upload extends HttpServlet {
     	}
     	
     	//将apk信息保存到数据库中
-    	public Apk storeInfo(ApkInfo apkInfo,String type) throws IOException
+    	public Apk storeInfo(ApkInfo apkInfo,String type,Date date,int fileSize) throws IOException
     	{
     		//E:/Files/Documents/study/j2ee/project/.metadata/.me_tcat7/webapps/ApkAnalyzePlatform/
     			String apkPath = getServletContext().getRealPath("./") + File.separator + UPLOAD_DIRECTORY+"/"+apkInfo.getFileName();
@@ -172,6 +179,8 @@ public class Upload extends HttpServlet {
     			apk.setFileDirectoryName(UPLOAD_DIRECTORY+'/'+apkInfo.getFileName());
     			apk.setApkName(apkInfo.getApplicationLable());
     			apk.setApkType(type);
+    			apk.setUploadDate(date);
+    			apk.setFileSize(fileSize);
     			//传用户id apk.setDeveloperId(developerId);
     		    apk.setVersionName(apkInfo.getVersionName());
     		    apk.setIconDirectory(storeIcon(apkInfo.getApplicationIcon(),apkPath));
@@ -250,7 +259,6 @@ public class Upload extends HttpServlet {
     	        {
     	        	outPath=targetPath + file.getName() + entry.getName();
     	        	iconPath="upload/icons/"+file.getName() + entry.getName();
-    	        	//System.out.println(+"zzzzzzzzzzzzzzzzzzzzzzzzz");
     		        outFile = new File(outPath);    
     		        // 如果条目为目录，则跳向下一个     
     		        if(entry.isDirectory()){  

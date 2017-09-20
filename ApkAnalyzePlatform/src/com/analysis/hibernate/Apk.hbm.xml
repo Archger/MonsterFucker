@@ -22,6 +22,12 @@
         <property name="apkType" type="java.lang.String">
             <column name="apk_type" length="45" />
         </property>
+        <property name="uploadDate" type="java.util.Date">
+            <column name="upload_date" length="10" />
+        </property>
+        <property name="fileSize" type="java.lang.Integer">
+            <column name="file_size" />
+        </property>
         <property name="developerId" type="java.lang.Integer">
             <column name="developer_id" />
         </property>

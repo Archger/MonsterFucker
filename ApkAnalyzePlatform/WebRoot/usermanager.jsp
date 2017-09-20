@@ -7,7 +7,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.analysis.hibernate.Message"%>
 <%@ page import="com.analysis.hibernate.User"%>
-<%@ page import="com.analysis.hibernate.Apk"%>
 <%@ page import="com.analysis.cfg.HibernateSessionFactory"%>
 <%
 String path = request.getContextPath();
@@ -18,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 
 	<head>
-		<title>Analysis</title>
+		<title>UserManager</title>
 		<meta charset="utf-8" />
 		<!--Import Google Icon Font-->
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -50,11 +49,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			
 			body {
+				background-image: url(images/back_demo.jpg);
 				display: flex;
 				min-height: 100vh;
 				flex-direction: column;
 			}
-			
+		
 			main {
 				flex: 1 0 auto;
 			}
@@ -69,52 +69,80 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 Object user_id=request.getSession().getAttribute("user_id");
 Object username=request.getSession().getAttribute("username");
 Object is_admin=request.getSession().getAttribute("is_admin");
-//Object is_admin=request.getSession().getAttribute("is_admin");
-//System.out.println(username+" "+is_admin);
+System.out.println(username+" "+is_admin);
 int un_read_num=0;
-Session session2=HibernateSessionFactory.getSession();
-Transaction tx2 = session2.beginTransaction();
+Session session3=HibernateSessionFactory.getSession();
+Transaction tx3 = session3.beginTransaction();
 //----------------------------------------------
 Message message = new Message();  
-Query q = session2.createQuery("from Message where receiver_id = ?");  
-q.setParameter(0, user_id.toString());
-//System.out.println("user_id = "+user_id.toString());
-List<Message> list=q.list();
-//System.out.println("list size = "+list.size());
-/*for(int i=0;i<list.size();i++)
+Query q3 = session3.createQuery("from Message where receiver_id = ?");  
+q3.setParameter(0, user_id.toString());
+System.out.println("user_id = "+user_id.toString());
+List<Message> list3=q3.list();
+System.out.println("list size = "+list3.size());
+for(int i=0;i<list3.size();i++)
 {
-	if(!list.get(i).getIsRead())
+	if(!list3.get(i).getIsRead())
 		un_read_num++;
 }
-System.out.println(un_read_num);*/
-//tx2.commit();
-//HibernateSessionFactory.closeSession();
+System.out.println(un_read_num);
+tx3.commit();
+HibernateSessionFactory.closeSession();
  %>
 		<!--java end-->
 
 		<!--Import jQuery before materialize.js-->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js/materialize.min.js"></script>
+		
+		 <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red" href="statistic.jsp"><i class="material-icons">insert_chart</i></a></li>
+      <li><a class="btn-floating yellow darken-1" href="message.jsp"><i class="material-icons">question_answer</i></a></li>
+      <li><a class="btn-floating green" href="upload.jsp"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue" href="dashboard.jsp"><i class="material-icons">perm_identity</i></a></li>
+    </ul>
+  </div>
 
 		<header>
-			<nav class="top-nav">
+			<nav class="top-nav z-depth-2 hoverable">
 				<div class="container">
 					<div class="nav-wrapper">
-						<span class="flow-text left-align">Analysis</span>
+						<span class="flow-text left-align">UserManager</span>
 					</div>
 				</div>
 			</nav>
 
-			<ul id="slide-out" class="side-nav fixed">
+			<ul id="slide-out" class="side-nav fixed z-depth-4 hoverable">
 				<li class="logo"> <img src="images/materialize-logo.png" /> </li>
 				<li>
-					<div class="userView">
+					<div class="userView row col s12">
 						<div class="background">
-							<img src="images/user-bg.jpg">
+							<img src="images/user.jpg" class="responsive-img">
 						</div>
-						<img class="circle" src="images/sample4.jpg">
-						<span class="white-text name"><%=username %></span>
-						<span class="white-text"><%
+
+						<div class="col s12">
+							<div class="col s1"></div>
+							<div class="col s10">
+								<img class="circle responsive-img" src="images/sample4.jpg">
+							</div>
+							<div class="col s1"></div>
+						</div>
+						<div class="col s12">
+							<span>
+				  	  	<!-- Dropdown Trigger -->
+						  <a class='dropdown-button black-text left' data-activates='dropdownuser'><%=username %></a>
+						
+						  <!-- Dropdown Structure -->
+						  <ul id='dropdownuser' class='dropdown-content'>
+						    <li><a href="/ApkAnalyzePlatform/signoutpatten">退出登录</a></li>
+						  </ul>
+				  	  </span></div>
+						<div class="col s12">
+							<span class="black-text"><%
                                 if((Boolean)is_admin)
                                 {
                                 	%>管理员<%
@@ -123,8 +151,10 @@ System.out.println(un_read_num);*/
                                 {
                                 	%>用户<%
                                 }
-                                 %></span>
+                                 %></span></div>
+
 					</div>
+
 				</li>
 				<li class="bold">
 					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
@@ -133,12 +163,12 @@ System.out.println(un_read_num);*/
 					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
 				</li>
 				<li class="bold">
-					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知</a>
+					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
 				</li>
 				<li class="bold">
 					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
 				</li>
-				<li class="bold active teal lighten-4">
+				<li class="bold active red lighten-4">
 					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
 				</li>
 				<li class="bold">
@@ -178,21 +208,82 @@ System.out.println(un_read_num);*/
 			<div class="container">
 
 				<!--right start-->
-				<div class="row">
-					<div class="col s12 m9 l10">
-						<div id="analysis" class="section scrollspy">
-							<!--start-->
-								
-							<!--end-->
-						</div>
-					</div>
-					<div class="col hide-on-small-only m3 l2">
-						<ul class="section table-of-contents side-nav-bar">
-							<li>
-								<a href="#analysis">分析结果</a>
-							</li>
-						</ul>
-					</div>
+				<div class="row col s12">
+        <form action = "/ApkAnalyzePlatform/usermanagerpattern" method = "post">
+					<!--*********************************-->
+					<table class="striped centered col s12">
+        <thead>
+          <tr>
+              <th>选中用户</th>
+              <th>用户id</th>
+              <th>用户名</th>
+              <th>是否拥有下载权限</th>
+              <th>是否拥有上传权限</th>
+              <th>是否为管理员</th>
+              <th>上传文件大小</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!--、、、、、、、、、、、、、、、、、、、、、、、、、、、、-->
+          <%
+        Session session2 = HibernateSessionFactory.getSession();
+        Transaction tx2 = session2.beginTransaction();
+        String hql = "from User";
+        Query q = session2.createQuery(hql);
+        List<User> list = q.list();
+        %>
+        <% 
+        for(int i = 0;i < list.size();i ++)
+        {
+            %>
+            <tr>
+                <td><input id="<%=list.get(i).getUserId()%>1" name = "delete" type = "checkbox" value = "<%=list.get(i).getUserId()%>"/><label for="<%=list.get(i).getUserId()%>1" </label></td>
+                <td><%=list.get(i).getUserId()%></td>
+                <td><%=list.get(i).getUsername()%></td>
+                <%if(list.get(i).getDownload() == true){ %>
+                <td><input id="<%=list.get(i).getUserId()%>2"  name = "<%=list.get(i).getUserId()%>" type = "checkbox" value = "download" checked/><label for="<%=list.get(i).getUserId()%>2" ></label> </td>
+                <%}else{ %>
+                <td><input id="<%=list.get(i).getUserId()%>3"  name = "<%=list.get(i).getUserId()%>" type = "checkbox" value = "download"/><label for="<%=list.get(i).getUserId()%>3" ></label> </td>
+                <%}
+                if(list.get(i).getUpload() == true){ 
+                %>
+                <td><input id="<%=list.get(i).getUserId()%>4"  name = "<%=list.get(i).getUserId()%>" type = "checkbox" value = "upload"checked/><label for="<%=list.get(i).getUserId()%>4" ></label> </td>
+                <%} else {%>
+                <td><input id="<%=list.get(i).getUserId()%>5"  name = "<%=list.get(i).getUserId()%>" type = "checkbox" value = "upload"/><label for="<%=list.get(i).getUserId()%>5" ></label> </td>
+                <%}
+                if(list.get(i).getIsAdmin() == true){ 
+                %>
+                <td><input id="<%=list.get(i).getUserId()%>6"  name = "<%=list.get(i).getUserId()%>" type = "checkbox" value = "is_admin" checked/><label for="<%=list.get(i).getUserId()%>6" ></label> </td>
+                <%}
+                else { %>
+                <td><input id="<%=list.get(i).getUserId()%>7"  name = "<%=list.get(i).getUserId()%>" type = "checkbox" value = "is_admin"/><label for="<%=list.get(i).getUserId()%>7" ></label>  </td>
+                <%} %>
+                <%String temp_name="filesize"+Integer.toString(list.get(i).getUserId() ); %>
+                <td> file_size &nbsp;<%=list.get(i).getFileSize()%> <br>重设<input id="<%=list.get(i).getUserId()%>8"  name = <%=temp_name %> type = "text"/><label for="<%=list.get(i).getUserId()%>8" ></label></td>
+                <%System.out.println("filesize" + Integer.toString(list.get(i).getUserId() )); %>
+            </tr><br>
+         <%
+         }
+         %>
+                 
+          <!--、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、-->
+        </tbody>
+      </table>
+					<!--*************************************-->
+		<div class="col s12">
+			<div class="col s4">
+         <input name = "Submit" type = "submit" value = "modify" class="btn"/>
+			</div>
+			<div class="col s4">
+         <input name = "Submit" type = "submit" value = "delete" class="btn"/>
+			</div>
+			<div class="col s4">
+         <input name = "reset" type = "reset" class="btn"/>
+			</div>
+		</div>  
+                              
+         </form>
 				</div>
 				<!--right end-->
 
@@ -201,32 +292,6 @@ System.out.println(un_read_num);*/
 
 		<!--foot start-->
 		<footer class="page-footer">
-			<div class="container">
-				<div class="row">
-					<div class="col l6 s12">
-						<h5 class="white-text">联系我们</h5>
-						<p class="grey-text text-lighten-4">QQ:xxxxxxxxxx</p>
-						<p class="grey-text text-lighten-4">TEL:xxxxxxxxx</p>
-					</div>
-					<div class="col l4 offset-l2 s12">
-						<h5 class="white-text">关于网站</h5>
-						<ul>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">制作</a>
-							</li>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">合作</a>
-							</li>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">发展</a>
-							</li>
-							<li>
-								<a class="grey-text text-lighten-3" href="#!">鸣谢</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
 			<div class="footer-copyright">
 				<div class="container">
 					Copyright MonsterFucker Team © 2017 All rights reserved.

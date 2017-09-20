@@ -57,6 +57,33 @@
     <servlet-name>SignOut</servlet-name>
     <url-pattern>/signoutpatten</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>AStatistics</servlet-name>
+  	<servlet-class>com.analysis.statistic.ApkStatistics</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AStatistics</servlet-name>
+  	<url-pattern>/AStatistics</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>UStatistics</servlet-name>
+  	<servlet-class>com.analysis.statistic.UserStatistics</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>UStatistics</servlet-name>
+  	<url-pattern>/UStatistics</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>userm</servlet-name>
+  	<servlet-class>com.analysis.user.userm</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>userm</servlet-name>
+  	<url-pattern>/usermanagerpattern</url-pattern>
+  </servlet-mapping>
+  
+  
   <filter>
     <filter-name>SecurityFilter</filter-name>
     <filter-class>com.analysis.cfg.SecurityFilter</filter-class>

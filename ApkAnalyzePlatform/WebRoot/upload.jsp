@@ -225,13 +225,12 @@ HibernateSessionFactory.closeSession();
 											<input type="file" name="uploadFile">
 										</div>
 										<div class="file-path-wrapper">
-											<input class="file-path validate" type="text" name="uploadFile">
+											<input class="file-path validate" type="text">
 										</div>
 									</div>
 
 									<div class="input-field col s12">
-										<select class="browser-default">
-											<option value="" disabled selected>选择类型</option>
+										<select name="type" class="browser-default">
 											<option value="系统工具">系统工具</option>
 											<option value="桌面插件">桌面插件</option>
 											<option value="资讯阅读">资讯阅读</option>

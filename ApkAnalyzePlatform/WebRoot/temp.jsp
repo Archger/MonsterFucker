@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 
 	<head>
-		<title>Dashboard</title>
+		<title>UserManager</title>
 		<meta charset="utf-8" />
 		<!--Import Google Icon Font-->
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -34,14 +34,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				position: fixed !important;
 			}
 			
+			header,
+			main,
+			footer {
+				padding-left: 300px;
+			}
+			
+			@media only screen and (max-width: 992px) {
+				header,
+				main,
+				footer {
+					padding-left: 0;
+				}
+			}
 			
 			body {
-				background-image: url(images/loginback3.jpg);
+				background-image: url(images/back_demo.jpg);
 				display: flex;
 				min-height: 100vh;
 				flex-direction: column;
 			}
-			
+		
 			main {
 				flex: 1 0 auto;
 			}
@@ -58,22 +71,22 @@ Object username=request.getSession().getAttribute("username");
 Object is_admin=request.getSession().getAttribute("is_admin");
 System.out.println(username+" "+is_admin);
 int un_read_num=0;
-Session session2=HibernateSessionFactory.getSession();
-Transaction tx2 = session2.beginTransaction();
+Session session3=HibernateSessionFactory.getSession();
+Transaction tx3 = session3.beginTransaction();
 //----------------------------------------------
 Message message = new Message();  
-Query q = session2.createQuery("from Message where receiver_id = ?");  
-q.setParameter(0, user_id.toString());
+Query q3 = session3.createQuery("from Message where receiver_id = ?");  
+q3.setParameter(0, user_id.toString());
 System.out.println("user_id = "+user_id.toString());
-List<Message> list=q.list();
-System.out.println("list size = "+list.size());
-for(int i=0;i<list.size();i++)
+List<Message> list3=q3.list();
+System.out.println("list size = "+list3.size());
+for(int i=0;i<list3.size();i++)
 {
-	if(!list.get(i).getIsRead())
+	if(!list3.get(i).getIsRead())
 		un_read_num++;
 }
 System.out.println(un_read_num);
-tx2.commit();
+tx3.commit();
 HibernateSessionFactory.closeSession();
  %>
 		<!--java end-->
@@ -95,15 +108,15 @@ HibernateSessionFactory.closeSession();
   </div>
 
 		<header>
-
-			
-			<!--<a href="#" data-activates="slide-out" class="button-collapse white"><i class="material-icons">menu</i></a>-->
-				
-			
 			<nav class="top-nav z-depth-2 hoverable">
-					<div class="nav-wrapper row col s12">
-						<div class="col s1">
-							<ul id="slide-out" class="side-nav z-depth-4 hoverable">
+				<div class="container">
+					<div class="nav-wrapper">
+						<span class="flow-text left-align">UserManager</span>
+					</div>
+				</div>
+			</nav>
+
+			<ul id="slide-out" class="side-nav fixed z-depth-4 hoverable">
 				<li class="logo"> <img src="images/materialize-logo.png" /> </li>
 				<li>
 					<div class="userView row col s12">
@@ -143,7 +156,7 @@ HibernateSessionFactory.closeSession();
 					</div>
 
 				</li>
-				<li class="bold active red lighten-4">
+				<li class="bold">
 					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
 				</li>
 				<li class="bold">
@@ -155,7 +168,7 @@ HibernateSessionFactory.closeSession();
 				<li class="bold">
 					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
 				</li>
-				<li class="bold">
+				<li class="bold active red lighten-4">
 					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
 				</li>
 				<li class="bold">
@@ -190,184 +203,90 @@ HibernateSessionFactory.closeSession();
 				</li>
 
 			</ul>
-			
-							<a href="#" data-activates="slide-out" class="button-collapse white"><i class="material-icons">menu</i></a>
-						</div>
-						<div class="col s11">
-							<span class="flow-text left-align">Dashboard</span>
-						</div>
-					</div>
-			</nav>
-			 
 		</header>
 		<main>
 			<div class="container">
 
 				<!--right start-->
-				<div class="row">
-					<div class="col s12 m9 l10">
-						<div id="introduction" class="section scrollspy">
-							<!--start-->
-							<div class="col s12">
-								<div class="col s6">
-									<div class="card hoverable">
-										<div class="card-move-up">
-											<div id="chart-container">FusionCharts XT will load here!</div>
+				<div class="row col s12">
+        <form action = "/ApkAnalyzePlatform/usermanagerpattern" method = "post">
+					<!--*********************************-->
+					<table class="striped centered col s12">
+        <thead>
+          <tr>
+              <th>选中用户</th>
+              <th>用户id</th>
+              <th>用户名</th>
+              <th>是否拥有下载权限</th>
+              <th>是否拥有上传权限</th>
+              <th>是否为管理员</th>
+              <th>上传文件大小</th>
+          </tr>
+        </thead>
 
-										</div>
-										<div class="card-content">
-
-											FusionCharts XT will load here!
-										</div>
-
-										<div class="card-reveal">
-											FusionCharts XT will load here!2
-
-										</div>
-
-									</div>
-								</div>
-
-								<div class="col s6">
-									<div class="card hoverable">
-										<div class="card-move-up">
-											<div id="chart-container2">FusionCharts XT will load here!</div>
-
-										</div>
-										<div class="card-content  teal darken-2">
-
-											FusionCharts XT will load here!
-										</div>
-										<div class="card-reveal">
-											FusionCharts XT will load here!2
-
-										</div>
-									</div>
-								</div>
-							</div>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<!--end-->
-						</div>
-						<div id="structure" class="section scrollspy">
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-
-						</div>
-						<div id="initialization" class="section scrollspy">
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-
-						</div>
-					</div>
-					<div class="col hide-on-small-only m3 l2">
-						<ul class="section table-of-contents side-nav-bar">
-							<li>
-								<a href="#introduction">介绍</a>
-							</li>
-							<li>
-								<a href="#structure">结构</a>
-							</li>
-							<li>
-								<a href="#initialization">初始化</a>
-							</li>
-						</ul>
-					</div>
+        <tbody>
+          <!--、、、、、、、、、、、、、、、、、、、、、、、、、、、、-->
+          <%
+        Session session2 = HibernateSessionFactory.getSession();
+        Transaction tx2 = session2.beginTransaction();
+        String hql = "from User";
+        Query q = session2.createQuery(hql);
+        List<User> list = q.list();
+        %>
+        <% 
+        for(int i = 0;i < list.size();i ++)
+        {
+            %>
+            <tr>
+                <td><input id="<%=list.get(i).getUserId()%>1" name = "delete" type = "checkbox" value = "<%=list.get(i).getUserId()%>"/><label for="<%=list.get(i).getUserId()%>1" </label></td>
+                <td><%=list.get(i).getUserId()%></td>
+                <td><%=list.get(i).getUsername()%></td>
+                <%if(list.get(i).getDownload() == true){ %>
+                <td><input id="<%=list.get(i).getUserId()%>2"  name = "<%=list.get(i).getUserId()%>" type = "checkbox" value = "download" checked/><label for="<%=list.get(i).getUserId()%>2" ></label> </td>
+                <%}else{ %>
+                <td><input id="<%=list.get(i).getUserId()%>3"  name = "<%=list.get(i).getUserId()%>" type = "checkbox" value = "download"/><label for="<%=list.get(i).getUserId()%>3" ></label> </td>
+                <%}
+                if(list.get(i).getUpload() == true){ 
+                %>
+                <td><input id="<%=list.get(i).getUserId()%>4"  name = "<%=list.get(i).getUserId()%>" type = "checkbox" value = "upload"checked/><label for="<%=list.get(i).getUserId()%>4" ></label> </td>
+                <%} else {%>
+                <td><input id="<%=list.get(i).getUserId()%>5"  name = "<%=list.get(i).getUserId()%>" type = "checkbox" value = "upload"/><label for="<%=list.get(i).getUserId()%>5" ></label> </td>
+                <%}
+                if(list.get(i).getIsAdmin() == true){ 
+                %>
+                <td><input id="<%=list.get(i).getUserId()%>6"  name = "<%=list.get(i).getUserId()%>" type = "checkbox" value = "is_admin" checked/><label for="<%=list.get(i).getUserId()%>6" ></label> </td>
+                <%}
+                else { %>
+                <td><input id="<%=list.get(i).getUserId()%>7"  name = "<%=list.get(i).getUserId()%>" type = "checkbox" value = "is_admin"/><label for="<%=list.get(i).getUserId()%>7" ></label>  </td>
+                <%} %>
+                <%String temp_name="filesize"+Integer.toString(list.get(i).getUserId() ); %>
+                <td> file_size &nbsp;<%=list.get(i).getFileSize()%> <br>重设<input id="<%=list.get(i).getUserId()%>8"  name = <%=temp_name %> type = "text"/><label for="<%=list.get(i).getUserId()%>8" ></label></td>
+                <%System.out.println("filesize" + Integer.toString(list.get(i).getUserId() )); %>
+            </tr><br>
+         <%
+         }
+         %>
+                 
+          <!--、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、-->
+        </tbody>
+      </table>
+					<!--*************************************-->
+		<div class="col s12">
+			<div class="col s4">
+         <input name = "Submit" type = "submit" value = "modify" class="btn"/>
+			</div>
+			<div class="col s4">
+         <input name = "Submit" type = "submit" value = "delete" class="btn"/>
+			</div>
+			<div class="col s4">
+         <input name = "reset" type = "reset" class="btn"/>
+			</div>
+		</div>  
+                              
+         </form>
 				</div>
 				<!--right end-->
 
-				<div class="file-field input-field">
-					<div class="btn">
-						<span>文件</span>
-						<input type="file" />
-					</div>
-					<div class="file-path-wrapper">
-						<input class="file-path validate" type="text" />
-					</div>
-				</div>
-				<nav>
-					<div class="nav-wrapper">
-						<form>
-							<div class="input-field hoverable">
-								<input id="search" type="search" required="" />
-								<label class="label-icon" for="search"><i class="material-icons">search</i></label>
-								<i class="material-icons">close</i>
-							</div>
-						</form>
-					</div>
-				</nav>
 			</div>
 		</main>
 
@@ -386,134 +305,8 @@ HibernateSessionFactory.closeSession();
 
 	<!--Script start-->
 	<script type="text/javascript">
-		 $(".button-collapse").sideNav();
 		$(document).ready(function() {
 			$('.scrollspy').scrollSpy();
-		});
-		// Toast Notification
-		$(window).load(function() {
-			setTimeout(function() {
-				Materialize.toast('<span>Hi!  Welcome to Dashboard  <%=username %></span>', 2500);
-			}, 2500);
-			<%if(un_read_num>0){ %>
-			setTimeout(function() {
-				Materialize.toast('<span>You have <%=un_read_num%> new message!</span><a class="btn-flat yellow-text" href="message.jsp">Read<a>', 6000);
-			}, 5500);
-			<%}%>
-			setTimeout(function() {
-				Materialize.toast('<span>You have new order.</span><a class="btn-flat yellow-text" href="#">Read<a>', 3000);
-			}, 18000);
-		});
-	</script>
-
-	<script>
-		FusionCharts.ready(function() {
-			var revenueChart = new FusionCharts({
-				type: 'doughnut2d',
-				renderAt: 'chart-container',
-				width: '250',
-				height: '250',
-				dataFormat: 'json',
-				dataSource: {
-					"chart": {
-						"caption": "Split of Revenue by Product Categories",
-						"subCaption": "Last year",
-						"numberPrefix": "$",
-						"paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
-						"bgColor": "#ffffff",
-						"showBorder": "0",
-						"use3DLighting": "0",
-						"showShadow": "0",
-						"enableSmartLabels": "0",
-						"startingAngle": "310",
-						"showLabels": "0",
-						"showPercentValues": "1",
-						"showLegend": "1",
-						"legendShadow": "0",
-						"legendBorderAlpha": "0",
-						"defaultCenterLabel": "Total revenue: $64.08K",
-						"centerLabel": "Revenue from $label: $value",
-						"centerLabelBold": "1",
-						"showTooltip": "0",
-						"decimals": "0",
-						"captionFontSize": "14",
-						"subcaptionFontSize": "14",
-						"subcaptionFontBold": "0"
-					},
-					"data": [{
-							"label": "Food",
-							"value": "28504"
-						},
-						{
-							"label": "Apparels",
-							"value": "14633"
-						},
-						{
-							"label": "Electronics",
-							"value": "10507"
-						},
-						{
-							"label": "Household",
-							"value": "4910"
-						}
-					]
-				}
-			}).render();
-		});
-	</script>
-	<script>
-		FusionCharts.ready(function() {
-			var revenueChart = new FusionCharts({
-				type: 'doughnut2d',
-				renderAt: 'chart-container2',
-				width: '250',
-				height: '250',
-				dataFormat: 'json',
-				dataSource: {
-					"chart": {
-						"caption": "Split of Revenue by Product Categories",
-						"subCaption": "Last year",
-						"numberPrefix": "$",
-						"paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
-						"bgColor": "#ffffff",
-						"showBorder": "0",
-						"use3DLighting": "0",
-						"showShadow": "0",
-						"enableSmartLabels": "0",
-						"startingAngle": "310",
-						"showLabels": "0",
-						"showPercentValues": "1",
-						"showLegend": "1",
-						"legendShadow": "0",
-						"legendBorderAlpha": "0",
-						"defaultCenterLabel": "Total revenue: $64.08K",
-						"centerLabel": "Revenue from $label: $value",
-						"centerLabelBold": "1",
-						"showTooltip": "0",
-						"decimals": "0",
-						"captionFontSize": "14",
-						"subcaptionFontSize": "14",
-						"subcaptionFontBold": "0"
-					},
-					"data": [{
-							"label": "Food",
-							"value": "27404"
-						},
-						{
-							"label": "Apparels",
-							"value": "165633"
-						},
-						{
-							"label": "Electronics",
-							"value": "145607"
-						},
-						{
-							"label": "Household",
-							"value": "89910"
-						}
-					]
-				}
-			}).render();
 		});
 	</script>
 

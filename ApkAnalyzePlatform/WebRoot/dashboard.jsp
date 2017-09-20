@@ -49,12 +49,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			
 			body {
-				background-image: url(images/loginback3.jpg);
+				background-image: url(images/back_demo.jpg);
 				display: flex;
 				min-height: 100vh;
 				flex-direction: column;
 			}
-			
+		
 			main {
 				flex: 1 0 auto;
 			}
