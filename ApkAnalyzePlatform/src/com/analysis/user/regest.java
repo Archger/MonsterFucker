@@ -1,6 +1,7 @@
 package com.analysis.user;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -84,7 +85,9 @@ public class regest extends HttpServlet {
 		}
 		else
 		{
+			Date date=new Date();
 			User user = new User();
+			user.setRegisterDate(date);
 			user.setUsername(username);
 			user.setPassword(password);
 			user.setIsAdmin(false);

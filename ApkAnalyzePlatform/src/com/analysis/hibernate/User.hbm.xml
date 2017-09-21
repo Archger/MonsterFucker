@@ -10,6 +10,9 @@
             <column name="user_id" />
             <generator class="identity" />
         </id>
+        <property name="registerDate" type="java.util.Date">
+            <column name="register_date" length="10" />
+        </property>
         <property name="username" type="java.lang.String">
             <column name="username" length="45" not-null="true" />
         </property>

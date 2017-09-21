@@ -73,6 +73,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 Object user_id=request.getSession().getAttribute("user_id");
 Object username=request.getSession().getAttribute("username");
 Object is_admin=request.getSession().getAttribute("is_admin");
+Object upload=request.getSession().getAttribute("upload");
+Object download=request.getSession().getAttribute("download");
 System.out.println(username+" "+is_admin);
 int un_read_num=0;
 Session session2=HibernateSessionFactory.getSession();
@@ -171,21 +173,20 @@ HibernateSessionFactory.closeSession();
 				<li class="bold">
 					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
 				</li>
+				<%if((Boolean)upload){ %>
 				<li class="bold">
 					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
-				</li>
+				</li><%} %>
 				<li class="bold">
-					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知
-						<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span>
-						<%}%>
-					</a>
+					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
 				</li>
 				<li class="bold active red lighten-4">
 					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
 				</li>
+				<%if((Boolean)is_admin){ %>
 				<li class="bold">
 					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
-				</li>
+				</li><%} %>
 				<li class="bold">
 					<a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
 				</li>

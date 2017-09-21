@@ -69,6 +69,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 Object user_id=request.getSession().getAttribute("user_id");
 Object username=request.getSession().getAttribute("username");
 Object is_admin=request.getSession().getAttribute("is_admin");
+Object upload=request.getSession().getAttribute("upload");
+Object download=request.getSession().getAttribute("download");
 System.out.println(username+" "+is_admin);
 int un_read_num=0;
 Session session3=HibernateSessionFactory.getSession();
@@ -159,18 +161,20 @@ HibernateSessionFactory.closeSession();
 				<li class="bold">
 					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
 				</li>
+				<%if((Boolean)upload){ %>
 				<li class="bold">
 					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
-				</li>
+				</li><%} %>
 				<li class="bold">
 					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
 				</li>
 				<li class="bold">
 					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
 				</li>
+				<%if((Boolean)is_admin){ %>
 				<li class="bold active red lighten-4">
 					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
-				</li>
+				</li><%} %>
 				<li class="bold">
 					<a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
 				</li>
@@ -238,7 +242,7 @@ HibernateSessionFactory.closeSession();
         {
             %>
             <tr>
-                <td><input id="<%=list.get(i).getUserId()%>1" name = "delete" type = "checkbox" value = "<%=list.get(i).getUserId()%>"/><label for="<%=list.get(i).getUserId()%>1" </label></td>
+                <td><input id="<%=list.get(i).getUserId()%>1" name = "delete" type = "checkbox" value = "<%=list.get(i).getUserId()%>"/><label for="<%=list.get(i).getUserId()%>1" ></label></td>
                 <td><%=list.get(i).getUserId()%></td>
                 <td><%=list.get(i).getUsername()%></td>
                 <%if(list.get(i).getDownload() == true){ %>
@@ -273,10 +277,10 @@ HibernateSessionFactory.closeSession();
 					<!--*************************************-->
 		<div class="col s12">
 			<div class="col s4">
-         <input name = "Submit" type = "submit" value = "modify" class="btn"/>
+         <input name = "Submit" type = "submit" value = "modify" onclick="Materialize.toast('权限已修改', 4000)" class="btn"/>
 			</div>
 			<div class="col s4">
-         <input name = "Submit" type = "submit" value = "delete" class="btn"/>
+         <input name = "Submit" type = "submit" value = "delete" onclick="Materialize.toast('用户已删除', 4000)" class="btn"/>
 			</div>
 			<div class="col s4">
          <input name = "reset" type = "reset" class="btn"/>

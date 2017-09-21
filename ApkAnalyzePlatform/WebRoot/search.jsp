@@ -1,13 +1,12 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ page import="org.hibernate.Query" %>
-<%@ page import="org.hibernate.Session" %>
-<%@ page import="org.hibernate.SessionFactory" %>
-<%@ page import="org.hibernate.Transaction" %>
-<%@ page import="org.hibernate.cfg.Configuration" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.analysis.hibernate.Message"%>
-<%@ page import="com.analysis.hibernate.User"%>
-<%@ page import="com.analysis.cfg.HibernateSessionFactory"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import = "com.analysis.cfg.HibernateSessionFactory" %>
+<%@ page import = "org.hibernate.Query" %>
+<%@ page import = "org.hibernate.Session"%>
+<%@ page import = "org.hibernate.Transaction" %>
+<%@ page import = "com.analysis.hibernate.*" %>
+<%@ page import = "org.hibernate.Criteria" %>
+
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -17,6 +16,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 
 	<head>
+		<base href="<%=basePath%>">
+
 		<title>Search</title>
 		<meta charset="utf-8" />
 		<!--Import Google Icon Font-->
@@ -49,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			
 			body {
-				background-image: url(images/loginback3.jpg);
+				background-image: url(images/back_demo.jpg);
 				display: flex;
 				min-height: 100vh;
 				flex-direction: column;
@@ -59,7 +60,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				flex: 1 0 auto;
 			}
 		</style>
-
 	</head>
 
 	<body>
@@ -69,6 +69,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 Object user_id=request.getSession().getAttribute("user_id");
 Object username=request.getSession().getAttribute("username");
 Object is_admin=request.getSession().getAttribute("is_admin");
+Object upload=request.getSession().getAttribute("upload");
+Object download=request.getSession().getAttribute("download");
 System.out.println(username+" "+is_admin);
 int un_read_num=0;
 Session session2=HibernateSessionFactory.getSession();
@@ -167,9 +169,11 @@ HibernateSessionFactory.closeSession();
 				<li class="bold">
 					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
 				</li>
+				<%if((Boolean)upload){ %>
 				<li class="bold">
 					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
 				</li>
+				<%} %>
 				<li class="bold">
 					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知
 						<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span>
@@ -179,9 +183,11 @@ HibernateSessionFactory.closeSession();
 				<li class="bold">
 					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
 				</li>
+				<%if((Boolean)is_admin){ %>
 				<li class="bold">
 					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
 				</li>
+				<%} %>
 				<li class="bold active red lighten-4">
 					<a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
 				</li>
@@ -221,110 +227,108 @@ HibernateSessionFactory.closeSession();
 				<!--right start-->
 				<div class="row">
 					<div class="col s12 m9 l10">
-						<div id="easysearch" class="section scrollspy">
+						<div id="introduction" class="section scrollspy">
 							<!--start-->
-							<nav>
-								<div class="nav-wrapper">
-									<form>
-										<div class="input-field z-depth-1">
-											<input id="search" type="search" required="" />
-											<label class="label-icon" for="search"><i class="material-icons">search</i></label>
-											<i class="material-icons">close</i>
-										</div>
-									</form>
-								</div>
-							</nav>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
+							<form action="/ApkAnalyzePlatform/searchpattern" method="post">
+								名称 <input name="apkName" type="text"><br>         类型
+								<select name="apkType" class="browser-default">
+									<option value="">选择类型</option>
+									<option value="系统工具">系统工具</option>
+									<option value="桌面插件">桌面插件</option>
+									<option value="资讯阅读">资讯阅读</option>
+									<option value="社交聊天">社交聊天</option>
+									<option value="影音娱乐">影音娱乐</option>
+									<option value="生活服务">生活服务</option>
+									<option value="实用工具">实用工具</option>
+									<option value="文档商务">文档商务</option>
+									<option value="金融财经">金融财经</option>
+									<option value="运动健康">运动健康</option>
+									<option value="学习教育">学习教育</option>
+									<option value="出行交通">出行交通</option>
+									<option value="其它">其它</option>
+								</select><br>         开发者
+								<input name="developer_name" type="text"><br>           版本 <input name="versionName" type="text"><br>
+								<input name="submit" type="submit" class="btn">
+							</form>
 							<!--end-->
 						</div>
-						<div id="hexsearch" class="section scrollspy">
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-
-						</div>
-						<div id="selectapk" class="section scrollspy">
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
+						<div id="structure" class="section scrollspy">
+							<table>
+								<tr>
+									<td> 产品名称</td>
+									<td> 开发者 </td>
+									<td> 产品类型 </td>
+									<td> 版本 </td>
+									<td> 是否有权限获取手机状态</td>
+								</tr>
+								<c:forEach var="i" items="${list2}" varStatus="f">
+									<tr>
+										<td>${i.apkName}</td>
+										<td>${i.developerId}</td>
+										<td>${i.apkType}</td>
+										<td>${i.versionName }</td>
+										<td>${i.readPhoneState}</td>
+									</tr>
+								</c:forEach>
+							</table>
+							<div>
+								第${page.pageno }/${page.totalpage}页 &nbsp;&nbsp;
+								<a href="Showpage?pageNo = 1">首页</a>
+								<c:choose>
+									<c:when test="${page.pageno gt 1 }">
+										<a href="Showpage?pageNo=${page.pageno-1}">上一页</a>
+									</c:when>
+									<c:otherwise>
+										<a href="javascript:alert('已经是第一页')">上一页</a>
+									</c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${page.pageno lt page.totalpage }">
+										<a href="Showpage?pageNo=${page.pageno+1}">下一页</a>
+									</c:when>
+									<c:otherwise>
+										<a href="javascript:alert('已经是最后一页')">下一页</a>
+									</c:otherwise>
+								</c:choose>
+								<a href="Showpage?pageNo=${page.totalpage}">末页</a>
+								&nbsp;&nbsp; 共${page.totalcount } 条
+							</div>
 
 						</div>
 					</div>
 					<div class="col hide-on-small-only m3 l2">
 						<ul class="section table-of-contents side-nav-bar">
 							<li>
-								<a href="#easysearch">简单查询</a>
+								<a href="#introduction">查询</a>
 							</li>
 							<li>
-								<a href="#hexsearch">混合查询</a>
-							</li>
-							<li>
-								<a href="#selectapk">分类查询</a>
+								<a href="#structure">结果</a>
 							</li>
 						</ul>
 					</div>
 				</div>
 				<!--right end-->
 
+				<div class="file-field input-field">
+					<div class="btn">
+						<span>文件</span>
+						<input type="file" />
+					</div>
+					<div class="file-path-wrapper">
+						<input class="file-path validate" type="text" />
+					</div>
+				</div>
+				<nav>
+					<div class="nav-wrapper">
+						<form>
+							<div class="input-field hoverable">
+								<input id="search" type="search" required="" />
+								<label class="label-icon" for="search"><i class="material-icons">search</i></label>
+								<i class="material-icons">close</i>
+							</div>
+						</form>
+					</div>
+				</nav>
 			</div>
 		</main>
 
@@ -340,14 +344,5 @@ HibernateSessionFactory.closeSession();
 		<!--foot end-->
 
 	</body>
-
-	<!--Script start-->
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('.scrollspy').scrollSpy();
-		});
-	</script>
-
-	<!--Script End-->
 
 </html>

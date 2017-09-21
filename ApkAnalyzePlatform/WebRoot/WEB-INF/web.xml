@@ -41,14 +41,16 @@
     <servlet-name>Regest</servlet-name>
     <url-pattern>/regestpatten</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>Search</servlet-name>
-    <servlet-class>com.analysis.APK.saerch</servlet-class>
+    <servlet-class>com.analysis.search.Search</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Search</servlet-name>
-    <url-pattern>/searchpatten</url-pattern>
+    <url-pattern>/searchpattern</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>SignOut</servlet-name>
     <servlet-class>com.analysis.user.Sign_out</servlet-class>
@@ -82,6 +84,17 @@
   	<servlet-name>userm</servlet-name>
   	<url-pattern>/usermanagerpattern</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>Showpage</servlet-name>
+  	<servlet-class>com.analysis.search.Showpage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>Showpage</servlet-name>
+  	<url-pattern>/Showpage</url-pattern>
+  </servlet-mapping>
+  
+  
   
   
   <filter>

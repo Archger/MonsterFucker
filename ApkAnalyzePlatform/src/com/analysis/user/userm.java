@@ -65,18 +65,21 @@ public class userm extends HttpServlet {
 		if(button.equals("delete") )
 		{
 			String []st = request.getParameterValues("delete");
-			Session session = HibernateSessionFactory.getSession();
-		    Transaction tx2 = session.beginTransaction();
-			for(int i = 0;i < st.length;i ++)
+			if(st!=null)
 			{
-				User u  = (User)session.get(User.class,Integer.parseInt(st[i]));
-				if(u != null)
+				Session session = HibernateSessionFactory.getSession();
+			    Transaction tx2 = session.beginTransaction();
+				for(int i = 0;i < st.length;i ++)
 				{
-				    session.delete(u);
+					User u  = (User)session.get(User.class,Integer.parseInt(st[i]));
+					if(u != null)
+					{
+					    session.delete(u);
+					}
 				}
+				tx2.commit();
+				session.close();
 			}
-			tx2.commit();
-			session.close();
 			request.getRequestDispatcher("usermanager.jsp").forward(request,response);
 		}
 		else if(button.equals("modify"))

@@ -1,5 +1,7 @@
 package com.analysis.hibernate;
 
+import java.util.Date;
+
 /**
  * User entity. @author MyEclipse Persistence Tools
  */
@@ -9,6 +11,7 @@ public class User implements java.io.Serializable {
 	// Fields
 
 	private Integer userId;
+	private Date registerDate;
 	private String username;
 	private String password;
 	private Boolean isAdmin;
@@ -30,7 +33,9 @@ public class User implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public User(String username, String password, Boolean isAdmin, Integer fileSize, Boolean download, Boolean upload) {
+	public User(Date registerDate, String username, String password, Boolean isAdmin, Integer fileSize,
+			Boolean download, Boolean upload) {
+		this.registerDate = registerDate;
 		this.username = username;
 		this.password = password;
 		this.isAdmin = isAdmin;
@@ -47,6 +52,14 @@ public class User implements java.io.Serializable {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public Date getRegisterDate() {
+		return this.registerDate;
+	}
+
+	public void setRegisterDate(Date registerDate) {
+		this.registerDate = registerDate;
 	}
 
 	public String getUsername() {
@@ -95,10 +108,6 @@ public class User implements java.io.Serializable {
 
 	public void setUpload(Boolean upload) {
 		this.upload = upload;
-	}
-	
-	public String toSting(){
-		return "User id = "+userId+" username = "+username+" password = "+password+" isAdmin = "+isAdmin;
 	}
 
 }

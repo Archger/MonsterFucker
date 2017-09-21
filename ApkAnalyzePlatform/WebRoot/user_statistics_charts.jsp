@@ -54,9 +54,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		
 			Transaction tx2=se.beginTransaction();
 			//-------------------------------------------------------
-			String adminHQL="select count(userId) from User where admin=1";
-			String uploadHQL="select count(userId) from User where upload=1";
-			String downloadHQL="select count(userId) from User where download=1";
+			String adminHQL="select count(*) from User where isAdmin=1";
+			String uploadHQL="select count(*) from User where upload=1";
+			String downloadHQL="select count(*) from User where download=1";
 			Query adminQuery=se.createQuery(hql);
 			Query uploadQuery=se.createQuery(hql);
 			Query downloadQuery=se.createQuery(hql);
@@ -66,6 +66,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			//-------------------------------------------------------
 			tx2.commit();
      %>
+     <%=adminNum %>
+     <br>
+     <%=uploadNum %>
+     <br>
+     <%=downloadNum %>
+     <br>
    <script>
 	FusionCharts.ready(function(){
 	    var myChart = new FusionCharts({
