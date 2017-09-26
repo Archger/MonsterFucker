@@ -129,7 +129,6 @@ public class Upload extends HttpServlet {
                 	//处理普通文本（apk的类型）
                 	else if(item.isFormField())
                 	{
-                		System.out.println("*********************************"+item.getString("utf-8"));
                 		Apk apk=storeInfo(tempApkInfo,item.getString("utf-8"),date,fileSize);
                 		request.setAttribute("apk",apk );
                 		request.setAttribute("iconPath", apk.getIconDirectory());

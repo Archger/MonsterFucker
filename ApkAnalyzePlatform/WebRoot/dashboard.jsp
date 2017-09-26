@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<title>Dashboard</title>
 		<meta charset="utf-8" />
 		<!--Import Google Icon Font-->
-		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    	<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
 		<!--Import materialize.css-->
 		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 		<!--Let browser know website is optimized for mobile-->
@@ -99,13 +99,13 @@ HibernateSessionFactory.closeSession();
 		
 		 <div class="fixed-action-btn">
     <a class="btn-floating btn-large red">
-      <i class="large material-icons">mode_edit</i>
+      <i class="large mdi mdi-24px mdi-light mdi-pencil"></i>
     </a>
     <ul>
-      <li><a class="btn-floating red" href="statistic.jsp"><i class="material-icons">insert_chart</i></a></li>
-      <li><a class="btn-floating yellow darken-1" href="message.jsp"><i class="material-icons">question_answer</i></a></li>
-      <li><a class="btn-floating green" href="upload.jsp"><i class="material-icons">publish</i></a></li>
-      <li><a class="btn-floating blue" href="dashboard.jsp"><i class="material-icons">perm_identity</i></a></li>
+      <li><a class="btn-floating red" href="statistic.jsp"><i class="large mdi mdi-18px mdi-light mdi-chart-bar"></i></a></li>
+      <li><a class="btn-floating yellow darken-1" href="message.jsp"><i class="large mdi mdi-18px mdi-light mdi-message"></i></a></li>
+      <li><a class="btn-floating green" href="upload.jsp"><i class="large mdi mdi-18px mdi-light mdi-upload"></i></a></li>
+      <li><a class="btn-floating blue" href="dashboard.jsp"><i class="large mdi mdi-18px mdi-light mdi-view-dashboard"></i></a></li>
     </ul>
   </div>
 
@@ -159,24 +159,24 @@ HibernateSessionFactory.closeSession();
 
 				</li>
 				<li class="bold active red lighten-4">
-					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
+					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-view-dashboard"></i> 控制台</a>
 				</li>
 				<%if((Boolean)upload){ %>
 				<li class="bold">
-					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
+					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-upload"></i> 文件上传</a>
 				</li><%} %>
 				<li class="bold">
-					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
+					<a href="message.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-message"></i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
 				</li>
 				<li class="bold">
-					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
+					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-chart-bar"></i> 统计管理</a>
 				</li>
 				<%if((Boolean)is_admin){ %>
 				<li class="bold">
-					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
+					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-account-edit"></i> 用户管理</a>
 				</li><%} %>
 				<li class="bold">
-					<a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
+					<a href="search.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-magnify"></i> 查找</a>
 				</li>
 
 				<li class="li-hover">
@@ -186,7 +186,7 @@ HibernateSessionFactory.closeSession();
 					<p class="ultra-small margin more-text">MORE</p>
 				</li>
 				<li>
-					<a href="aboutus.jsp"><i class="material-icons">turned_in</i>关于我们</a>
+					<a href="aboutus.jsp"><i class="large mdi mdi-24px mdi-dark mdi-information-outline"></i>关于我们</a>
 				</li>
 				<li class="li-hover">
 					<div class="divider"></div>

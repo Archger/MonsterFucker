@@ -19,6 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <title>Search</title>
     <meta charset="utf-8" />
+    	<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
 		<!--Import Google Icon Font-->
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 		<!--Import materialize.css-->
@@ -157,7 +158,7 @@ HibernateSessionFactory.closeSession();
 
 				</li>
 				<li class="bold active red lighten-4">
-					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
+					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="mdi mdi-24px mdi-dark mdi-account"></i>控制台</a>
 				</li>
 				<%if((Boolean)upload){ %>
 				<li class="bold">

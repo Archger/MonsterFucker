@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 
 	<head>
-		<title>Analysis</title>
+		<title>Apk Message</title>
 		<meta charset="utf-8" />
     	<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
 		<!--Import Google Icon Font-->
@@ -104,7 +104,7 @@ HibernateSessionFactory.closeSession();
 			<nav class="top-nav z-depth-2 hoverable">
 				<div class="container">
 					<div class="nav-wrapper">
-						<span class="flow-text left-align">Analysis</span>
+						<span class="flow-text left-align">Analysis Result</span>
 					</div>
 				</div>
 			</nav>
@@ -153,7 +153,7 @@ HibernateSessionFactory.closeSession();
 					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-view-dashboard"></i> 控制台</a>
 				</li>
 				<%if((Boolean)upload){ %>
-				<li class="bold active red lighten-4">
+				<li class="bold">
 					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-upload"></i> 文件上传</a>
 				</li><%} %>
 				<li class="bold">
@@ -166,7 +166,7 @@ HibernateSessionFactory.closeSession();
 				<li class="bold">
 					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-account-edit"></i> 用户管理</a>
 				</li><%} %>
-				<li class="bold">
+				<li class="bold active red lighten-4">
 					<a href="search.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-magnify"></i> 查找</a>
 				</li>
 
@@ -207,7 +207,7 @@ HibernateSessionFactory.closeSession();
 					<div class="col s12">
 						<div id="analysis" class="section scrollspy">
 							<!--start-->
-							<p class="flow-text center">${message}</p> <br>
+							
 							<%
 									   Object obj=request.getAttribute("apk");
 										   Apk apk=(Apk)obj; 
@@ -536,7 +536,7 @@ HibernateSessionFactory.closeSession();
 		<!--foot end-->
 
 		<div class="fixed-action-btn">
-			<a class="btn-floating btn-large red" href="upload.jsp">
+			<a class="btn-floating btn-large red" href="search.jsp">
 				<i class="large material-icons">replay</i>
 			</a>
 		</div>

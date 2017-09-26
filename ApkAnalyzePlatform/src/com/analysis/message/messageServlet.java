@@ -47,11 +47,9 @@ public class messageServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("UTF-8");
-		System.out.println("ok messagetPost success!");
 		Object user_id=request.getSession().getAttribute("user_id");
 		String to =request.getParameter("to");
 		String content =request.getParameter("content");
-		System.out.println(to+" ok and "+content+" ok");
 		Object is_admin=request.getSession().getAttribute("is_admin");
 		//----------------------------------------------
 		if(to.isEmpty())

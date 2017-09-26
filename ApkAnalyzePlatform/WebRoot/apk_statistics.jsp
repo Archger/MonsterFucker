@@ -10,6 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     
     <title>My JSP 'apk_statistics.jsp' starting page</title>
+    	<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">

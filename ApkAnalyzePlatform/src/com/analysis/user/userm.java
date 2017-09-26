@@ -89,8 +89,10 @@ public class userm extends HttpServlet {
 		    String hql = "from User";
 		    Query q = session.createQuery(hql);
 		    List<User> list = q.list();
+	    	Object user_id=request.getSession().getAttribute("user_id");
 		    for(int i = 0;i < list.size();i ++)
 		    {
+		    	if(list.get(i).getUserId()==(Integer)user_id) continue;
 		    	System.out.println(i);
 		    	User u = (User) session.get(User.class, list.get(i).getUserId());
 		    	String res2 = request.getParameter("filesize" + Integer.toString(list.get(i).getUserId()));

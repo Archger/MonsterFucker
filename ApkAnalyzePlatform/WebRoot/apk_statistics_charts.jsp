@@ -19,13 +19,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<head>
 		<title>Statistic</title>
 		<meta charset="utf-8" />
+    	<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
 		<!--Import Google Icon Font-->
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 		<!--Import materialize.css-->
 		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 		<!--Let browser know website is optimized for mobile-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
 		<script type="text/javascript" src="FusionCharts/js/fusioncharts.js"></script>
 		<script type="text/javascript" src="FusionCharts/js/themes/fusioncharts.theme.fint.js"></script>
 
@@ -33,16 +33,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			.side-nav-bar {
 				position: fixed !important;
 			}
-			#type{
+			
+			#type {
 				opacity: 0.7;
 			}
-			#permission{
+			
+			#permission {
 				opacity: 0.7;
 			}
-			#size{
+			
+			#size {
 				opacity: 0.7;
 			}
-			#date{
+			
+			#date {
 				opacity: 0.7;
 			}
 			
@@ -108,24 +112,19 @@ HibernateSessionFactory.closeSession();
 		<!--Import jQuery before materialize.js-->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js/materialize.min.js"></script>
-		
-		 <div class="fixed-action-btn">
-    <a class="btn-floating btn-large red">
-      <i class="large material-icons">mode_edit</i>
-    </a>
-    <ul>
-      <li><a class="btn-floating red" href="statistic.jsp"><i class="material-icons">insert_chart</i></a></li>
-      <li><a class="btn-floating yellow darken-1" href="message.jsp"><i class="material-icons">question_answer</i></a></li>
-      <li><a class="btn-floating green" href="upload.jsp"><i class="material-icons">publish</i></a></li>
-      <li><a class="btn-floating blue" href="dashboard.jsp"><i class="material-icons">perm_identity</i></a></li>
-    </ul>
-  </div>
+
+		<div class="fixed-action-btn">
+			<a class="btn-floating btn-large red" href="statistic.jsp">
+				<i class="large mdi mdi-24px mdi-light mdi-replay"></i>
+			</a>
+		</div>
+
 
 		<header>
 			<nav class="top-nav z-depth-2 hoverable">
 				<div class="container">
 					<div class="nav-wrapper">
-						<span class="flow-text left-align">Dashboard</span>
+						<span class="flow-text left-align">Statistic</span>
 					</div>
 				</div>
 			</nav>
@@ -171,24 +170,24 @@ HibernateSessionFactory.closeSession();
 
 				</li>
 				<li class="bold">
-					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
+					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-view-dashboard"></i> 控制台</a>
 				</li>
 				<%if((Boolean)upload){ %>
 				<li class="bold">
-					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
+					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-upload"></i> 文件上传</a>
 				</li><%} %>
 				<li class="bold">
-					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
+					<a href="message.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-message"></i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
 				</li>
 				<li class="bold active red lighten-4">
-					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
+					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-chart-bar"></i> 统计管理</a>
 				</li>
 				<%if((Boolean)is_admin){ %>
 				<li class="bold">
-					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
+					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-account-edit"></i> 用户管理</a>
 				</li><%} %>
 				<li class="bold">
-					<a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
+					<a href="search.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-magnify"></i> 查找</a>
 				</li>
 
 				<li class="li-hover">
@@ -198,7 +197,7 @@ HibernateSessionFactory.closeSession();
 					<p class="ultra-small margin more-text">MORE</p>
 				</li>
 				<li>
-					<a href="aboutus.jsp"><i class="material-icons">turned_in</i>关于我们</a>
+					<a href="aboutus.jsp"><i class="large mdi mdi-24px mdi-dark mdi-information-outline"></i>关于我们</a>
 				</li>
 				<li class="li-hover">
 					<div class="divider"></div>
@@ -228,9 +227,9 @@ HibernateSessionFactory.closeSession();
 					<div class="col s12 m9 l10">
 						<div id="introduction" class="section scrollspy">
 							<!--start-->
-							
+
 							<!-- 类型统计 -->
-      <%if(request.getAttribute("typeMap")!=null)
+							<%if(request.getAttribute("typeMap")!=null)
       {
        	Object typeObj=request.getAttribute("typeMap");
     	Map typeMap=(Map)typeObj;
@@ -241,121 +240,72 @@ HibernateSessionFactory.closeSession();
     	}
     	String centerLabel="总共"+sum+"个App";
        	%>
-<script>
-FusionCharts.ready(function () {
-    var revenueChart = new FusionCharts({
-        type: 'doughnut2d',
-        renderAt: 'type',
-        width: '100%',
-        height: '100%',
-        dataFormat: 'json',
-        dataSource: {
-            "chart": {
-                "caption": "应用类型统计图",
-                "subCaption": "",
-                "numberPrefix": "",
-                "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
-                "bgColor": "#ffffff",
-                "showBorder": "0",
-                "use3DLighting": "0",
-                "showShadow": "1",
-                "enableSmartLabels": "1",
-                "startingAngle": "310",
-                "showLabels": "0",
-                "showPercentValues": "1",
-                "showLegend": "1",
-                "legendShadow": "0",
-                "legendBorderAlpha": "0",
-                "defaultCenterLabel": "<%=centerLabel%>",
-                "centerLabel": "$label: $value",
-                "centerLabelBold": "1",
-                "showTooltip": "0",
-                "decimals": "1",
-                "captionFontSize": "14",
-                "subcaptionFontSize": "14",
-                "subcaptionFontBold": "0"
-            },
-            "data": [
-      	<% for(Map.Entry entry:typeEntries){%>
-                {
-                    "label": "<%= entry.getKey()%>",
-                    "value": <%= entry.getValue()%>
-                }, 
-                
-          <%
-          }%>
-            ]
-        }
-    }).render();
-});
+							
 
-</script>
-    
-    <br>
-    <div id="date"></div>
-   <%}%>
+							<br>
+							<div id="date"></div>
+							<%}%>
 							<!--end-->
 						</div>
 						<div id="structure" class="section scrollspy">
-							<!-- 权限统计 -->  
-         <%if(request.getAttribute("permissionMap")!=null)
+							<!-- 权限统计 -->
+							<%if(request.getAttribute("permissionMap")!=null)
       {
       	Object permissionObj=request.getAttribute("permissionMap");
     	Map permissionMap=(Map)permissionObj;
     	Set<Map.Entry> permissionEntries = permissionMap.entrySet();
 
 		%>
-<script>
-FusionCharts.ready(function(){
-    var myChart = new FusionCharts({
-        type: 'MSColumn2D',
-        dataFormat: 'json',
-        renderAt: 'permission',
-        width: '100%',
-        height: '100%',
-        dataSource: {
-            "chart": {
-                "caption": "应用权限统计图",
-                "subCaption": "",
-                "showBorder": "0",
-                "xAxisName": "权限",
-                "yAxisName": "应用数量",
-                "numberSuffix": "",
-                "baseFontColor" : "#333333",
-                "baseFont" : "Helvetica Neue,Arial",
-                "paletteColors" : "#69f0ae",
-                "bgColor" : "#ffffff",
-                "canvasBgColor" : "#ffffff",                                 
-                "captionFontSize" : "14",
-                "subcaptionFontSize" : "14",
-                "subcaptionFontBold" : "0",
-                "showBorder" : "0",
-                "showPlotBorder": "0",
-                "showXAxisLine" : "1",
-                "showLegend": "0",
-                "showShadow" : "1",
-                "showCanvasBorder" : "0",
-                "showAlternateHGridColor" : "0",
-                "usePlotGradientColor" :"0",
-                "divlineColor" : "#999999",
-                "divlineThickness" : "1",
-                "divLineIsDashed" : "1",
-                "divLineDashLen" : "1",
-                "divLineGapLen" : "1",
-                "xAxisLineThickness" : "1",
-                "xAxisLineColor" : "#999999",
-                "toolTipColor": "#ffffff",
-                "toolTipBorderThickness": "0",
-                "toolTipBgColor": "#000000",
-                "toolTipBgAlpha": "80",
-                "toolTipBorderRadius": "2",
-                "toolTipPadding": "5"
-            },
-      
-                "categories": [
-                {
-                  "category": [
-                    <%for(Map.Entry entry:permissionEntries)
+							<script>
+								FusionCharts.ready(function() {
+									var myChart = new FusionCharts({
+										type: 'MSColumn2D',
+										dataFormat: 'json',
+										renderAt: 'permission',
+										width: '100%',
+										height: '100%',
+										dataSource: {
+											"chart": {
+												"caption": "应用权限统计图",
+												"subCaption": "",
+												"showBorder": "0",
+												"xAxisName": "权限",
+												"yAxisName": "应用数量",
+												"numberSuffix": "",
+												"baseFontColor": "#333333",
+												"baseFont": "Helvetica Neue,Arial",
+												"paletteColors": "#69f0ae",
+												"bgColor": "#ffffff",
+												"canvasBgColor": "#ffffff",
+												"captionFontSize": "14",
+												"subcaptionFontSize": "14",
+												"subcaptionFontBold": "0",
+												"showBorder": "0",
+												"showPlotBorder": "0",
+												"showXAxisLine": "1",
+												"showLegend": "0",
+												"showShadow": "1",
+												"showCanvasBorder": "0",
+												"showAlternateHGridColor": "0",
+												"usePlotGradientColor": "0",
+												"divlineColor": "#999999",
+												"divlineThickness": "1",
+												"divLineIsDashed": "1",
+												"divLineDashLen": "1",
+												"divLineGapLen": "1",
+												"xAxisLineThickness": "1",
+												"xAxisLineColor": "#999999",
+												"toolTipColor": "#ffffff",
+												"toolTipBorderThickness": "0",
+												"toolTipBgColor": "#000000",
+												"toolTipBgAlpha": "80",
+												"toolTipBorderRadius": "2",
+												"toolTipPadding": "5"
+											},
+
+											"categories": [{
+												"category": [
+													<%for(Map.Entry entry:permissionEntries)
                   	  {
 	      				  String label=null; 
 	                	  if(entry.getKey().toString().compareTo("access_coarse_location")==0){label="获取大致位置信息";}
@@ -392,225 +342,213 @@ FusionCharts.ready(function(){
 	                      else if(entry.getKey().toString().compareTo("set_wallpaper")==0){label="设置壁纸";}
 	                      else if(entry.getKey().toString().compareTo("set_preferred_applications")==0){label="设置首选应用";}
 	                      else if(entry.getKey().toString().compareTo("write_secure_settings")==0){label="修改安全系统设置";}
-	                      else{label="error";}%>
-                        { "label": "<%=label%>" },
-                        <%}%>
-                    ]
-                }
-            ],
-            "dataset": [
-                {
-                    "seriesname": "Loading Time",
-                    "allowDrag": "0",
-                   "data": [
-                		 <%for(Map.Entry entry:permissionEntries){%>
-                        { "value": "<%= entry.getValue()%>" },
-                        <%}%>
-                    ]
-                }
-            ]
-        }
-    }).render();
-});
-</script>
-    
-    <br>
-    <div id="size"></div>
-   <%}%>
-   
-   
+	                      else{label="error";}%> {
+														"label": "<%=label%>"
+													},
+													<%}%>
+												]
+											}],
+											"dataset": [{
+												"seriesname": "Loading Time",
+												"allowDrag": "0",
+												"data": [
+													<%for(Map.Entry entry:permissionEntries){%> {
+														"value": "<%= entry.getValue()%>"
+													},
+													<%}%>
+												]
+											}]
+										}
+									}).render();
+								});
+							</script>
+
+							<br>
+							<div id="size"></div>
+							<%}%>
 
 						</div>
 						<div id="initialization" class="section scrollspy">
 							<!-- 上传时间统计 -->
-   
-    
-      <%if(request.getAttribute("uploadDateMap")!=null){
+
+							<%if(request.getAttribute("uploadDateMap")!=null){
       	Object uploadDateMapObj=request.getAttribute("uploadDateMap");
     	Map uploadDateMap=(Map)uploadDateMapObj;
     	Set<Map.Entry> uploadDateEntries = uploadDateMap.entrySet();%>
-<script>
-FusionCharts.ready(function(){
-    var salesChart = new FusionCharts({
-        type: 'scrollline2d',
-        dataFormat: 'json',
-        renderAt: 'date',
-        width: '100%',
-        height: '100%',
-        dataSource: {
-            "chart": {
-                "caption": "上传时间统计图",
-                "subCaption": "",
-                "xAxisName": "月份",
-                "yAxisName": "上传数量",
-                "showValues": "0",
-                "numberPrefix": "",
-                "showBorder": "0",
-                "showShadow": "1",
-                "bgColor": "#ffffff",
-                "paletteColors": "#69f0ae",
-                "showCanvasBorder": "0",
-                "showAxisLines": "0",
-                "showAlternateHGridColor": "0",
-                "divlineAlpha": "100",
-                "divlineThickness": "1",
-                "divLineIsDashed": "1",
-                "divLineDashLen": "1",
-                "divLineGapLen": "1",
-                "lineThickness": "3",  
-                "flatScrollBars": "1",
-                "scrollheight": "10",
-                "numVisiblePlot": "12",
-                "showHoverEffect":"1"
-            },
-            //-----------------------------------------
-            
-            "categories": [
-                {
-                    "category": [
-                    <%for(Map.Entry entry:uploadDateEntries){%>
-                        { "label": "<%= entry.getKey()%>" },
-                        <%}%>
-                       
-                    ]
-                }
-            ],
-            "dataset": [
-                {
-                    "data": [
-                       <%for(Map.Entry entry:uploadDateEntries){%>
-                        { "value": "<%= entry.getValue()%>" },
-                        <%}%>
-                       
-                    ]
-                }
-            ]
-            
-            //-------------------------------------------------------
-        }
-    }).render();
-});
-</script>
-    
-    <br>
-    <div id="type">FusionCharts XT will load here!</div>
-   <%}%>
-   
-   
+							<script>
+								FusionCharts.ready(function() {
+									var salesChart = new FusionCharts({
+										type: 'scrollline2d',
+										dataFormat: 'json',
+										renderAt: 'date',
+										width: '100%',
+										height: '100%',
+										dataSource: {
+											"chart": {
+												"caption": "上传时间统计图",
+												"subCaption": "",
+												"xAxisName": "月份",
+												"yAxisName": "上传数量",
+												"showValues": "0",
+												"numberPrefix": "",
+												"showBorder": "0",
+												"showShadow": "1",
+												"bgColor": "#ffffff",
+												"paletteColors": "#69f0ae",
+												"showCanvasBorder": "0",
+												"showAxisLines": "0",
+												"showAlternateHGridColor": "0",
+												"divlineAlpha": "100",
+												"divlineThickness": "1",
+												"divLineIsDashed": "1",
+												"divLineDashLen": "1",
+												"divLineGapLen": "1",
+												"lineThickness": "3",
+												"flatScrollBars": "1",
+												"scrollheight": "10",
+												"numVisiblePlot": "12",
+												"showHoverEffect": "1"
+											},
+											//-----------------------------------------
+
+											"categories": [{
+												"category": [
+													<%for(Map.Entry entry:uploadDateEntries){%> {
+														"label": "<%= entry.getKey()%>"
+													},
+													<%}%>
+
+												]
+											}],
+											"dataset": [{
+												"data": [
+													<%for(Map.Entry entry:uploadDateEntries){%> {
+														"value": "<%= entry.getValue()%>"
+													},
+													<%}%>
+
+												]
+											}]
+
+											//-------------------------------------------------------
+										}
+									}).render();
+								});
+							</script>
+
+							<br>
+							<div id="type">FusionCharts XT will load here!</div>
+							<%}%>
+
 						</div>
 						<div id="initialization2" class="section scrollspy">
-							 <!-- 文件大小统计 -->
-        <%if(request.getAttribute("fileSizeMap")!=null)
+							<!-- 文件大小统计 -->
+							<%if(request.getAttribute("fileSizeMap")!=null)
       {
       	Object fileSizeMapObj=request.getAttribute("fileSizeMap");
     	Map fileSizeMap=(Map)fileSizeMapObj;
     	Set<Map.Entry> fileSizeEntries = fileSizeMap.entrySet();%>
-<script>
-FusionCharts.ready(function(){
-    var myChart = new FusionCharts({
-        type: 'MSColumn2D',
-        dataFormat: 'json',
-        renderAt: 'size',
-        width: '100%',
-        height: '100%',
-        dataSource: {
-            "chart": {
-                "caption": "文件大小统计图",
-                "subCaption": "",
-                "showBorder": "0",
-                "xAxisName": "文件大小（MB）",
-                "yAxisName": "文件数量",
-                "numberSuffix": "",
-                "baseFontColor" : "#333333",
-                "baseFont" : "Helvetica Neue,Arial",
-                "paletteColors" : "#69f0ae",
-                "bgColor" : "#ffffff",
-                "canvasBgColor" : "#ffffff",                                 
-                "captionFontSize" : "14",
-                "subcaptionFontSize" : "14",
-                "subcaptionFontBold" : "0",
-                "showBorder" : "0",
-                "showPlotBorder": "0",
-                "showXAxisLine" : "1",
-                "showLegend": "0",
-                "showShadow" : "1",
-                "showCanvasBorder" : "0",
-                "showAlternateHGridColor" : "0",
-                "usePlotGradientColor" :"0",
-                "divlineColor" : "#999999",
-                "divlineThickness" : "1",
-                "divLineIsDashed" : "1",
-                "divLineDashLen" : "1",
-                "divLineGapLen" : "1",
-                "xAxisLineThickness" : "1",
-                "xAxisLineColor" : "#999999",
-                "toolTipColor": "#ffffff",
-                "toolTipBorderThickness": "0",
-                "toolTipBgColor": "#000000",
-                "toolTipBgAlpha": "80",
-                "toolTipBorderRadius": "2",
-                "toolTipPadding": "5"
-            },
-            
-            
-            "categories": [
-                {
-                  "category": [
-                    <%for(Map.Entry entry:fileSizeEntries){
+							<script>
+								FusionCharts.ready(function() {
+									var myChart = new FusionCharts({
+										type: 'MSColumn2D',
+										dataFormat: 'json',
+										renderAt: 'size',
+										width: '100%',
+										height: '100%',
+										dataSource: {
+											"chart": {
+												"caption": "文件大小统计图",
+												"subCaption": "",
+												"showBorder": "0",
+												"xAxisName": "文件大小（MB）",
+												"yAxisName": "文件数量",
+												"numberSuffix": "",
+												"baseFontColor": "#333333",
+												"baseFont": "Helvetica Neue,Arial",
+												"paletteColors": "#69f0ae",
+												"bgColor": "#ffffff",
+												"canvasBgColor": "#ffffff",
+												"captionFontSize": "14",
+												"subcaptionFontSize": "14",
+												"subcaptionFontBold": "0",
+												"showBorder": "0",
+												"showPlotBorder": "0",
+												"showXAxisLine": "1",
+												"showLegend": "0",
+												"showShadow": "1",
+												"showCanvasBorder": "0",
+												"showAlternateHGridColor": "0",
+												"usePlotGradientColor": "0",
+												"divlineColor": "#999999",
+												"divlineThickness": "1",
+												"divLineIsDashed": "1",
+												"divLineDashLen": "1",
+												"divLineGapLen": "1",
+												"xAxisLineThickness": "1",
+												"xAxisLineColor": "#999999",
+												"toolTipColor": "#ffffff",
+												"toolTipBorderThickness": "0",
+												"toolTipBgColor": "#000000",
+												"toolTipBgAlpha": "80",
+												"toolTipBorderRadius": "2",
+												"toolTipPadding": "5"
+											},
+
+											"categories": [{
+												"category": [
+													<%for(Map.Entry entry:fileSizeEntries){
                     	Integer limit=(Integer)entry.getKey()+10;
-                    	String label=entry.getKey()+"-"+limit;%>
-                        { "label": "<%=label%>" },
-                        <%}%>
-                       
-                    ]
-                }
-            ],
-            "dataset": [
-                {
-                    "seriesname": "Loading Time",
-                    "allowDrag": "0",
-                   "data": [
-                       <%for(Map.Entry entry:fileSizeEntries){%>
-                        { "value": "<%= entry.getValue()%>" },
-                        <%}%>
-                       
-                    ]
-                }
-            ]
-            
-            
-        }
-    }).render();
-});
-</script>
-    
-    <br>
-    <div id="permission">FusionCharts XT will load here!</div>
-   <%}%>
-   
+                    	String label=entry.getKey()+"-"+limit;%> {
+														"label": "<%=label%>"
+													},
+													<%}%>
+
+												]
+											}],
+											"dataset": [{
+												"seriesname": "Loading Time",
+												"allowDrag": "0",
+												"data": [
+													<%for(Map.Entry entry:fileSizeEntries){%> {
+														"value": "<%= entry.getValue()%>"
+													},
+													<%}%>
+
+												]
+											}]
+
+										}
+									}).render();
+								});
+							</script>
+
+							<br>
+							<div id="permission">FusionCharts XT will load here!</div>
+							<%}%>
 
 						</div>
 					</div>
 					<div class="col hide-on-small-only m3 l2">
 						<ul class="section table-of-contents side-nav-bar">
+						<%if(request.getAttribute("uploadDateMap")!=null) {%>
 							<li>
 								<a href="#introduction">时间统计</a>
-							</li>
+							</li><%}if(request.getAttribute("fileSizeMap")!=null){ %>
 							<li>
 								<a href="#structure">大小统计</a>
-							</li>
+							</li><%}if(request.getAttribute("typeMap")!=null){ %>
 							<li>
 								<a href="#initialization">类型统计</a>
-							</li>
+							</li><%}if(request.getAttribute("permissionMap")!=null){ %>
 							<li>
 								<a href="#initialization2">权限统计</a>
-							</li>
+							</li><%} %>
 						</ul>
 					</div>
 				</div>
 				<!--right end-->
 
-				
 			</div>
 		</main>
 
@@ -633,6 +571,7 @@ FusionCharts.ready(function(){
 			$('.scrollspy').scrollSpy();
 		});
 	</script>
+	
 
 	<!--Script End-->
 

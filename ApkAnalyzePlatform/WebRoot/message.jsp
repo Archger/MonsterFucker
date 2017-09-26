@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<title>Message</title>
 		<meta charset="utf-8" />
 		<!--Import Google Icon Font-->
-		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+		<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
 		<!--Import materialize.css-->
 		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 		<!--Let browser know website is optimized for mobile-->
@@ -98,23 +98,30 @@ System.out.println(un_read_num);*/
 //HibernateSessionFactory.closeSession();
  %>
 		<!--java end-->
-		
-		
+
 		<!--Import jQuery before materialize.js-->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js/materialize.min.js"></script>
 
 		<div class="fixed-action-btn">
-		    <a class="btn-floating btn-large red">
-		      <i class="large material-icons">mode_edit</i>
-		    </a>
-		    <ul>
-		      <li><a class="btn-floating red" href="statistic.jsp"><i class="material-icons">insert_chart</i></a></li>
-		      <li><a class="btn-floating yellow darken-1" href="message.jsp"><i class="material-icons">question_answer</i></a></li>
-		      <li><a class="btn-floating green" href="upload.jsp"><i class="material-icons">publish</i></a></li>
-		      <li><a class="btn-floating blue" href="dashboard.jsp"><i class="material-icons">perm_identity</i></a></li>
-		    </ul>
-		  </div>
+			<a class="btn-floating btn-large red">
+				<i class="large mdi mdi-24px mdi-light mdi-pencil"></i>
+			</a>
+			<ul>
+				<li>
+					<a class="btn-floating red" href="statistic.jsp"><i class="large mdi mdi-18px mdi-light mdi-chart-bar"></i></a>
+				</li>
+				<li>
+					<a class="btn-floating yellow darken-1" href="message.jsp"><i class="large mdi mdi-18px mdi-light mdi-message"></i></a>
+				</li>
+				<li>
+					<a class="btn-floating green" href="upload.jsp"><i class="large mdi mdi-18px mdi-light mdi-upload"></i></a>
+				</li>
+				<li>
+					<a class="btn-floating blue" href="dashboard.jsp"><i class="large mdi mdi-18px mdi-light mdi-view-dashboard"></i></a>
+				</li>
+			</ul>
+		</div>
 
 		<header>
 			<nav class="top-nav z-depth-2 hoverable">
@@ -166,24 +173,26 @@ System.out.println(un_read_num);*/
 
 				</li>
 				<li class="bold">
-					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
+					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-view-dashboard"></i> 控制台</a>
 				</li>
 				<%if((Boolean)upload){ %>
 				<li class="bold">
-					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
-				</li><%} %>
+					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-upload"></i> 文件上传</a>
+				</li>
+				<%} %>
 				<li class="bold active red lighten-4">
-					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知</a>
+					<a href="message.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-message"></i>消息通知</a>
 				</li>
 				<li class="bold">
-					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
+					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-chart-bar"></i> 统计管理</a>
 				</li>
 				<%if((Boolean)is_admin){ %>
 				<li class="bold">
-					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
-				</li><%} %>
+					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-account-edit"></i> 用户管理</a>
+				</li>
+				<%} %>
 				<li class="bold">
-					<a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
+					<a href="search.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-magnify"></i> 查找</a>
 				</li>
 
 				<li class="li-hover">
@@ -193,7 +202,7 @@ System.out.println(un_read_num);*/
 					<p class="ultra-small margin more-text">MORE</p>
 				</li>
 				<li>
-					<a href="aboutus.jsp"><i class="material-icons">turned_in</i>关于我们</a>
+					<a href="aboutus.jsp"><i class="large mdi mdi-24px mdi-dark mdi-information-outline"></i>关于我们</a>
 				</li>
 				<li class="li-hover">
 					<div class="divider"></div>
@@ -214,7 +223,8 @@ System.out.println(un_read_num);*/
 				</li>
 
 			</ul>
-		</header><main>
+		</header>
+		<main>
 			<div class="container">
 
 				<!--right start-->
@@ -223,15 +233,15 @@ System.out.println(un_read_num);*/
 						<div id="message" class="section scrollspy">
 							<!--start-->
 							<div class="row">
-                		<div class="col s12 m6 l6">
-                			<p class="flow-text">用户留言</p>
-                			<ul class="collapsible popout" data-collapsible="accordion">
-                	 <%
+								<div class="col s12 m6 l6">
+									<p class="flow-text">用户留言</p>
+									<ul class="collapsible popout" data-collapsible="accordion">
+										<%
                 	 	if(list.size()==0)
                 	 	{
                 	 		%>
-				        	<p>  暂时没有消息</p>
-				        	<%
+										<p> 暂时没有消息</p>
+										<%
                 	 	}
 				        else if(list.size()>0)
 				        { 
@@ -248,11 +258,17 @@ System.out.println(un_read_num);*/
 				        	 	if(!list2.get(0).getIsAdmin()){
 				        	 	num2++;
 				        	 %>
-				        		 <li>
-								      <div class="collapsible-header"><i class="material-icons">textsms</i>来自<%=from%></div>
-								      <div class="collapsible-body"><p><%=list.get(i).getContent() %></p></div>
-								 </li>
-				        	<% 		}
+										<li>
+											<div class="collapsible-header"><i class="large mdi mdi-24px mdi-dark mdi-message-processing"></i>来自
+												<%=from%>
+											</div>
+											<div class="collapsible-body">
+												<p>
+													<%=list.get(i).getContent() %>
+												</p>
+											</div>
+										</li>
+										<% 		}
 				        		}
 				        		//System.out.println("********num = "+num);
 				        	}
@@ -260,23 +276,23 @@ System.out.println(un_read_num);*/
 				        		if(num2==0)
 				        		{
 				        			%>
-				        			<p>  暂时没有消息</p>
-				        			<%
+										<p> 暂时没有消息</p>
+										<%
 				        		}
 				        }
                 	  %>
-					</ul>
-                
-                		</div>
-                		<div class="col s12 m6 l6">
-                			<p class="flow-text">系统通知</p>
-                			<ul class="collapsible popout" data-collapsible="accordion">
-                	 <%
+									</ul>
+
+								</div>
+								<div class="col s12 m6 l6">
+									<p class="flow-text">系统通知</p>
+									<ul class="collapsible popout" data-collapsible="accordion">
+										<%
                 	 if(list.size()==0)
                 	 	{
                 	 		%>
-				        	<p>  暂时没有通知</p>
-				        	<%
+										<p> 暂时没有通知</p>
+										<%
                 	 	}
 				        if(list.size()>0)
 				        {  
@@ -292,62 +308,67 @@ System.out.println(un_read_num);*/
 				        	 	if(list2.get(0).getIsAdmin())
 				        	 	{ num++;
 				        	 	%>
-				        	 	 <li>
-								      <div class="collapsible-header"><i class="material-icons">message</i>来自<%=from%></div>
-								      <div class="collapsible-body"><p><%=list.get(i).getContent() %></p></div>
-								 </li>
-				        	 	<%}}
+										<li>
+											<div class="collapsible-header"><i class="large mdi mdi-24px mdi-dark mdi-message-text"></i>来自
+												<%=from%>
+											</div>
+											<div class="collapsible-body">
+												<p>
+													<%=list.get(i).getContent() %>
+												</p>
+											</div>
+										</li>
+										<%}}
 				        	 }
 				        	 if(num==0)
 				        	 {
 				        	 	%>
-				        	 	<p>  暂时没有通知</p>
-				        	 	<%
+										<p> 暂时没有通知</p>
+										<%
 				        	 }
 				        }
 						tx2.commit();
         				HibernateSessionFactory.closeSession();
                 	  %>
-					</ul>
-                
-                			
-                		</div>
-                		
-                	</div>
-                	
+									</ul>
+
+								</div>
+
+							</div>
+
 							<!--end-->
 						</div>
 						<div id="leave" class="section scrollspy">
 							<!--stary-->
 							<br />
-                	<div class="divider"></div>
-                	<br />
-                		<div class="row">
-                			<div class="card col s12 hoverable z-depth-2">
-                				<br />
-                				<form class="col s12" action="/ApkAnalyzePlatform/messagepatten" method="post">
-							      <div class="row">
-							        <div class="input-field col s2">
-							          <input placeholder="用户名" id="receiver_id" name="to" type="text" class="validate">
-							          <label for="receiver_id">接收方：</label>
-							        </div>
-							      </div>
-							      <br />
-							      <div class="row">
-							          <div class="input-field col s11">
-							          	<textarea placeholder="留言内容" id="content" name="content" class="materialize-textarea"></textarea>
-							          	<label for="content">留言：</label>
-							          </div>
-							      </div>
-							      <input type="submit" value="留言"  onclick="Materialize.toast('留言已发送', 4000)" class="right btn"  />
-							      <!--<a class="col s1 btn waves-effect waves-light right">留言</a>-->
-							      <br />
-							    </form>
-							    <br />
-                			</div>
-						    
-						</div>
-                		<br />
+							<div class="divider"></div>
+							<br />
+							<div class="row">
+								<div class="card col s12 hoverable z-depth-2">
+									<br />
+									<form class="col s12" action="/ApkAnalyzePlatform/messagepatten" method="post">
+										<div class="row">
+											<div class="input-field col s2">
+												<input placeholder="用户名" id="receiver_id" name="to" type="text" class="validate">
+												<label for="receiver_id">接收方：</label>
+											</div>
+										</div>
+										<br />
+										<div class="row">
+											<div class="input-field col s11">
+												<textarea placeholder="留言内容" id="content" name="content" class="materialize-textarea"></textarea>
+												<label for="content">留言：</label>
+											</div>
+										</div>
+										<input type="submit" value="留言" onclick="Materialize.toast('留言已发送', 4000)" class="right btn" />
+										<!--<a class="col s1 btn waves-effect waves-light right">留言</a>-->
+										<br />
+									</form>
+									<br />
+								</div>
+
+							</div>
+							<br />
 							<!--end-->
 						</div>
 					</div>
@@ -379,15 +400,14 @@ System.out.println(un_read_num);*/
 		<!--foot end-->
 
 	</body>
-	
-	
+
 	<!--Script start-->
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('.scrollspy').scrollSpy();
 		});
-    </script>
-	
+	</script>
+
 	<!--Script End-->
 
 </html>

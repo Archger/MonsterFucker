@@ -6,7 +6,7 @@
 <%@ page import = "org.hibernate.Transaction" %>
 <%@ page import = "com.analysis.hibernate.*" %>
 <%@ page import = "org.hibernate.Criteria" %>
-
+<%@ page import = "org.hibernate.criterion.Restrictions" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -20,6 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		<title>Search</title>
 		<meta charset="utf-8" />
+    	<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
 		<!--Import Google Icon Font-->
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 		<!--Import materialize.css-->
@@ -50,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			
 			body {
-				background-image: url(images/back_demo.jpg);
+				background-image: url(images/loginback3.jpg);
 				display: flex;
 				min-height: 100vh;
 				flex-direction: column;
@@ -73,22 +74,19 @@ Object upload=request.getSession().getAttribute("upload");
 Object download=request.getSession().getAttribute("download");
 System.out.println(username+" "+is_admin);
 int un_read_num=0;
-Session session2=HibernateSessionFactory.getSession();
-Transaction tx2 = session2.beginTransaction();
+Session session3=HibernateSessionFactory.getSession();
+Transaction tx3 = session3.beginTransaction();
 //----------------------------------------------
 Message message = new Message();  
-Query q = session2.createQuery("from Message where receiver_id = ?");  
-q.setParameter(0, user_id.toString());
-System.out.println("user_id = "+user_id.toString());
-List<Message> list=q.list();
-System.out.println("list size = "+list.size());
-for(int i=0;i<list.size();i++)
+Query q3 = session3.createQuery("from Message where receiver_id = ?");  
+q3.setParameter(0, user_id.toString());
+List<Message> list3=q3.list();
+for(int i=0;i<list3.size();i++)
 {
-	if(!list.get(i).getIsRead())
+	if(!list3.get(i).getIsRead())
 		un_read_num++;
 }
-System.out.println(un_read_num);
-tx2.commit();
+tx3.commit();
 HibernateSessionFactory.closeSession();
  %>
 		<!--java end-->
@@ -98,24 +96,17 @@ HibernateSessionFactory.closeSession();
 		<script type="text/javascript" src="js/materialize.min.js"></script>
 
 		<div class="fixed-action-btn">
-			<a class="btn-floating btn-large red">
-				<i class="large material-icons">mode_edit</i>
-			</a>
-			<ul>
-				<li>
-					<a class="btn-floating red" href="statistic.jsp"><i class="material-icons">insert_chart</i></a>
-				</li>
-				<li>
-					<a class="btn-floating yellow darken-1" href="message.jsp"><i class="material-icons">question_answer</i></a>
-				</li>
-				<li>
-					<a class="btn-floating green" href="upload.jsp"><i class="material-icons">publish</i></a>
-				</li>
-				<li>
-					<a class="btn-floating blue" href="dashboard.jsp"><i class="material-icons">perm_identity</i></a>
-				</li>
-			</ul>
-		</div>
+    <a class="btn-floating btn-large red">
+      <i class="large mdi mdi-24px mdi-light mdi-pencil"></i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red" href="statistic.jsp"><i class="large mdi mdi-18px mdi-light mdi-chart-bar"></i></a></li>
+      <li><a class="btn-floating yellow darken-1" href="message.jsp"><i class="large mdi mdi-18px mdi-light mdi-message"></i></a></li>
+      <li><a class="btn-floating green" href="upload.jsp"><i class="large mdi mdi-18px mdi-light mdi-upload"></i></a></li>
+      <li><a class="btn-floating blue" href="dashboard.jsp"><i class="large mdi mdi-18px mdi-light mdi-view-dashboard"></i></a></li>
+    </ul>
+  </div>
+
 
 		<header>
 			<nav class="top-nav z-depth-2 hoverable">
@@ -167,29 +158,24 @@ HibernateSessionFactory.closeSession();
 
 				</li>
 				<li class="bold">
-					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
+					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-view-dashboard"></i> 控制台</a>
 				</li>
 				<%if((Boolean)upload){ %>
 				<li class="bold">
-					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
-				</li>
-				<%} %>
+					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-upload"></i> 文件上传</a>
+				</li><%} %>
 				<li class="bold">
-					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知
-						<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span>
-						<%}%>
-					</a>
+					<a href="message.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-message"></i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
 				</li>
 				<li class="bold">
-					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
+					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-chart-bar"></i> 统计管理</a>
 				</li>
 				<%if((Boolean)is_admin){ %>
 				<li class="bold">
-					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
-				</li>
-				<%} %>
+					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-account-edit"></i> 用户管理</a>
+				</li><%} %>
 				<li class="bold active red lighten-4">
-					<a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
+					<a href="search.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-magnify"></i> 查找</a>
 				</li>
 
 				<li class="li-hover">
@@ -199,7 +185,7 @@ HibernateSessionFactory.closeSession();
 					<p class="ultra-small margin more-text">MORE</p>
 				</li>
 				<li>
-					<a href="aboutus.jsp"><i class="material-icons">turned_in</i>关于我们</a>
+					<a href="aboutus.jsp"><i class="large mdi mdi-24px mdi-dark mdi-information-outline"></i>关于我们</a>
 				</li>
 				<li class="li-hover">
 					<div class="divider"></div>
@@ -223,77 +209,192 @@ HibernateSessionFactory.closeSession();
 		</header>
 		<main>
 			<div class="container">
-
+				<br />
+				<br />
 				<!--right start-->
 				<div class="row">
 					<div class="col s12 m9 l10">
-						<div id="introduction" class="section scrollspy">
+						<div id="introduction" class="section scrollspy col s12">
+							<br />
+							<br />
 							<!--start-->
 							<form action="/ApkAnalyzePlatform/searchpattern" method="post">
-								名称 <input name="apkName" type="text"><br>         类型
-								<select name="apkType" class="browser-default">
-									<option value="">选择类型</option>
-									<option value="系统工具">系统工具</option>
-									<option value="桌面插件">桌面插件</option>
-									<option value="资讯阅读">资讯阅读</option>
-									<option value="社交聊天">社交聊天</option>
-									<option value="影音娱乐">影音娱乐</option>
-									<option value="生活服务">生活服务</option>
-									<option value="实用工具">实用工具</option>
-									<option value="文档商务">文档商务</option>
-									<option value="金融财经">金融财经</option>
-									<option value="运动健康">运动健康</option>
-									<option value="学习教育">学习教育</option>
-									<option value="出行交通">出行交通</option>
-									<option value="其它">其它</option>
-								</select><br>         开发者
-								<input name="developer_name" type="text"><br>           版本 <input name="versionName" type="text"><br>
-								<input name="submit" type="submit" class="btn">
+								<div class="row">
+									<div class="col s12 m6 l3 input-field">
+										<input name="apkName" type="text" class="validate" id="a1">
+										<label for="a1">APK名称</label>
+									</div>
+									<div class="col s12 m6 l3">
+
+										<select name="apkType" class="browser-default">
+											<option value="">选择类型</option>
+											<option value="系统工具">系统工具</option>
+											<option value="桌面插件">桌面插件</option>
+											<option value="资讯阅读">资讯阅读</option>
+											<option value="社交聊天">社交聊天</option>
+											<option value="影音娱乐">影音娱乐</option>
+											<option value="生活服务">生活服务</option>
+											<option value="实用工具">实用工具</option>
+											<option value="文档商务">文档商务</option>
+											<option value="金融财经">金融财经</option>
+											<option value="运动健康">运动健康</option>
+											<option value="学习教育">学习教育</option>
+											<option value="出行交通">出行交通</option>
+											<option value="其它">其它</option>
+										</select>
+									</div>
+									<div class="col s12 m6 l3 input-field">
+										<input name="developer_name" type="text" class="validate" id="a2">
+										<label for="a2">开发者</label>
+									</div>
+									<div class="col s12 m6 l3 input-field">
+										<input name="versionName" type="text" class="validate" id="a3">
+										<label for="a3">版本</label>
+									</div>
+								</div>
+								<div class="row">
+									<input name="submit" type="submit" value="查询" class="btn right" onclick="Materialize.toast('正在查询', 4000)">
+								</div>
 							</form>
+							<br />
+							<br />
 							<!--end-->
 						</div>
+						<br />
 						<div id="structure" class="section scrollspy">
-							<table>
-								<tr>
-									<td> 产品名称</td>
-									<td> 开发者 </td>
-									<td> 产品类型 </td>
-									<td> 版本 </td>
-									<td> 是否有权限获取手机状态</td>
-								</tr>
-								<c:forEach var="i" items="${list2}" varStatus="f">
-									<tr>
-										<td>${i.apkName}</td>
-										<td>${i.developerId}</td>
-										<td>${i.apkType}</td>
-										<td>${i.versionName }</td>
-										<td>${i.readPhoneState}</td>
-									</tr>
-								</c:forEach>
-							</table>
-							<div>
-								第${page.pageno }/${page.totalpage}页 &nbsp;&nbsp;
-								<a href="Showpage?pageNo = 1">首页</a>
-								<c:choose>
-									<c:when test="${page.pageno gt 1 }">
-										<a href="Showpage?pageNo=${page.pageno-1}">上一页</a>
-									</c:when>
-									<c:otherwise>
-										<a href="javascript:alert('已经是第一页')">上一页</a>
-									</c:otherwise>
-								</c:choose>
-								<c:choose>
-									<c:when test="${page.pageno lt page.totalpage }">
-										<a href="Showpage?pageNo=${page.pageno+1}">下一页</a>
-									</c:when>
-									<c:otherwise>
-										<a href="javascript:alert('已经是最后一页')">下一页</a>
-									</c:otherwise>
-								</c:choose>
-								<a href="Showpage?pageNo=${page.totalpage}">末页</a>
-								&nbsp;&nbsp; 共${page.totalcount } 条
-							</div>
+							<br />
+							<div class="divider"></div>
+							<br />
+							<div id="div1" style="display:block;">
+								<div class="row">
+									<br />
+									<br />
+									<div>
+										<br />
+										<br />
+										<form action="/ApkAnalyzePlatform/Showpage" method="post">
+											<div class="col s12 m4">
+												<select name="order" class="browser-default">
+													<option value=""> 选择类型 </option>
+													<option value="apkName"> 产品名称</option>
+													<option value="developer_Id">开发者Id</option>
+													<option value="apkType">产品类型</option>
+													<option value="versionName">产品版本</option>
+												</select>
+											</div>
+											<div class="col s12 m4">
+												<select name="type" class="browser-default">
+													<option value=""> 选择升序或降序</option>
+													<option value="1"> 升序</option>
+													<option value="2"> 降序</option>
+												</select>
+											</div>
+											<div class="col s12 m4">
+												<input name="submit" type="submit" class="btn right" value="排序" onclick="Materialize.toast('查询结果已排序', 4000)">
+											</div>
+										</form>
+										<br />
+										<br />
+										<br />
+									</div>
+								</div>
 
+								<table>
+									<tr>
+										<td> 产品名称</td>
+										<td> 开发者 </td>
+										<td> 产品类型 </td>
+										<td> 版本 </td>
+										<td> 是否有权限获取手机状态</td>
+										<td> 查看详细信息</td>
+									</tr>
+									<%
+               List<Apk> res = (List<Apk>) request.getAttribute("res");
+               List<Apk> list2 = (List<Apk>) request.getAttribute("list2");
+               int len;
+			   if(res != null) {
+			        session.setAttribute("res", res);
+			   }
+			   if(list2 != null){
+			       len = list2.size();
+			   }
+			   else len = 0;
+               Session session2 = HibernateSessionFactory.getSession();
+               Transaction tx = session2.beginTransaction();
+               Criteria cri = session2.createCriteria(User.class);
+               for(int i = 0;i < len;i ++){
+             %>
+									<tr>
+										<%
+               String temp = "";
+               if(list2.get(i).getApkName() != null) temp = list2.get(i).getApkName();  
+             %>
+										<td>
+											<%=temp %>
+										</td>
+										<% 
+               if(list2.get(i).getDeveloperId() != null)
+               {
+               int tmp = list2.get(i).getDeveloperId();
+               cri.add(Restrictions.eq("userId",tmp));
+               List<User> list = cri.list();
+               temp = "";
+               if(list.size()> 0) temp = list.get(0).getUsername();
+               }
+               else temp = "";
+            %>
+										<td>
+											<%=temp %>
+										</td>
+										<%
+               temp = "";
+               if(list2.get(i).getApkType() != null) temp = list2.get(0).getApkType();  
+             %>
+										<td>
+											<%=temp%>
+										</td>
+										<%
+               temp = "";
+               if(list2.get(i).getVersionName() != null) temp = list2.get(0).getVersionName();  
+             %>
+										<td>
+											<%=temp %>
+										</td>
+										<%
+               boolean t = false;
+               if(list2.get(i).getReadPhoneState() != null) t = list2.get(0).getReadPhoneState();  
+             %>
+										<td>
+											<%=t %>
+										</td>
+									</tr>
+									<%} %>
+
+								</table>
+								<div>
+									第${page.pageno }/${page.totalpage}页 &nbsp;&nbsp;
+									<a href="Showpage?pageNo = 1">首页</a>
+									<c:choose>
+										<c:when test="${page.pageno gt 1 }">
+											<a href="Showpage?pageNo=${page.pageno-1}">上一页</a>
+										</c:when>
+										<c:otherwise>
+											<a href="javascript:alert('已经是第一页')">上一页</a>
+										</c:otherwise>
+									</c:choose>
+									<c:choose>
+										<c:when test="${page.pageno lt page.totalpage }">
+											<a href="Showpage?pageNo=${page.pageno+1}">下一页</a>
+										</c:when>
+										<c:otherwise>
+											<a href="javascript:alert('已经是最后一页')">下一页</a>
+										</c:otherwise>
+									</c:choose>
+									<a href="Showpage?pageNo=${page.totalpage}">末页</a>
+									&nbsp;&nbsp; 共${page.totalcount } 条
+								</div>
+
+							</div>
 						</div>
 					</div>
 					<div class="col hide-on-small-only m3 l2">
@@ -308,27 +409,6 @@ HibernateSessionFactory.closeSession();
 					</div>
 				</div>
 				<!--right end-->
-
-				<div class="file-field input-field">
-					<div class="btn">
-						<span>文件</span>
-						<input type="file" />
-					</div>
-					<div class="file-path-wrapper">
-						<input class="file-path validate" type="text" />
-					</div>
-				</div>
-				<nav>
-					<div class="nav-wrapper">
-						<form>
-							<div class="input-field hoverable">
-								<input id="search" type="search" required="" />
-								<label class="label-icon" for="search"><i class="material-icons">search</i></label>
-								<i class="material-icons">close</i>
-							</div>
-						</form>
-					</div>
-				</nav>
 			</div>
 		</main>
 
@@ -344,5 +424,11 @@ HibernateSessionFactory.closeSession();
 		<!--foot end-->
 
 	</body>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.scrollspy').scrollSpy();
+		});
+	</script>
 
 </html>

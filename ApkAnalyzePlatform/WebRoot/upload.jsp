@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<title>upload APK</title>
 		<meta charset="utf-8" />
 		<!--Import Google Icon Font-->
-		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+		<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
 		<!--Import materialize.css-->
 		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 		<!--Let browser know website is optimized for mobile-->
@@ -98,22 +98,30 @@ HibernateSessionFactory.closeSession();
 		<script type="text/javascript" src="js/materialize.min.js"></script>
 
 		<div class="fixed-action-btn">
-		    <a class="btn-floating btn-large red">
-		      <i class="large material-icons">mode_edit</i>
-		    </a>
-		    <ul>
-		      <li><a class="btn-floating red" href="statistic.jsp"><i class="material-icons">insert_chart</i></a></li>
-		      <li><a class="btn-floating yellow darken-1" href="message.jsp"><i class="material-icons">question_answer</i></a></li>
-		      <li><a class="btn-floating green" href="upload.jsp"><i class="material-icons">publish</i></a></li>
-		      <li><a class="btn-floating blue" href="dashboard.jsp"><i class="material-icons">perm_identity</i></a></li>
-		    </ul>
-		  </div>
+			<a class="btn-floating btn-large red">
+				<i class="large mdi mdi-24px mdi-light mdi-pencil"></i>
+			</a>
+			<ul>
+				<li>
+					<a class="btn-floating red" href="statistic.jsp"><i class="large mdi mdi-18px mdi-light mdi-chart-bar"></i></a>
+				</li>
+				<li>
+					<a class="btn-floating yellow darken-1" href="message.jsp"><i class="large mdi mdi-18px mdi-light mdi-message"></i></a>
+				</li>
+				<li>
+					<a class="btn-floating green" href="upload.jsp"><i class="large mdi mdi-18px mdi-light mdi-upload"></i></a>
+				</li>
+				<li>
+					<a class="btn-floating blue" href="dashboard.jsp"><i class="large mdi mdi-18px mdi-light mdi-view-dashboard"></i></a>
+				</li>
+			</ul>
+		</div>
 
 		<header>
 			<nav class="top-nav z-depth-2 hoverable">
 				<div class="container">
 					<div class="nav-wrapper">
-						<span class="flow-text left-align">Upload APK</span>
+						<span class="flow-text left-align">Upload</span>
 					</div>
 				</div>
 			</nav>
@@ -159,24 +167,29 @@ HibernateSessionFactory.closeSession();
 
 				</li>
 				<li class="bold">
-					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="material-icons">toc</i> 控制台</a>
+					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-view-dashboard"></i> 控制台</a>
 				</li>
 				<%if((Boolean)upload){ %>
 				<li class="bold active red lighten-4">
-					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
-				</li><%} %>
+					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-upload"></i> 文件上传</a>
+				</li>
+				<%} %>
 				<li class="bold">
-					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
+					<a href="message.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-message"></i>消息通知
+						<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span>
+						<%}%>
+					</a>
 				</li>
 				<li class="bold">
-					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
+					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-chart-bar"></i> 统计管理</a>
 				</li>
 				<%if((Boolean)is_admin){ %>
 				<li class="bold">
-					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
-				</li><%} %>
+					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-account-edit"></i> 用户管理</a>
+				</li>
+				<%} %>
 				<li class="bold">
-					<a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
+					<a href="search.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-magnify"></i> 查找</a>
 				</li>
 
 				<li class="li-hover">
@@ -186,7 +199,7 @@ HibernateSessionFactory.closeSession();
 					<p class="ultra-small margin more-text">MORE</p>
 				</li>
 				<li>
-					<a href="aboutus.jsp"><i class="material-icons">turned_in</i>关于我们</a>
+					<a href="aboutus.jsp"><i class="large mdi mdi-24px mdi-dark mdi-information-outline"></i>关于我们</a>
 				</li>
 				<li class="li-hover">
 					<div class="divider"></div>
@@ -207,7 +220,8 @@ HibernateSessionFactory.closeSession();
 				</li>
 
 			</ul>
-		</header><main>
+		</header>
+		<main>
 			<div class="container">
 
 				<!--right start-->
@@ -222,38 +236,38 @@ HibernateSessionFactory.closeSession();
 					<div class="card col s12 hoverable">
 						<div id="upload" class="section scrollspy">
 							<!--start-->
-								<form method="post" enctype="multipart/form-data" action="/ApkAnalyzePlatform/Upload" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
-									<div class="file-field input-field col s12">
-										<div class="btn">
-											<span>选择一个文件</span>
-											<input type="file" name="uploadFile">
-										</div>
-										<div class="file-path-wrapper">
-											<input class="file-path validate" type="text">
-										</div>
+							<form method="post" enctype="multipart/form-data" action="/ApkAnalyzePlatform/Upload" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
+								<div class="file-field input-field col s12">
+									<div class="btn">
+										<span>选择一个文件</span>
+										<input type="file" name="uploadFile">
 									</div>
+									<div class="file-path-wrapper">
+										<input class="file-path validate" type="text">
+									</div>
+								</div>
 
-									<div class="input-field col s12">
-										<select name="type" class="browser-default">
-											<option value="系统工具">系统工具</option>
-											<option value="桌面插件">桌面插件</option>
-											<option value="资讯阅读">资讯阅读</option>
-											<option value="社交聊天">社交聊天</option>
-											<option value="影音娱乐">影音娱乐</option>
-											<option value="生活服务">生活服务</option>
-											<option value="实用工具">实用工具</option>
-											<option value="文档商务">文档商务</option>
-											<option value="金融财经">金融财经</option>
-											<option value="运动健康">运动健康</option>
-											<option value="学习教育">学习教育</option>
-											<option value="出行交通">出行交通</option>
-											<option value="其它">其它</option>
-										</select>
-									</div>
-									<div class="col s12">
-										<input type="submit" value="上传" class="btn">
-									</div>
-								</form>
+								<div class="input-field col s12">
+									<select name="type" class="browser-default">
+										<option value="系统工具">系统工具</option>
+										<option value="桌面插件">桌面插件</option>
+										<option value="资讯阅读">资讯阅读</option>
+										<option value="社交聊天">社交聊天</option>
+										<option value="影音娱乐">影音娱乐</option>
+										<option value="生活服务">生活服务</option>
+										<option value="实用工具">实用工具</option>
+										<option value="文档商务">文档商务</option>
+										<option value="金融财经">金融财经</option>
+										<option value="运动健康">运动健康</option>
+										<option value="学习教育">学习教育</option>
+										<option value="出行交通">出行交通</option>
+										<option value="其它">其它</option>
+									</select>
+								</div>
+								<div class="col s12">
+									<input type="submit" value="上传" class="btn">
+								</div>
+							</form>
 
 							<!--end-->
 						</div>
@@ -272,7 +286,7 @@ HibernateSessionFactory.closeSession();
 				<!--right end-->
 
 			</div>
-			
+
 		</main>
 
 		<!--foot start-->
@@ -285,8 +299,6 @@ HibernateSessionFactory.closeSession();
 			</div>
 		</footer>
 		<!--foot end-->
-		
-		
 
 	</body>
 
@@ -297,7 +309,6 @@ HibernateSessionFactory.closeSession();
 		});
 	</script>
 
-	
 	<!--Script End-->
 
 </html>

@@ -58,7 +58,6 @@ public class ApkStatistics extends HttpServlet {
 		{
 			System.out.println(startMonth+endMonth);
 			Map uploadDateMap=uploadDateStatistics(startMonth,endMonth);
-			System.out.println("aaaaaaaaaa"+uploadDateMap);
 			request.setAttribute("uploadDateMap", uploadDateMap);
 		}
 		
@@ -66,7 +65,6 @@ public class ApkStatistics extends HttpServlet {
 		if(minSize.isEmpty()==false&&maxSize.isEmpty()==false)
 		{
 			Map fileSizeMap=fileSizeStatistics(minSize,maxSize);
-			System.out.println("aaaaaaaaa"+fileSizeMap);
 			request.setAttribute("fileSizeMap", fileSizeMap);
 		}
 		
@@ -160,7 +158,6 @@ public class ApkStatistics extends HttpServlet {
 			Map fileSizeNum=new LinkedHashMap();
 			int size=Integer.parseInt(minSize);
 			int maxSizeInt=Integer.parseInt(maxSize);
-			System.out.println("size=========="+size);
 			while(size<maxSizeInt)
 			{
 				int midSize=size+10;

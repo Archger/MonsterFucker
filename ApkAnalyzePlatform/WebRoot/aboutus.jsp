@@ -19,6 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<head>
 		<title>About us</title>
 		<meta charset="utf-8" />
+    	<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
 		<!--Import Google Icon Font-->
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 		<!--Import materialize.css-->
@@ -72,7 +73,7 @@ HibernateSessionFactory.closeSession();
 
 		<div class="fixed-action-btn">
 			<a class="btn-floating btn-large red" href="dashboard.jsp">
-				<i class="large material-icons">replay</i>
+				<i class="large mdi mdi-24px mdi-light mdi-replay"></i>
 			</a>
 		</div>
 

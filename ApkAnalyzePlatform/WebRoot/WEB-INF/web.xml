@@ -41,7 +41,6 @@
     <servlet-name>Regest</servlet-name>
     <url-pattern>/regestpatten</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>Search</servlet-name>
     <servlet-class>com.analysis.search.Search</servlet-class>
@@ -50,7 +49,6 @@
     <servlet-name>Search</servlet-name>
     <url-pattern>/searchpattern</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>SignOut</servlet-name>
     <servlet-class>com.analysis.user.Sign_out</servlet-class>
@@ -60,42 +58,46 @@
     <url-pattern>/signoutpatten</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>AStatistics</servlet-name>
-  	<servlet-class>com.analysis.statistic.ApkStatistics</servlet-class>
+    <servlet-name>AStatistics</servlet-name>
+    <servlet-class>com.analysis.statistic.ApkStatistics</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>AStatistics</servlet-name>
-  	<url-pattern>/AStatistics</url-pattern>
+    <servlet-name>AStatistics</servlet-name>
+    <url-pattern>/AStatistics</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>UStatistics</servlet-name>
-  	<servlet-class>com.analysis.statistic.UserStatistics</servlet-class>
+    <servlet-name>UStatistics</servlet-name>
+    <servlet-class>com.analysis.statistic.UserStatistics</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>UStatistics</servlet-name>
-  	<url-pattern>/UStatistics</url-pattern>
+    <servlet-name>UStatistics</servlet-name>
+    <url-pattern>/UStatistics</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>userm</servlet-name>
+    <servlet-class>com.analysis.user.userm</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>userm</servlet-name>
+    <url-pattern>/usermanagerpattern</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Showpage</servlet-name>
+    <servlet-class>com.analysis.search.Showpage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Showpage</servlet-name>
+    <url-pattern>/Showpage</url-pattern>
   </servlet-mapping>
   
   <servlet>
-  	<servlet-name>userm</servlet-name>
-  	<servlet-class>com.analysis.user.userm</servlet-class>
+    <servlet-name>APKMs</servlet-name>
+    <servlet-class>com.analysis.APK.Apk_message</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>userm</servlet-name>
-  	<url-pattern>/usermanagerpattern</url-pattern>
+    <servlet-name>APKMs</servlet-name>
+    <url-pattern>/Apkmessage</url-pattern>
   </servlet-mapping>
-  
-  <servlet>
-  	<servlet-name>Showpage</servlet-name>
-  	<servlet-class>com.analysis.search.Showpage</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>Showpage</servlet-name>
-  	<url-pattern>/Showpage</url-pattern>
-  </servlet-mapping>
-  
-  
-  
   
   <filter>
     <filter-name>SecurityFilter</filter-name>
