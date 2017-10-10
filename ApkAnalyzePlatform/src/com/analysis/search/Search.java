@@ -68,10 +68,14 @@ public class Search extends HttpServlet {
 			{
 				Criteria cri2 = session2.createCriteria(User.class);
 				cri2.add(Restrictions.like("username","%"+tmp+"%"));
-				List<User> l = cri.list();
+				List<User> l = cri2.list();
+				System.out.println("OK **********");
 				for(int i = 0;i < l.size();i++){
 					for(int j  = 0;j < list.size();j ++){
-						if(list.get(j).getDeveloperId() == l.get(i).getUserId()){
+						Integer tmp1 = list.get(j).getDeveloperId();
+						Integer tmp2 = l.get(i).getUserId();
+						System.out.println("****************** "+tmp1+" "+tmp2);
+						if(tmp1.compareTo(tmp2)==0){
 							res.add(list.get(j));
 						}
 					}

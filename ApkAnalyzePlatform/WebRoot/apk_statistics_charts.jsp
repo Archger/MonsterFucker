@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 
 	<head>
-		<title>Statistic</title>
+		<title>Apk统计</title>
 		<meta charset="utf-8" />
     	<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
 		<!--Import Google Icon Font-->
@@ -33,23 +33,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			.side-nav-bar {
 				position: fixed !important;
 			}
-			
-			#type {
-				opacity: 0.7;
-			}
-			
-			#permission {
-				opacity: 0.7;
-			}
-			
-			#size {
-				opacity: 0.7;
-			}
-			
-			#date {
-				opacity: 0.7;
-			}
-			
 			header,
 			main,
 			footer {
@@ -65,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			
 			body {
-				background-image: url(images/loginback3.jpg);
+				background-image: url(images/back_demo.jpg);
 				display: flex;
 				min-height: 100vh;
 				flex-direction: column;
@@ -124,40 +107,33 @@ HibernateSessionFactory.closeSession();
 			<nav class="top-nav z-depth-2 hoverable">
 				<div class="container">
 					<div class="nav-wrapper">
-						<span class="flow-text left-align">Statistic</span>
+						<span class="flow-text left-align">APK统计信息</span>
 					</div>
 				</div>
 			</nav>
 
-			<ul id="slide-out" class="side-nav fixed z-depth-4 hoverable">
-				<li class="logo"> <img src="images/materialize-logo.png" /> </li>
+			<ul id="slide-out" class="side-nav fixed z 	-depth-4 hoverable">
+				<li class="logo"> <img src="images/logo2.1.png" class="responsive-img" /> </li>
 				<li>
-					<div class="userView row col s12">
+					<div class="userView  row col s12">
 						<div class="background">
 							<img src="images/user.jpg" class="responsive-img">
 						</div>
 
 						<div class="col s12">
-							<div class="col s1"></div>
-							<div class="col s10">
-								<img class="circle responsive-img" src="images/sample4.jpg">
-							</div>
-							<div class="col s1"></div>
-						</div>
-						<div class="col s12">
-							<span>
+							<span class>
 				  	  	<!-- Dropdown Trigger -->
-						  <a class='dropdown-button black-text left' data-activates='dropdownuser'><%=username %></a>
+						  <a class='dropdown-button black-text left ' data-activates='dropdownuser'><%=username %></a>
 						
 						  <!-- Dropdown Structure -->
 						  <ul id='dropdownuser' class='dropdown-content'>
 						    <li><a href="/ApkAnalyzePlatform/signoutpatten">退出登录</a></li>
 						  </ul>
 				  	  </span></div>
-						<div class="col s12">
+						<div class="col s12" >
 							<span class="black-text"><%
                                 if((Boolean)is_admin)
-                                {
+                                 {
                                 	%>管理员<%
                                 }
                                 else
@@ -170,7 +146,7 @@ HibernateSessionFactory.closeSession();
 
 				</li>
 				<li class="bold">
-					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-view-dashboard"></i> 控制台</a>
+					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-view-dashboard"></i>首页</a>
 				</li>
 				<%if((Boolean)upload){ %>
 				<li class="bold">
@@ -180,7 +156,10 @@ HibernateSessionFactory.closeSession();
 					<a href="message.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-message"></i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
 				</li>
 				<li class="bold active red lighten-4">
-					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-chart-bar"></i> 统计管理</a>
+					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-chart-line"></i> Apk统计</a>
+				</li>
+				<li class="bold">
+					<a href="user_statistics_charts.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-account-card-details"></i> 用户统计</a>
 				</li>
 				<%if((Boolean)is_admin){ %>
 				<li class="bold">
@@ -199,24 +178,6 @@ HibernateSessionFactory.closeSession();
 				<li>
 					<a href="aboutus.jsp"><i class="large mdi mdi-24px mdi-dark mdi-information-outline"></i>关于我们</a>
 				</li>
-				<li class="li-hover">
-					<div class="divider"></div>
-				</li>
-
-				<!--登录统计-->
-				<li class="li-hover">
-					<p class="ultra-small margin more-text">登录统计</p>
-				</li>
-				<li class="li-hover">
-					<div class="row">
-						<div class="col s12 m12 l12">
-							<div class="sample-chart-wrapper">
-								<div class="ct-chart ct-golden-section" id="ct2-chart"></div>
-							</div>
-						</div>
-					</div>
-				</li>
-
 			</ul>
 		</header>
 		<main>
@@ -225,7 +186,7 @@ HibernateSessionFactory.closeSession();
 				<!--right start-->
 				<div class="row">
 					<div class="col s12 m9 l10">
-						<div id="introduction" class="section scrollspy">
+						<div id="introduction" class="section scrollspy col s10">
 							<!--start-->
 
 							<!-- 类型统计 -->
@@ -240,14 +201,62 @@ HibernateSessionFactory.closeSession();
     	}
     	String centerLabel="总共"+sum+"个App";
        	%>
+							<script>
+FusionCharts.ready(function () {
+    var revenueChart = new FusionCharts({
+        type: 'doughnut2d',
+        renderAt: 'type',
+        width: '100%',
+		height: '100%',
+        dataFormat: 'json',
+        dataSource: {
+            "chart": {
+                "caption": "应用类型统计图",
+                "subCaption": "",
+                "numberPrefix": "",
+                "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
+                "bgColor": "#ffffff",
+                "showBorder": "0",
+                "use3DLighting": "0",
+                "showShadow": "1",
+                "enableSmartLabels": "1",
+                "startingAngle": "310",
+                "showLabels": "0",
+                "showPercentValues": "1",
+                "showLegend": "1",
+                "legendShadow": "0",
+                "legendBorderAlpha": "0",
+                "defaultCenterLabel": "<%=centerLabel%>",
+                "centerLabel": "$label: $value",
+                "centerLabelBold": "1",
+                "showTooltip": "0",
+                "decimals": "1",
+                "captionFontSize": "14",
+                "subcaptionFontSize": "14",
+                "subcaptionFontBold": "0"
+            },
+            "data": [
+      	<% for(Map.Entry entry:typeEntries){%>
+                {
+                    "label": "<%= entry.getKey()%>",
+                    "value": <%= entry.getValue()%>
+                }, 
+                
+          <%
+          }%>
+            ]
+        }
+    }).render();
+});
+</script>
 							
 
 							<br>
-							<div id="date"></div>
+							<div id="type">正在加载</div>
 							<%}%>
-							<!--end-->
+<!--end-->
 						</div>
-						<div id="structure" class="section scrollspy">
+						<div id="structure" class="section scrollspy col s10">
 							<!-- 权限统计 -->
 							<%if(request.getAttribute("permissionMap")!=null)
       {
@@ -364,11 +373,11 @@ HibernateSessionFactory.closeSession();
 							</script>
 
 							<br>
-							<div id="size"></div>
+							<div id="permission">正在加载</div>
 							<%}%>
 
 						</div>
-						<div id="initialization" class="section scrollspy">
+						<div id="initialization" class="section scrollspy col s10">
 							<!-- 上传时间统计 -->
 
 							<%if(request.getAttribute("uploadDateMap")!=null){
@@ -437,11 +446,11 @@ HibernateSessionFactory.closeSession();
 							</script>
 
 							<br>
-							<div id="type">FusionCharts XT will load here!</div>
+							<div id="date">正在加载</div>
 							<%}%>
 
 						</div>
-						<div id="initialization2" class="section scrollspy">
+						<div id="initialization2" class="section scrollspy col s10">
 							<!-- 文件大小统计 -->
 							<%if(request.getAttribute("fileSizeMap")!=null)
       {
@@ -524,25 +533,25 @@ HibernateSessionFactory.closeSession();
 							</script>
 
 							<br>
-							<div id="permission">FusionCharts XT will load here!</div>
+							<div id="size">正在加载</div>
 							<%}%>
 
 						</div>
 					</div>
 					<div class="col hide-on-small-only m3 l2">
 						<ul class="section table-of-contents side-nav-bar">
-						<%if(request.getAttribute("uploadDateMap")!=null) {%>
+						<%if(request.getAttribute("typeMap")!=null) {%>
 							<li>
-								<a href="#introduction">时间统计</a>
-							</li><%}if(request.getAttribute("fileSizeMap")!=null){ %>
-							<li>
-								<a href="#structure">大小统计</a>
-							</li><%}if(request.getAttribute("typeMap")!=null){ %>
-							<li>
-								<a href="#initialization">类型统计</a>
+								<a href="#introduction">类型统计</a>
 							</li><%}if(request.getAttribute("permissionMap")!=null){ %>
 							<li>
-								<a href="#initialization2">权限统计</a>
+								<a href="#structure">权限统计</a>
+							</li><%}if(request.getAttribute("uploadDateMap")!=null){ %>
+							<li>
+								<a href="#initialization">时间统计</a>
+							</li><%}if(request.getAttribute("fileSizeMap")!=null){ %>
+							<li>
+								<a href="#initialization2">大小统计</a>
 							</li><%} %>
 						</ul>
 					</div>
@@ -556,8 +565,8 @@ HibernateSessionFactory.closeSession();
 		<footer class="page-footer">
 			<div class="footer-copyright">
 				<div class="container">
-					Copyright MonsterFucker Team © 2017 All rights reserved.
-					<span class="right"> Design and Developed by  MonsterFucker's</span>
+					Copyright MonsterFighter Team © 2017 All rights reserved.
+					<span class="right"> Design and Developed by  MonsterFighter</span>
 				</div>
 			</div>
 		</footer>

@@ -52,8 +52,8 @@ public class loginJudge extends HttpServlet {
 	@Test
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//request.setCharacterEncoding("utf-8");
-
+		//request.setCharacterEncoding("utf-8")
+		System.out.println("ok is in login post");
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("UTF-8");
 		System.out.println("ok dopost success!");

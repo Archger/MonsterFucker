@@ -1,12 +1,10 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import = "com.analysis.cfg.HibernateSessionFactory" %>
-<%@ page import = "org.hibernate.Query" %>
-<%@ page import = "org.hibernate.Session"%>
-<%@ page import = "org.hibernate.Transaction" %>
-<%@ page import = "com.analysis.hibernate.*" %>
-<%@ page import = "org.hibernate.Criteria" %>
-
+<%@ page import="org.hibernate.*"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.analysis.hibernate.Message"%>
+<%@ page import="com.analysis.hibernate.User"%>
+<%@ page import="java.math.BigInteger"%>
+<%@ page import="com.analysis.cfg.HibernateSessionFactory"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -14,14 +12,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>Search</title>
-    <meta charset="utf-8" />
-    	<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
+
+	<head>
+		<title>User Statistic</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="css/style.css" type="text/css" > 
 		<!--Import Google Icon Font-->
-		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    	<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
 		<!--Import materialize.css-->
 		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 		<!--Let browser know website is optimized for mobile-->
@@ -30,38 +27,173 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<script type="text/javascript" src="FusionCharts/js/fusioncharts.js"></script>
 		<script type="text/javascript" src="FusionCharts/js/themes/fusioncharts.theme.fint.js"></script>
 
-		<style>
-			.side-nav-bar {
-				position: fixed !important;
-			}
-			
-			header,
-			main,
-			footer {
-				padding-left: 300px;
-			}
-			
-			@media only screen and (max-width: 992px) {
-				header,
-				main,
-				footer {
-					padding-left: 0;
-				}
-			}
-			
-			body {
-				background-image: url(images/back_demo.jpg);
-				display: flex;
-				min-height: 100vh;
-				flex-direction: column;
-			}
-		
-			main {
-				flex: 1 0 auto;
-			}
-		</style>
-  </head>
-  <body>
+		<%
+    	Session se= HibernateSessionFactory.getSession();
+    %>
+     <!-- 权限统计 -->
+    <%
+    		
+			Transaction tx2=se.beginTransaction();
+			//-------------------------------------------------------
+			String adminHQL="select count(userId) from User where isAdmin=true";
+			String uploadHQL="select count(userId) from User where upload=1";
+			String downloadHQL="select count(userId) from User where download=1";
+			Query adminQuery=se.createQuery(adminHQL);
+			Query uploadQuery=se.createQuery(uploadHQL);
+			Query downloadQuery=se.createQuery(downloadHQL);
+			Long adminNum= (Long)adminQuery.uniqueResult();
+			Long uploadNum= (Long)uploadQuery.uniqueResult();
+			Long downloadNum=(Long)downloadQuery.uniqueResult();
+			//-------------------------------------------------------
+			tx2.commit();
+     %>
+   
+
+   <script>
+	FusionCharts.ready(function(){
+	    var myChart = new FusionCharts({
+	        type: 'MSColumn2D',
+	        dataFormat: 'json',
+	        renderAt: 'permission',
+	        width: '100%',
+	        height: '100%',
+	        dataSource: {
+	            "chart": {
+	                "caption": "用户权限统计图",
+	                "subCaption": "",
+	                "showBorder": "0",
+	                "xAxisName": "权限",
+	                "yAxisName": "用户数量",
+	                "numberSuffix": "",
+	                "baseFontColor" : "#333333",
+	                "baseFont" : "Helvetica Neue,Arial",
+	                "paletteColors" : "#69f0ae",
+	                "bgColor" : "#ffffff",
+	                "canvasBgColor" : "#ffffff",                                 
+	                "captionFontSize" : "14",
+	                "subcaptionFontSize" : "14",
+	                "subcaptionFontBold" : "0",
+	                "showBorder" : "0",
+	                "showPlotBorder": "0",
+	                "showXAxisLine" : "1",
+	                "showLegend": "0",
+	                "showShadow" : "1",
+	                "showCanvasBorder" : "0",
+	                "showAlternateHGridColor" : "0",
+	                "usePlotGradientColor" :"0",
+	                "divlineColor" : "#999999",
+	                "divlineThickness" : "1",
+	                "divLineIsDashed" : "1",
+	                "divLineDashLen" : "1",
+	                "divLineGapLen" : "1",
+	                "xAxisLineThickness" : "1",
+	                "xAxisLineColor" : "#999999",
+	                "toolTipColor": "#ffffff",
+	                "toolTipBorderThickness": "0",
+	                "toolTipBgColor": "#000000",
+	                "toolTipBgAlpha": "80",
+	                "toolTipBorderRadius": "2",
+	                "toolTipPadding": "5"
+	            },
+	      
+	                "categories": [
+	                {
+	                  "category": [
+	                        { "label": "管理员权限" },
+							{ "label": "上传权限" },
+							{ "label": "下载权限" }
+	                    ]
+	                }
+	            ],
+	            "dataset": [
+	                {
+	                    "seriesname": "Loading Time",
+	                    "allowDrag": "0",
+	                   "data": [
+	              		    { "value": "<%= adminNum%>" },
+	                        { "value": "<%= uploadNum%>" },
+	       				    { "value": "<%= downloadNum%>" }
+	                    ]
+	                }
+	            ]
+	        }
+	    }).render();
+	});
+	</script>
+	
+	   <!-- 上传时间 -->
+      <%
+      Transaction tx3=se.beginTransaction();
+			//-------------------------------------------------------
+			String sql="SELECT DATE_FORMAT(register_date,'%Y-%m') as month, count(user_id) FROM user where register_date>DATE_SUB(CURDATE(), INTERVAL 7 MONTH) group by month";
+			SQLQuery sqlQuery=se.createSQLQuery(sql);
+			List<Object[]> list=sqlQuery.list();%>
+			<script>
+			FusionCharts.ready(function(){
+			    var salesChart = new FusionCharts({
+			        type: 'scrollline2d',
+			        dataFormat: 'json',
+			        renderAt: 'date',
+			        width: '100%',
+			        height: '100%',
+			        dataSource: {
+			            "chart": {
+			                "caption": "注册时间统计图",
+			                "subCaption": "",
+			                "xAxisName": "月份",
+			                "yAxisName": "注册用户数",
+			                "showValues": "0",
+			                "numberPrefix": "",
+			                "showBorder": "0",
+			                "showShadow": "1",
+			                "bgColor": "#ffffff",
+			                "paletteColors": "#69f0ae",
+			                "showCanvasBorder": "0",
+			                "showAxisLines": "0",
+			                "showAlternateHGridColor": "0",
+			                "divlineAlpha": "100",
+			                "divlineThickness": "1",
+			                "divLineIsDashed": "1",
+			                "divLineDashLen": "1",
+			                "divLineGapLen": "1",
+			                "lineThickness": "3",  
+			                "flatScrollBars": "1",
+			                "scrollheight": "10",
+			                "numVisiblePlot": "12",
+			                "showHoverEffect":"1"
+			            },
+			            "categories": [
+			                {
+			                    "category": [
+			                    <%for(Object[] item:list){%>
+			                        { "label": "<%=(String)item[0]%>" },
+			                        <%}%>
+			                       
+			                    ]
+			                }
+			            ],
+			            "dataset": [
+			                {
+			                    "data": [
+			                       <%for(Object[] item:list){%>
+			                        { "value": "<%=(BigInteger)item[1]%>" },
+			                        <%}%>
+			                       
+			                    ]
+			                }
+			            ]
+			        }
+			    }).render();
+			});
+			</script>
+			<%
+			//-------------------------------------------------------
+			tx3.commit();
+       %>
+
+	</head>
+
+	<body>
 		<!--java start-->
 		<%
 //request.setCharacterEncoding("utf-8");
@@ -70,25 +202,20 @@ Object username=request.getSession().getAttribute("username");
 Object is_admin=request.getSession().getAttribute("is_admin");
 Object upload=request.getSession().getAttribute("upload");
 Object download=request.getSession().getAttribute("download");
-System.out.println(username+" "+is_admin);
 int un_read_num=0;
-Session session2=HibernateSessionFactory.getSession();
-Transaction tx2 = session2.beginTransaction();
+Session session7=HibernateSessionFactory.getSession();
+Transaction tx7 = session7.beginTransaction();
 //----------------------------------------------
 Message message = new Message();  
-Query q = session2.createQuery("from Message where receiver_id = ?");  
-q.setParameter(0, user_id.toString());
-System.out.println("user_id = "+user_id.toString());
-List<Message> list=q.list();
-System.out.println("list size = "+list.size());
-for(int i=0;i<list.size();i++)
+Query q7 = session7.createQuery("from Message where receiver_id = ?");  
+q7.setParameter(0, user_id.toString());
+List<Message> list7=q7.list();
+for(int i=0;i<list7.size();i++)
 {
-	if(!list.get(i).getIsRead())
+	if(!list7.get(i).getIsRead())
 		un_read_num++;
 }
-System.out.println(un_read_num);
-tx2.commit();
-HibernateSessionFactory.closeSession();
+tx7.commit();
  %>
 		<!--java end-->
 
@@ -98,13 +225,14 @@ HibernateSessionFactory.closeSession();
 		
 		 <div class="fixed-action-btn">
     <a class="btn-floating btn-large red">
-      <i class="large material-icons">mode_edit</i>
+      <i class="large mdi mdi-24px mdi-light mdi-pencil"></i>
     </a>
     <ul>
-      <li><a class="btn-floating red" href="statistic.jsp"><i class="material-icons">insert_chart</i></a></li>
-      <li><a class="btn-floating yellow darken-1" href="message.jsp"><i class="material-icons">question_answer</i></a></li>
-      <li><a class="btn-floating green" href="upload.jsp"><i class="material-icons">publish</i></a></li>
-      <li><a class="btn-floating blue" href="dashboard.jsp"><i class="material-icons">perm_identity</i></a></li>
+    <%if((Boolean)is_admin){%> <li><a class="btn-floating pink" href="usermanager.jsp"><i class="large mdi mdi-18px mdi-light mdi-account-edit"></i></a></li><%} %>
+     <li><a class="btn-floating red" href="statistic.jsp"><i class="large mdi mdi-18px mdi-light mdi-chart-bar"></i></a></li>
+      <li><a class="btn-floating yellow darken-1" href="message.jsp"><i class="large mdi mdi-18px mdi-light mdi-message"></i></a></li>
+     <%if((Boolean)upload){%><li><a class="btn-floating green" href="upload.jsp"><i class="large mdi mdi-18px mdi-light mdi-upload"></i></a></li><%} %> 
+      <li><a class="btn-floating blue" href="dashboard.jsp"><i class="large mdi mdi-18px mdi-light mdi-view-dashboard"></i></a></li>
     </ul>
   </div>
 
@@ -112,13 +240,13 @@ HibernateSessionFactory.closeSession();
 			<nav class="top-nav z-depth-2 hoverable">
 				<div class="container">
 					<div class="nav-wrapper">
-						<span class="flow-text left-align">Dashboard</span>
+						<span class="flow-text left-align">User Statistic</span>
 					</div>
 				</div>
 			</nav>
 
 			<ul id="slide-out" class="side-nav fixed z-depth-4 hoverable">
-				<li class="logo"> <img src="images/materialize-logo.png" /> </li>
+				<li class="logo"> <img src="images/logo2.0.png" class="responsive-img" /> </li>
 				<li>
 					<div class="userView row col s12">
 						<div class="background">
@@ -157,25 +285,28 @@ HibernateSessionFactory.closeSession();
 					</div>
 
 				</li>
-				<li class="bold active red lighten-4">
-					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="mdi mdi-24px mdi-dark mdi-account"></i>控制台</a>
+				<li class="bold">
+					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-view-dashboard"></i> 控制台</a>
 				</li>
 				<%if((Boolean)upload){ %>
 				<li class="bold">
-					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="material-icons">present_to_all</i> 文件上传</a>
+					<a href="upload.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-upload"></i> 文件上传</a>
 				</li><%} %>
 				<li class="bold">
-					<a href="message.jsp" class="waves-effect waves-cyan"><i class="material-icons">message</i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
+					<a href="message.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-message"></i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
 				</li>
 				<li class="bold">
-					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="material-icons">assessment</i> 统计管理</a>
+					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-chart-line"></i> Apk统计</a>
+				</li>
+				<li class="bold active red lighten-4">
+					<a href="user_statistics_charts.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-account-card-details"></i> 用户统计</a>
 				</li>
 				<%if((Boolean)is_admin){ %>
 				<li class="bold">
-					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="material-icons">perm_identity</i> 用户管理</a>
+					<a href="usermanager.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-account-edit"></i> 用户管理</a>
 				</li><%} %>
 				<li class="bold">
-					<a href="search.jsp" class="waves-effect waves-cyan"><i class="material-icons">search</i> 查找</a>
+					<a href="search.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-magnify"></i> 查找</a>
 				</li>
 
 				<li class="li-hover">
@@ -185,7 +316,7 @@ HibernateSessionFactory.closeSession();
 					<p class="ultra-small margin more-text">MORE</p>
 				</li>
 				<li>
-					<a href="aboutus.jsp"><i class="material-icons">turned_in</i>关于我们</a>
+					<a href="aboutus.jsp"><i class="large mdi mdi-24px mdi-dark mdi-information-outline"></i>关于我们</a>
 				</li>
 				<li class="li-hover">
 					<div class="divider"></div>
@@ -215,100 +346,25 @@ HibernateSessionFactory.closeSession();
 					<div class="col s12 m9 l10">
 						<div id="introduction" class="section scrollspy">
 							<!--start-->
-							<form action  = "/ApkAnalyzePlatform/searchpattern" method = "post">
-        名称 <input name = "apkName" type = "text" ><br>
-        类型<select name = "apkType" class="browser-default">
-											<option value="">选择类型</option>
-											<option value="系统工具">系统工具</option>
-											<option value="桌面插件">桌面插件</option>
-											<option value="资讯阅读">资讯阅读</option>
-											<option value="社交聊天">社交聊天</option>
-											<option value="影音娱乐">影音娱乐</option>
-											<option value="生活服务">生活服务</option>
-											<option value="实用工具">实用工具</option>
-											<option value="文档商务">文档商务</option>
-											<option value="金融财经">金融财经</option>
-											<option value="运动健康">运动健康</option>
-											<option value="学习教育">学习教育</option>
-											<option value="出行交通">出行交通</option>
-											<option value="其它">其它</option>
-										</select><br>
-        开发者<input name = "developer_name" type = "text" ><br>  
-        版本     <input name = "versionName" type = "text" ><br>
-        <input name = "submit" type = "submit" class="btn">
-        </form>
+							  <!-- 用户总数 -->
+    <%
+			Transaction tx1=se.beginTransaction();
+			//-------------------------------------------------------
+			String hql="select count(userId) from User";
+			Query query=se.createQuery(hql);
+			Long totalNum= (Long) query.uniqueResult();%>
+			<p class="flow-text">用户总数：<%= totalNum%></p>
+			<%
+			//-------------------------------------------------------
+			tx1.commit();
+			HibernateSessionFactory.closeSession();
+
+     %>
+        <div id="permission" class="col s10">正在加载</div>
 							<!--end-->
 						</div>
 						<div id="structure" class="section scrollspy">
-							<table>
-        <tr>
-            <td> 产品名称</td>
-            <td> 开发者    </td>
-            <td> 产品类型 </td>
-            <td> 版本          </td>
-            <td> 是否有权限获取手机状态</td>
-        </tr>
-    <c:forEach var = "i" items = "${list2}" varStatus = "f">
-       <tr>
-           <td>${i.apkName}</td>
-           <td>${i.developerId}</td>
-           <td>${i.apkType}</td>
-           <td>${i.versionName }</td>
-           <td>${i.readPhoneState}</td>
-       </tr>
-    </c:forEach>
-   </table>
-    <div>
-                             第${page.pageno }/${page.totalpage}页 &nbsp;&nbsp;
-         <a href = "fenye?pageNo = 1">首页</a>
-         <c:choose>
-             <c:when test = "${page.pageno gt 1 }">
-                 <a href = "Showpage?pageNo=${page.pageno-1}">上一页</a>
-             </c:when>
-             <c:otherwise>
-                 <a href = "javascript:alert('已经是第一页')">上一页</a>
-             </c:otherwise>
-         </c:choose>
-         <c:choose>
-             <c:when test = "${page.pageno lt page.totalpage }">
-                 <a href  ="Showpage?pageNo=${page.pageno+1}">下一页</a>
-             </c:when>
-             <c:otherwise>
-                 <a href = "javascript:alert('已经是最后一页')">下一页</a>
-             </c:otherwise>
-         </c:choose>     
-         <a href = "Showpage?pageNo=${page.totalpage}">末页</a>
-         &nbsp;&nbsp;
-                                 共${page.totalcount } 条    
-    </div>
-
-						</div>
-						<div id="initialization" class="section scrollspy">
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
-							<p>内容 </p>
+							<div id="date" class="col s10">正在加载</div>
 
 						</div>
 					</div>
@@ -320,34 +376,11 @@ HibernateSessionFactory.closeSession();
 							<li>
 								<a href="#structure">结构</a>
 							</li>
-							<li>
-								<a href="#initialization">初始化</a>
-							</li>
 						</ul>
 					</div>
 				</div>
 				<!--right end-->
 
-				<div class="file-field input-field">
-					<div class="btn">
-						<span>文件</span>
-						<input type="file" />
-					</div>
-					<div class="file-path-wrapper">
-						<input class="file-path validate" type="text" />
-					</div>
-				</div>
-				<nav>
-					<div class="nav-wrapper">
-						<form>
-							<div class="input-field hoverable">
-								<input id="search" type="search" required="" />
-								<label class="label-icon" for="search"><i class="material-icons">search</i></label>
-								<i class="material-icons">close</i>
-							</div>
-						</form>
-					</div>
-				</nav>
 			</div>
 		</main>
 
@@ -364,5 +397,13 @@ HibernateSessionFactory.closeSession();
 
 	</body>
 
-    
+	<!--Script start-->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.scrollspy').scrollSpy();
+		});
+	</script>
+
+	<!--Script End-->
+
 </html>

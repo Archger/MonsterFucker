@@ -9,6 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
+   <servlet>
+    <servlet-name>dsearch</servlet-name>
+    <servlet-class>com.analysis.search.DashBoardSearch</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>dsearch</servlet-name>
+    <url-pattern>/DashSearch</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>upload</servlet-name>
     <servlet-class>com.analysis.APK.Upload</servlet-class>
@@ -89,7 +97,22 @@
     <servlet-name>Showpage</servlet-name>
     <url-pattern>/Showpage</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+    <servlet-name>Showpage1</servlet-name>
+    <servlet-class>com.analysis.view.Showpage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Showpage1</servlet-name>
+    <url-pattern>/showpage1</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>showpage</servlet-name>
+    <servlet-class>com.analysis.statistic.Showpage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>showpage</servlet-name>
+    <url-pattern>/showpage</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>APKMs</servlet-name>
     <servlet-class>com.analysis.APK.Apk_message</servlet-class>
@@ -98,7 +121,6 @@
     <servlet-name>APKMs</servlet-name>
     <url-pattern>/Apkmessage</url-pattern>
   </servlet-mapping>
-  
   <filter>
     <filter-name>SecurityFilter</filter-name>
     <filter-class>com.analysis.cfg.SecurityFilter</filter-class>

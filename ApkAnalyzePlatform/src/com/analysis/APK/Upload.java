@@ -42,7 +42,7 @@ public class Upload extends HttpServlet {
      
     // 上传文件存储目录
     private static final String UPLOAD_DIRECTORY = "upload";
- 
+    private Object user_id;
     // 上传配置
     private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
@@ -129,6 +129,7 @@ public class Upload extends HttpServlet {
                 	//处理普通文本（apk的类型）
                 	else if(item.isFormField())
                 	{
+            			user_id=request.getSession().getAttribute("user_id");
                 		Apk apk=storeInfo(tempApkInfo,item.getString("utf-8"),date,fileSize);
                 		request.setAttribute("apk",apk );
                 		request.setAttribute("iconPath", apk.getIconDirectory());
@@ -137,6 +138,8 @@ public class Upload extends HttpServlet {
                 	else
                 	{
                 		request.setAttribute("message", "只能上传.apk文件");
+                	    getServletContext().getRequestDispatcher("/upload_fail.jsp").forward(
+                                request, response);
                 		break;
                 	}
                 }
@@ -180,7 +183,7 @@ public class Upload extends HttpServlet {
     			apk.setApkType(type);
     			apk.setUploadDate(date);
     			apk.setFileSize(fileSize);
-    			//传用户id apk.setDeveloperId(developerId);
+    			apk.setDeveloperId((Integer)user_id);
     		    apk.setVersionName(apkInfo.getVersionName());
     		    apk.setIconDirectory(storeIcon(apkInfo.getApplicationIcon(),apkPath));
     		    

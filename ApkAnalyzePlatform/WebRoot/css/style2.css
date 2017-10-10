@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+			.card{
+				opacity: 0.7;
+			}
+			.side-nav-bar {
+				position: fixed !important;
+			}
+			
+			header,
+			main,
+			footer {
+				padding-left: 300px;
+			}
+			
+			@media only screen and (max-width: 992px) {
+				header,
+				main,
+				footer {
+					padding-left: 0;
+				}
+			}
+			
+			body {
+				background-image: url(../images/back_demo.jpg)!important;
+				display: flex;
+				min-height: 100vh;
+				flex-direction: column;
+			}
+			
+			main {
+				flex: 1 0 auto;
+			}

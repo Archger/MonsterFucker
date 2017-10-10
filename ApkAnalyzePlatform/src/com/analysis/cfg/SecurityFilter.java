@@ -88,6 +88,13 @@ public class SecurityFilter implements Filter {
         		gotoUrl="/dashboard.jsp";
         	}
         }
+        else if(currentUrl.length()>=27&&currentUrl.substring(0, 27).equals("/user_statistics_charts.jsp")){
+        	Object is_admin =  res.getSession().getAttribute("is_admin");
+        	if(!(Boolean)is_admin){
+        		filter=true;
+        		gotoUrl="/dashboard.jsp";
+        	}
+        }
 
         return filter;  
 

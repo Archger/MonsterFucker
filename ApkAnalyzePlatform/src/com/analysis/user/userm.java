@@ -61,8 +61,7 @@ public class userm extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		String button = request.getParameter("Submit");
-		System.out.println("wow");
-		if(button.equals("delete") )
+		if(button.equals("删除") )
 		{
 			String []st = request.getParameterValues("delete");
 			if(st!=null)
@@ -82,7 +81,7 @@ public class userm extends HttpServlet {
 			}
 			request.getRequestDispatcher("usermanager.jsp").forward(request,response);
 		}
-		else if(button.equals("modify"))
+		else if(button.equals("修改"))
 		{
 			Session session = HibernateSessionFactory.getSession();
 		    Transaction tx2 = session.beginTransaction();

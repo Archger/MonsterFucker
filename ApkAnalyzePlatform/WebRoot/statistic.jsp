@@ -30,40 +30,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<script type="text/javascript" src="FusionCharts/js/fusioncharts.js"></script>
 		<script type="text/javascript" src="FusionCharts/js/themes/fusioncharts.theme.fint.js"></script>
 
-		<style>
-			.side-nav-bar {
-				position: fixed !important;
-			}
-			
-			.card{
-				opacity: 0.7;
-			}
-			
-			header,
-			main,
-			footer {
-				padding-left: 300px;
-			}
-			
-			@media only screen and (max-width: 992px) {
-				header,
-				main,
-				footer {
-					padding-left: 0;
-				}
-			}
-			
-			body {
-				background-image: url(images/back_demo.jpg);
-				display: flex;
-				min-height: 100vh;
-				flex-direction: column;
-			}
-			
-			main {
-				flex: 1 0 auto;
-			}
-		</style>
+		
+		<link rel="stylesheet" href="css/style.css" type="text/css" > 
 
 	</head>
 
@@ -107,49 +75,45 @@ HibernateSessionFactory.closeSession();
       <i class="large mdi mdi-24px mdi-light mdi-pencil"></i>
     </a>
     <ul>
-      <li><a class="btn-floating red" href="statistic.jsp"><i class="large mdi mdi-18px mdi-light mdi-chart-bar"></i></a></li>
+    <%if((Boolean)is_admin){%> <li><a class="btn-floating pink" href="usermanager.jsp"><i class="large mdi mdi-18px mdi-light mdi-account-edit"></i></a></li><%} %>
+     <li><a class="btn-floating red" href="statistic.jsp"><i class="large mdi mdi-18px mdi-light mdi-chart-bar"></i></a></li>
       <li><a class="btn-floating yellow darken-1" href="message.jsp"><i class="large mdi mdi-18px mdi-light mdi-message"></i></a></li>
-      <li><a class="btn-floating green" href="upload.jsp"><i class="large mdi mdi-18px mdi-light mdi-upload"></i></a></li>
+     <%if((Boolean)upload){%><li><a class="btn-floating green" href="upload.jsp"><i class="large mdi mdi-18px mdi-light mdi-upload"></i></a></li><%} %> 
       <li><a class="btn-floating blue" href="dashboard.jsp"><i class="large mdi mdi-18px mdi-light mdi-view-dashboard"></i></a></li>
     </ul>
   </div>
+
 
 
 		<header>
 			<nav class="top-nav z-depth-2 hoverable">
 				<div class="container">
 					<div class="nav-wrapper">
-						<span class="flow-text left-align">Statistic</span>
+						<span class="flow-text left-align">APK统计</span>
 					</div>
 				</div>
 			</nav>
 
-			<ul id="slide-out" class="side-nav fixed z-depth-4 hoverable">
-				<li class="logo"> <img src="images/materialize-logo.png" /> </li>
+			<ul id="slide-out" class="side-nav fixed z 	-depth-4 hoverable">
+				<li class="logo"> <img src="images/logo2.1.png" class="responsive-img" /> </li>
 				<li>
-					<div class="userView row col s12">
+					<div class="userView  row col s12">
 						<div class="background">
 							<img src="images/user.jpg" class="responsive-img">
 						</div>
 
+						
 						<div class="col s12">
-							<div class="col s1"></div>
-							<div class="col s10">
-								<img class="circle responsive-img" src="images/sample4.jpg">
-							</div>
-							<div class="col s1"></div>
-						</div>
-						<div class="col s12">
-							<span>
+							<span class>
 				  	  	<!-- Dropdown Trigger -->
-						  <a class='dropdown-button black-text left' data-activates='dropdownuser'><%=username %></a>
+						  <a class='dropdown-button black-text left ' data-activates='dropdownuser'><%=username %></a>
 						
 						  <!-- Dropdown Structure -->
 						  <ul id='dropdownuser' class='dropdown-content'>
 						    <li><a href="/ApkAnalyzePlatform/signoutpatten">退出登录</a></li>
 						  </ul>
 				  	  </span></div>
-						<div class="col s12">
+						<div class="col s12" >
 							<span class="black-text"><%
                                 if((Boolean)is_admin)
                                 {
@@ -165,7 +129,7 @@ HibernateSessionFactory.closeSession();
 
 				</li>
 				<li class="bold">
-					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-view-dashboard"></i> 控制台</a>
+					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-view-dashboard"></i>首页</a>
 				</li>
 				<%if((Boolean)upload){ %>
 				<li class="bold">
@@ -175,7 +139,10 @@ HibernateSessionFactory.closeSession();
 					<a href="message.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-message"></i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
 				</li>
 				<li class="bold active red lighten-4">
-					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-chart-bar"></i> 统计管理</a>
+					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-chart-line"></i> Apk统计</a>
+				</li>
+				<li class="bold">
+					<a href="user_statistics_charts.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-account-card-details"></i> 用户统计</a>
 				</li>
 				<%if((Boolean)is_admin){ %>
 				<li class="bold">
@@ -194,24 +161,6 @@ HibernateSessionFactory.closeSession();
 				<li>
 					<a href="aboutus.jsp"><i class="large mdi mdi-24px mdi-dark mdi-information-outline"></i>关于我们</a>
 				</li>
-				<li class="li-hover">
-					<div class="divider"></div>
-				</li>
-
-				<!--登录统计-->
-				<li class="li-hover">
-					<p class="ultra-small margin more-text">登录统计</p>
-				</li>
-				<li class="li-hover">
-					<div class="row">
-						<div class="col s12 m12 l12">
-							<div class="sample-chart-wrapper">
-								<div class="ct-chart ct-golden-section" id="ct2-chart"></div>
-							</div>
-						</div>
-					</div>
-				</li>
-
 			</ul>
 		</header>
 		<main>
@@ -236,7 +185,7 @@ HibernateSessionFactory.closeSession();
 								<!--start-->
 								<p class="flow-text col s12">文件大小统计</p><br />
 								<span class="col s12">统计区间</span>
-								<input class="col s5" name="minSize" min="0" max="500" step="10"><span class="col s1">MB~</span><input class="col s5" name="maxSize" min="0" max="500" step="10"><span class="col s1">MB</span>
+								<input class="col s5" name="minSize" min="0" max="500" step="10" type="number"><span class="col s1">MB~</span><input class="col s5" name="maxSize" min="0" max="500" step="10" type="number"><span class="col s1">MB</span>
 								<!--end-->
 
 							</div>
@@ -418,8 +367,8 @@ HibernateSessionFactory.closeSession();
 		<footer class="page-footer">
 			<div class="footer-copyright">
 				<div class="container">
-					Copyright MonsterFucker Team © 2017 All rights reserved.
-					<span class="right"> Design and Developed by  MonsterFucker's</span>
+					Copyright MonsterFighter Team © 2017 All rights reserved.
+					<span class="right"> Design and Developed by  MonsterFighter</span>
 				</div>
 			</div>
 		</footer>

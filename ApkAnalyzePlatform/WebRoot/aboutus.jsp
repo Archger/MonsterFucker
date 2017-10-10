@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 
 	<head>
-		<title>About us</title>
+		<title>关于我们</title>
 		<meta charset="utf-8" />
     	<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
 		<!--Import Google Icon Font-->
@@ -83,15 +83,15 @@ HibernateSessionFactory.closeSession();
 			</div>
 			<div class="section white">
 				<div class="row container">
-					<h2 class="header">MonsterFucker Team</h2>
-					<h6 class="flow-text grey-text text-darken-3 lighten-3">MonsterFucker developer：Arch , Krypton , ST</h6>
-					<h4 class="header">Contact us</h5>
+					<h2 class="header">MonsterFighter Team</h2>
+					<h6 class="flow-text grey-text text-darken-3 lighten-3">MonsterFighter developer：Arch , Krypton , ST</h6>
+					<h4 class="header">联系我们</h5>
 					<h6 class="flow-text grey-text text-darken-3 lighten-3">
-						Email: MonsterFucker@gmail.com<br />
+						Email: MonsterFighter@gmail.com<br />
 						QQ: 669143142<br />
 						期待您能给我们提供宝贵的意见,同时也期待您的加入<br />
 					</h6>
-					<h6 class="flow-text">MonsterFucker for a better tomorrow.</h6>
+					<h6 class="flow-text">MonsterFighter for a better tomorrow.</h6>
 				</div>
 			</div>
 			<div class="parallax-container">
@@ -103,8 +103,8 @@ HibernateSessionFactory.closeSession();
 		<footer class="page-footer">
 			<div class="footer-copyright">
 				<div class="container">
-					Copyright MonsterFucker Team © 2017 All rights reserved.
-					<span class="right"> Design and Developed by  MonsterFuckers</span>
+					Copyright MonsterFighter Team © 2017 All rights reserved.
+					<span class="right"> Design and Developed by  MonsterFighter</span>
 				</div>
 			</div>
 		</footer>

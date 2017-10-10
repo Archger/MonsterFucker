@@ -18,8 +18,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<head>
 		<base href="<%=basePath%>">
 
-		<title>Search</title>
+		<title>查找</title>
 		<meta charset="utf-8" />
+		<link rel="stylesheet" href="css/style.css" type="text/css" > 
     	<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
 		<!--Import Google Icon Font-->
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -31,36 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<script type="text/javascript" src="FusionCharts/js/fusioncharts.js"></script>
 		<script type="text/javascript" src="FusionCharts/js/themes/fusioncharts.theme.fint.js"></script>
 
-		<style>
-			.side-nav-bar {
-				position: fixed !important;
-			}
-			
-			header,
-			main,
-			footer {
-				padding-left: 300px;
-			}
-			
-			@media only screen and (max-width: 992px) {
-				header,
-				main,
-				footer {
-					padding-left: 0;
-				}
-			}
-			
-			body {
-				background-image: url(images/loginback3.jpg);
-				display: flex;
-				min-height: 100vh;
-				flex-direction: column;
-			}
-			
-			main {
-				flex: 1 0 auto;
-			}
-		</style>
+		
 	</head>
 
 	<body>
@@ -100,49 +72,45 @@ HibernateSessionFactory.closeSession();
       <i class="large mdi mdi-24px mdi-light mdi-pencil"></i>
     </a>
     <ul>
-      <li><a class="btn-floating red" href="statistic.jsp"><i class="large mdi mdi-18px mdi-light mdi-chart-bar"></i></a></li>
+    <%if((Boolean)is_admin){%> <li><a class="btn-floating pink" href="usermanager.jsp"><i class="large mdi mdi-18px mdi-light mdi-account-edit"></i></a></li><%} %>
+     <li><a class="btn-floating red" href="statistic.jsp"><i class="large mdi mdi-18px mdi-light mdi-chart-bar"></i></a></li>
       <li><a class="btn-floating yellow darken-1" href="message.jsp"><i class="large mdi mdi-18px mdi-light mdi-message"></i></a></li>
-      <li><a class="btn-floating green" href="upload.jsp"><i class="large mdi mdi-18px mdi-light mdi-upload"></i></a></li>
+     <%if((Boolean)upload){%><li><a class="btn-floating green" href="upload.jsp"><i class="large mdi mdi-18px mdi-light mdi-upload"></i></a></li><%} %> 
       <li><a class="btn-floating blue" href="dashboard.jsp"><i class="large mdi mdi-18px mdi-light mdi-view-dashboard"></i></a></li>
     </ul>
   </div>
+
 
 
 		<header>
 			<nav class="top-nav z-depth-2 hoverable">
 				<div class="container">
 					<div class="nav-wrapper">
-						<span class="flow-text left-align">Search</span>
+						<span class="flow-text left-align">查找</span>
 					</div>
 				</div>
 			</nav>
 
-			<ul id="slide-out" class="side-nav fixed z-depth-4 hoverable">
-				<li class="logo"> <img src="images/materialize-logo.png" /> </li>
+			<ul id="slide-out" class="side-nav fixed z 	-depth-4 hoverable">
+				<li class="logo"> <img src="images/logo2.1.png" class="responsive-img" /> </li>
 				<li>
-					<div class="userView row col s12">
+					<div class="userView  row col s12">
 						<div class="background">
 							<img src="images/user.jpg" class="responsive-img">
 						</div>
 
+						
 						<div class="col s12">
-							<div class="col s1"></div>
-							<div class="col s10">
-								<img class="circle responsive-img" src="images/sample4.jpg">
-							</div>
-							<div class="col s1"></div>
-						</div>
-						<div class="col s12">
-							<span>
+							<span class>
 				  	  	<!-- Dropdown Trigger -->
-						  <a class='dropdown-button black-text left' data-activates='dropdownuser'><%=username %></a>
+						  <a class='dropdown-button black-text left ' data-activates='dropdownuser'><%=username %></a>
 						
 						  <!-- Dropdown Structure -->
 						  <ul id='dropdownuser' class='dropdown-content'>
 						    <li><a href="/ApkAnalyzePlatform/signoutpatten">退出登录</a></li>
 						  </ul>
 				  	  </span></div>
-						<div class="col s12">
+						<div class="col s12" >
 							<span class="black-text"><%
                                 if((Boolean)is_admin)
                                 {
@@ -158,7 +126,7 @@ HibernateSessionFactory.closeSession();
 
 				</li>
 				<li class="bold">
-					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-view-dashboard"></i> 控制台</a>
+					<a href="dashboard.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-view-dashboard"></i>首页</a>
 				</li>
 				<%if((Boolean)upload){ %>
 				<li class="bold">
@@ -168,7 +136,10 @@ HibernateSessionFactory.closeSession();
 					<a href="message.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-message"></i>消息通知<%if(un_read_num>0){%><span class="new badge blue lighten-1"><%=un_read_num %></span><%}%></a>
 				</li>
 				<li class="bold">
-					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-chart-bar"></i> 统计管理</a>
+					<a href="statistic.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-chart-line"></i> Apk统计</a>
+				</li>
+				<li class="bold">
+					<a href="user_statistics_charts.jsp" class="waves-effect waves-cyan"><i class="large mdi mdi-24px mdi-dark mdi-account-card-details"></i> 用户统计</a>
 				</li>
 				<%if((Boolean)is_admin){ %>
 				<li class="bold">
@@ -187,24 +158,6 @@ HibernateSessionFactory.closeSession();
 				<li>
 					<a href="aboutus.jsp"><i class="large mdi mdi-24px mdi-dark mdi-information-outline"></i>关于我们</a>
 				</li>
-				<li class="li-hover">
-					<div class="divider"></div>
-				</li>
-
-				<!--登录统计-->
-				<li class="li-hover">
-					<p class="ultra-small margin more-text">登录统计</p>
-				</li>
-				<li class="li-hover">
-					<div class="row">
-						<div class="col s12 m12 l12">
-							<div class="sample-chart-wrapper">
-								<div class="ct-chart ct-golden-section" id="ct2-chart"></div>
-							</div>
-						</div>
-					</div>
-				</li>
-
 			</ul>
 		</header>
 		<main>
@@ -213,7 +166,7 @@ HibernateSessionFactory.closeSession();
 				<br />
 				<!--right start-->
 				<div class="row">
-					<div class="col s12 m9 l10">
+					<div class="card col s12 m9 l10">
 						<div id="introduction" class="section scrollspy col s12">
 							<br />
 							<br />
@@ -223,6 +176,14 @@ HibernateSessionFactory.closeSession();
 									<div class="col s12 m6 l3 input-field">
 										<input name="apkName" type="text" class="validate" id="a1">
 										<label for="a1">APK名称</label>
+									</div>
+									<div class="col s12 m6 l3 input-field">
+										<input name="developer_name" type="text" class="validate" id="a2">
+										<label for="a2">开发者</label>
+									</div>
+									<div class="col s12 m6 l3 input-field">
+										<input name="versionName" type="text" class="validate" id="a3">
+										<label for="a3">版本</label>
 									</div>
 									<div class="col s12 m6 l3">
 
@@ -243,14 +204,7 @@ HibernateSessionFactory.closeSession();
 											<option value="其它">其它</option>
 										</select>
 									</div>
-									<div class="col s12 m6 l3 input-field">
-										<input name="developer_name" type="text" class="validate" id="a2">
-										<label for="a2">开发者</label>
-									</div>
-									<div class="col s12 m6 l3 input-field">
-										<input name="versionName" type="text" class="validate" id="a3">
-										<label for="a3">版本</label>
-									</div>
+									
 								</div>
 								<div class="row">
 									<input name="submit" type="submit" value="查询" class="btn right" onclick="Materialize.toast('正在查询', 4000)">
@@ -265,7 +219,7 @@ HibernateSessionFactory.closeSession();
 							<br />
 							<div class="divider"></div>
 							<br />
-							<div id="div1" style="display:block;">
+							<div id="div1">
 								<div class="row">
 									<br />
 									<br />
@@ -289,6 +243,9 @@ HibernateSessionFactory.closeSession();
 													<option value="2"> 降序</option>
 												</select>
 											</div>
+											<br />
+											<div class="divider"></div>
+											<br />
 											<div class="col s12 m4">
 												<input name="submit" type="submit" class="btn right" value="排序" onclick="Materialize.toast('查询结果已排序', 4000)">
 											</div>
@@ -299,13 +256,14 @@ HibernateSessionFactory.closeSession();
 									</div>
 								</div>
 
-								<table>
+								<table class="striped center">
 									<tr>
+										<th></th>
 										<td> 产品名称</td>
 										<td> 开发者 </td>
 										<td> 产品类型 </td>
 										<td> 版本 </td>
-										<td> 是否有权限获取手机状态</td>
+										<td> 下载</td>
 										<td> 查看详细信息</td>
 									</tr>
 									<%
@@ -321,10 +279,14 @@ HibernateSessionFactory.closeSession();
 			   else len = 0;
                Session session2 = HibernateSessionFactory.getSession();
                Transaction tx = session2.beginTransaction();
-               Criteria cri = session2.createCriteria(User.class);
                for(int i = 0;i < len;i ++){
              %>
 									<tr>
+									<%
+               String icon = "";
+               if(list2.get(i).getIconDirectory() != null) icon= list2.get(i).getIconDirectory();  
+             %>
+			<th><img src="<%=icon%>" class="responsive-img center"></th>
 										<%
                String temp = "";
                if(list2.get(i).getApkName() != null) temp = list2.get(i).getApkName();  
@@ -336,6 +298,7 @@ HibernateSessionFactory.closeSession();
                if(list2.get(i).getDeveloperId() != null)
                {
                int tmp = list2.get(i).getDeveloperId();
+               Criteria cri = session2.createCriteria(User.class);
                cri.add(Restrictions.eq("userId",tmp));
                List<User> list = cri.list();
                temp = "";
@@ -348,24 +311,27 @@ HibernateSessionFactory.closeSession();
 										</td>
 										<%
                temp = "";
-               if(list2.get(i).getApkType() != null) temp = list2.get(0).getApkType();  
+               if(list2.get(i).getApkType() != null) temp = list2.get(i).getApkType();  
              %>
 										<td>
 											<%=temp%>
 										</td>
 										<%
                temp = "";
-               if(list2.get(i).getVersionName() != null) temp = list2.get(0).getVersionName();  
+               if(list2.get(i).getVersionName() != null) temp = list2.get(i).getVersionName();  
              %>
 										<td>
 											<%=temp %>
 										</td>
 										<%
-               boolean t = false;
-               if(list2.get(i).getReadPhoneState() != null) t = list2.get(0).getReadPhoneState();  
+               String apk_path = new String();
+               if(list2.get(i).getFileDirectoryName() != null) apk_path = list2.get(i).getFileDirectoryName();  
              %>
 										<td>
-											<%=t %>
+										<%if(!apk_path.isEmpty()&&(Boolean)download){%><a href="<%=apk_path%>">下载</a><%}else{%>无权限<%} %>
+										</td>
+										<td>
+											<a href="/ApkAnalyzePlatform/Apkmessage?apkid=<%=list2.get(i).getApkId()%>" class="btn">详情</a>
 										</td>
 									</tr>
 									<%} %>
@@ -416,8 +382,8 @@ HibernateSessionFactory.closeSession();
 		<footer class="page-footer">
 			<div class="footer-copyright">
 				<div class="container">
-					Copyright MonsterFucker Team © 2017 All rights reserved.
-					<span class="right"> Design and Developed by  MonsterFucker's</span>
+					Copyright MonsterFighter Team © 2017 All rights reserved.
+					<span class="right"> Design and Developed by  MonsterFighter</span>
 				</div>
 			</div>
 		</footer>
